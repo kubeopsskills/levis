@@ -3,49 +3,21 @@ import * as YAML from "yamljs";
 import { Chart } from "cdk8s";
 import { Construct } from "constructs";
 import { Command, ServiceModel, DeploymentModel } from "../models";
-import { Deployment, EnvVar, RollingUpdateDeployment, Service } from "../../libs/k8s";
+import { Deployment, Service } from "../../libs/k8s";
 import { LevisConfig } from "../models/levisConfig";
 import { ConfigParser } from "../utils/configParser";
-import * as Constants from "../models/constants";
 
 const log = log4js.getLogger();
 
 export class MicroServiceChart extends Chart {
     
     constructor(scope: Construct, command: Command) {
-        super(scope, "Levis");
+        super(scope, "levis");
         log.debug(command.configFilePath);
         const configFilePath = command.configFilePath;
         const config: LevisConfig = YAML.load(configFilePath);
         this.generateService(ConfigParser.ParseService(config));
         this.generateDeployment(ConfigParser.ParseDeployment(config));
-    }
-
-    private isRollingUpdateEnable(type: string): boolean {
-      return type == Constants.Deployment.STRATEGY_ROLLING_UPDATE;
-    }
-
-    private toEnvVar(containerEnv: { [key: string]: string }): EnvVar[]{
-      
-      const envVar: EnvVar[] = []
-      let counter = 0
-      for (const [key, value] of Object.entries(containerEnv)) {
-        envVar[counter] = {
-          name: key,
-          value: value
-        }
-        counter++;
-      }
-
-      return envVar
-    }
-
-    private createStrategyRollingUpdate(isCreate: boolean, maxSurge: string, maxUnavailable: string): RollingUpdateDeployment {
-      if(!isCreate) return {};
-      return {
-        maxSurge: maxSurge,
-        maxUnavailable: maxUnavailable
-      }
     }
 
     private generateService(model: ServiceModel): void {
@@ -87,11 +59,7 @@ export class MicroServiceChart extends Chart {
               replicas: model.replicas,
               strategy: {
                 type: model.strategy.type,
-                rollingUpdate: this.createStrategyRollingUpdate(
-                  this.isRollingUpdateEnable(model.strategy.type), 
-                  model.strategy.rollingUpdate.maxSurge, 
-                  model.strategy.rollingUpdate.maxUnavailable
-                )
+                rollingUpdate: model.strategy.rollingUpdate
               },
               selector: {
                 matchLabels: model.matchLabels
@@ -114,7 +82,7 @@ export class MicroServiceChart extends Chart {
                           containerPort: model.containerPort 
                         } 
                       ],
-                      env: this.toEnvVar(model.containerEnvironment),
+                      env: model.containerEnvironment,
                       livenessProbe: {
                         httpGet: {
                           path: model.probe.livenessProbe.path,
@@ -137,16 +105,16 @@ export class MicroServiceChart extends Chart {
                         failureThreshold: model.probe.readinessProbe.failureThreshold,
                         timeoutSeconds: model.probe.readinessProbe.timeoutSeconds
                       },
-                      resources: {
-                        limits: {
-                          cpu: model.resources.limits.cpu,
-                          memory: model.resources.limits.memory,
-                        },
-                        requests: {
-                          cpu:  model.resources.requests.cpu,
-                          memory: model.resources.requests.memory
-                        }
-                      }
+                      // resources: {
+                      //   limits: {
+                      //     cpu: model.resources?.limits?.cpu,
+                      //     memory: model.resources?.limits?.memory,
+                      //   },
+                      //   requests: {
+                      //     cpu:  model.resources?.requests?.cpu,
+                      //     memory: model.resources?.requests?.memory
+                      //   }
+                      // }
                     }
                   ]
                 }

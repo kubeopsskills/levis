@@ -1,0 +1,24 @@
+levis:
+  name: "nginx"
+  namespace: "kubeops"
+  deployment:
+    replicas: 1
+    containers:
+      image: "nginx"
+      port: 80
+  # service:
+  #   name: ""
+  # # service:
+  # #   name: "nginx"
+  # #   labels:
+  # #     app: nginx
+  # #   annotations:
+  # #     app: nginx
+  # #   selector:
+  # #     app: nginx
+  # #   type: ClusterIP
+  #   ports:
+  #     name: ""
+  #     port: 80
+  #     targetPort: 80
+  #     nodePort: 30090
