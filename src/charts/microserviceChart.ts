@@ -3,9 +3,10 @@ import * as YAML from "yamljs";
 import { Chart } from "cdk8s";
 import { Construct } from "constructs";
 import { Command, ServiceModel, DeploymentModel } from "../models";
-import { Deployment, Service } from "../../libs/k8s";
+import { Deployment, EnvVar, RollingUpdateDeployment, Service } from "../../libs/k8s";
 import { LevisConfig } from "../models/levisConfig";
 import { ConfigParser } from "../utils/configParser";
+import * as Constants from "../models/constants";
 
 const log = log4js.getLogger();
 
@@ -20,73 +21,130 @@ export class MicroServiceChart extends Chart {
         this.generateDeployment(ConfigParser.ParseDeployment(config));
     }
 
-    private generateService(model: ServiceModel): void {
-        log.debug("generateService");
-        new Service(this, 'service', {
-            metadata: {
-              name: serviceName,
-              namespace: namespaceValue
-            },
-            spec: {
-              type: 'ClusterIP',
-              ports: [ { port: options.service.port, targetPort: options.service.port } ],
-              selector: label
-            }
-          });
+    private isRollingUpdateEnable(type: string): boolean {
+      return type == Constants.Deployment.STRATEGY_ROLLING_UPDATE;
     }
+
+    private toEnvVar(containerEnv: { [key: string]: string }): EnvVar[]{
+      
+      const envVar: EnvVar[] = []
+      let counter = 0
+      for (const [key, value] of Object.entries(containerEnv)) {
+        envVar[counter] = {
+          name: key,
+          value: value
+        }
+        counter++;
+      }
+
+      return envVar
+    }
+
+    private createStrategyRollingUpdate(isCreate: boolean, maxSurge: string, maxUnavailable: string): RollingUpdateDeployment {
+      if(!isCreate) return {};
+      return {
+        maxSurge: maxSurge,
+        maxUnavailable: maxUnavailable
+      }
+    }
+
+    private generateService(model: ServiceModel): void {
+      log.debug("generateService");
+      new Service(this, 'service', {
+        metadata: {
+          name: model.name,
+          namespace: model.namespace,
+          labels: model.labels,
+          annotations: model.annotations,
+        },
+        spec: {
+          type: model.type,
+          ports: [ 
+            { 
+              name: model.name, 
+              port: model.port, 
+              targetPort: model.targetPort, 
+              nodePort: model.nodePort 
+            } 
+          ],
+          selector: model.selector
+        }
+      });
+    }
+    
     private generateDeployment(model: DeploymentModel): void {
         log.debug("generateDeployment");
+
         new Deployment(this, 'deployment', {
             metadata: {
-              name: serviceName,
-              namespace: namespaceValue
+              name: model.name,
+              namespace: model.namespace,
+              labels: model.labels,
+              annotations: model.annotations,
             },
             spec: {
-              replicas: replicas,
+              revisionHistoryLimit: model.revisionHistoryLimit,
+              replicas: model.replicas,
+              strategy: {
+                type: model.strategy.type,
+                rollingUpdate: this.createStrategyRollingUpdate(
+                  this.isRollingUpdateEnable(model.strategy.type), 
+                  model.strategy.rollingUpdate.maxSurge, 
+                  model.strategy.rollingUpdate.maxUnavailable
+                )
+              },
               selector: {
-                matchLabels: label
+                matchLabels: model.matchLabels
               },
               template: {
                 metadata: {
-                  labels: label,
-                  annotations: annotationList
+                  labels: model.labels,
+                  annotations: model.annotations
                 },
                 spec: {
-                  imagePullSecrets: [
-                    {
-                      name: imagePullSecretName
-                    }
-                  ],
-                  serviceAccountName: serviceAccount,
+                  serviceAccountName: model.serviceAccount,
                   containers: [
                     {
-                      name: serviceName,
-                      image: secretImage,
-                      ports: [ { containerPort: options.service.port } ],
+                      name: model.containerName,
+                      image: model.containerImage,
+                      imagePullPolicy: model.containerImagePullPolicy,
+                      ports: [ 
+                        { 
+                          name: model.containerName, 
+                          containerPort: model.containerPort 
+                        } 
+                      ],
+                      env: this.toEnvVar(model.containerEnvironment),
                       livenessProbe: {
                         httpGet: {
-                          path: serviceHealthCheckPath,
-                          port: options.service.port
+                          path: model.probe.livenessProbe.path,
+                          port: model.probe.livenessProbe.port
                         },
-                        periodSeconds: serviceInitialDelaySeconds,
-                        initialDelaySeconds: serviceHealthCheckIntervalSeconds
+                        periodSeconds: model.probe.livenessProbe.intervalSeconds,
+                        initialDelaySeconds: model.probe.livenessProbe.initialDelaySeconds,
+                        successThreshold: model.probe.livenessProbe.successThreshold,
+                        failureThreshold: model.probe.livenessProbe.failureThreshold,
+                        timeoutSeconds: model.probe.livenessProbe.timeoutSeconds
                       },
                       readinessProbe: {
                         httpGet: {
-                          path: serviceHealthCheckPath,
-                          port: options.service.port
+                          path: model.probe.readinessProbe.path,
+                          port: model.probe.readinessProbe.port
                         },
-                        periodSeconds: serviceInitialDelaySeconds,
-                        initialDelaySeconds: serviceHealthCheckIntervalSeconds
+                        periodSeconds: model.probe.readinessProbe.intervalSeconds,
+                        initialDelaySeconds: model.probe.readinessProbe.initialDelaySeconds,
+                        successThreshold: model.probe.readinessProbe.successThreshold,
+                        failureThreshold: model.probe.readinessProbe.failureThreshold,
+                        timeoutSeconds: model.probe.readinessProbe.timeoutSeconds
                       },
                       resources: {
                         limits: {
-                          cpu: cpuLimits,
-                          memory: memoryLimits
+                          cpu: model.resources.limits.cpu,
+                          memory: model.resources.limits.memory,
                         },
                         requests: {
-                          cpu:  cpuRequests,
-                          memory: memoryRequests
+                          cpu:  model.resources.requests.cpu,
+                          memory: model.resources.requests.memory
                         }
                       }
                     }
@@ -96,5 +154,4 @@ export class MicroServiceChart extends Chart {
             }
           });
         }
-    }
 }

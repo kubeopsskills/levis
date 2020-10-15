@@ -1,0 +1,79 @@
+levis:
+  name: "helloworld-demo"
+  namespace: ""
+  deployment:
+    name: ""
+    labels:
+    - <key>: <value>
+    - <key2>: <value2>
+    - <key3>: <value3>
+    annotations:
+    - <key>: <value>
+    - <key2>: <value2>
+    - <key3>: <value3>
+    service-account: microservice
+    revision-history-limit: "1"
+    replicas: "1"
+    strategy: 
+      type: RollingUpdate
+      rolling-update:
+        maxSurge: "100%"
+        maxUnavailable: "0%"
+    match-labels:
+    - <key>: <value>
+    - <key2>: <value2>
+    - <key3>: <value3>
+    containers:
+      name: ""
+      image: ""
+      image-pull-policy: Always
+      port: "80"
+      env:
+      - <key>: <value>
+      - <key2>: <value2>
+      - <key3>: <value3>
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
+      liveness-probe:
+        path: /actuator/health/liveness
+        port: "8080"
+        initial-delay-seconds: "30"
+        interval-seconds: "10"
+        success-threshold: "10"
+        failure-threshold: "10"
+        timeout-seconds: :10
+      readiness-probe:
+        path: /actuator/health/readiness
+        port: "8080"
+        initial-delay-seconds: "30"
+        interval-seconds: "10"
+        success-threshold: "10"
+        failure-threshold: "10"
+        timeout-seconds: :10
+  service:
+    name: ""
+    labels:
+    - <key>: <value>
+    - <key2>: <value2>
+    - <key3>: <value3>
+    annotations:
+    - <key>: <value>
+    - <key2>: <value2>
+    - <key3>: <value3>
+    selector:
+      - <key>: <value>
+      - <key2>: <value2>
+      - <key3>: <value3>
+    type: string;
+    ports:
+      name: ""
+      port: "80"
+      targetPort: "80"
+      nodePort: "30090"
+    
+ 

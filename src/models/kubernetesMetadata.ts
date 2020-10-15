@@ -6,8 +6,8 @@ export interface KubernetesMetadata {
      * 
      */
     name: string;
+    namespace: string;
     labels?: { [key: string]: string };
     annotations?: { [key: string]: string };
-    namespace: string;
     
 }

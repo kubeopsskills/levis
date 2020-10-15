@@ -14,11 +14,11 @@ interface Deployment {
     name: string;
     labels: { [key: string]: string };
     annotations: { [key: string]: string };
-    serviceAccount: string;
     revisionHistoryLimit: number;
     replicas: number;
     strategy: Strategy;
     matchLabels: { [key: string]: string };
+    serviceAccount: string;
     containers: Containers;
 }
 
