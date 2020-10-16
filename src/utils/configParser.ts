@@ -21,14 +21,15 @@ export class ConfigParser {
     }
       
     public static ParseService (config: LevisConfig): ServiceModel {
+        const serviceName = config.levis.service?.name || config.levis.name;
         return {
-            name: config.levis.service?.name || config.levis.name,
+            name: serviceName,
             namespace: config.levis.namespace || Constants.MetaData.DEFAULT_NAMESPACE,
-            labels: config.levis.service?.labels || {app: this.name},
+            labels: config.levis.service?.labels || {app: serviceName},
             annotations: config.levis.service?.annotations,
             selector: config.levis.service?.selector || config.levis.deployment.matchLabels,
             type: config.levis.service?.type || Constants.Service.TYPE_CLUSTER_IP,
-            portName: config.levis.service?.ports?.name || this.name,
+            portName: config.levis.service?.ports?.name || serviceName,
             port: config.levis.service?.ports?.port || config.levis.deployment.containers.port,
             targetPort: config.levis.service?.ports?.targetPort || config.levis.deployment.containers.port,
             nodePort: config.levis.service?.ports?.nodePort,
@@ -37,6 +38,8 @@ export class ConfigParser {
 
     public static ParseDeployment (config: LevisConfig): DeploymentModel {
         
+        const deploymentName = config.levis.deployment.name || config.levis.name;
+        const deploymentLabels = config.levis.deployment.labels || {app: deploymentName};
         const env = config.levis.deployment.containers.env;
         const containerEnv: EnvVar[] = env ? TypeMapper.toEnvVar(env): []; 
         const rollingUpdateType: string = config.levis.deployment.strategy?.type || Constants.Deployment.STRATEGY_ROLLING_UPDATE;
@@ -50,9 +53,9 @@ export class ConfigParser {
         log.debug("rollingUpdate: ", rollingUpdateStrategy);
         log.debug("envVar: ", containerEnv);
         return {
-            name: config.levis.deployment.name || config.levis.name ,
+            name: deploymentName,
             namespace: config.levis.namespace || Constants.MetaData.DEFAULT_NAMESPACE ,
-            labels: config.levis.deployment.labels || {app: this.name},
+            labels: deploymentLabels,
             annotations: config.levis.deployment.annotations ,
             serviceAccount:config.levis.deployment.serviceAccount || Constants.Pod.DEFAULT_SERVICE_ACCOUNT ,
             revisionHistoryLimit:config.levis.deployment.revisionHistoryLimit || Constants.Deployment.REVISION_HISTORY_LIMIT,
@@ -61,22 +64,14 @@ export class ConfigParser {
                 type: rollingUpdateType,
                 rollingUpdate: rollingUpdateStrategy
             }, 
-            matchLabels: config.levis.deployment.matchLabels || {app: this.name},
-            containerName: config.levis.deployment.containers?.name || this.name,
+
+            matchLabels: config.levis.deployment.matchLabels || deploymentLabels,
+            containerName: config.levis.deployment.containers?.name || deploymentName,
             containerImage: config.levis.deployment.containers?.image,
             containerImagePullPolicy: config.levis.deployment.containers?.imagePullPolicy || Constants.Container.IMAGE_PULL_POLICY,
             containerPort: config.levis.deployment.containers?.port,
             containerEnvironment: containerEnv,
-            resources: {
-                requests: {
-                    cpu: config.levis.deployment.containers?.resources?.requests?.cpu,
-                    memory: config.levis.deployment.containers.resources?.requests?.memory
-                },
-                limits: {
-                    cpu: config.levis.deployment.containers.resources?.limits?.cpu,
-                    memory: config.levis.deployment.containers.resources?.limits?.memory
-                } 
-            },
+            resources: config.levis.deployment.containers.resources,
             probe: {
                 readinessProbe: {
                     path: config.levis.deployment.containers.readinessProbe?.path || Constants.Container.READINESS_PATH,

@@ -1,6 +1,6 @@
+import { App } from "cdk8s";
 import * as log4js from "log4js";
 import * as Minimist from "minimist";
-import { App } from 'cdk8s';
 import { CommandManager } from './src/managers/commandManager';
 
 const log = log4js.getLogger();

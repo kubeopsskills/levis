@@ -9,7 +9,7 @@
     "import": "cdk8s import",
     "build": "tsc --outDir bin",
     "watch": "tsc -w --outDir bin/dev",
-    "clean": "rm -rf bin manifests",
+    "clean": "rm -rf bin manifests dist",
     "test": "jest",
     "build-all": "yarn run clean && yarn run build",
     "lint": "eslint . --ext .ts"

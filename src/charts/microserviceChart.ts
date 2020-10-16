@@ -66,7 +66,7 @@ export class MicroServiceChart extends Chart {
               },
               template: {
                 metadata: {
-                  labels: model.labels,
+                  labels: model.matchLabels,
                   annotations: model.annotations
                 },
                 spec: {
@@ -105,16 +105,7 @@ export class MicroServiceChart extends Chart {
                         failureThreshold: model.probe.readinessProbe.failureThreshold,
                         timeoutSeconds: model.probe.readinessProbe.timeoutSeconds
                       },
-                      // resources: {
-                      //   limits: {
-                      //     cpu: model.resources?.limits?.cpu,
-                      //     memory: model.resources?.limits?.memory,
-                      //   },
-                      //   requests: {
-                      //     cpu:  model.resources?.requests?.cpu,
-                      //     memory: model.resources?.requests?.memory
-                      //   }
-                      // }
+                      resources: model.resources
                     }
                   ]
                 }

@@ -1,4 +1,4 @@
-import { EnvVar, RollingUpdateDeployment } from "../../libs/k8s";
+import { EnvVar, ResourceRequirements, RollingUpdateDeployment } from "../../libs/k8s";
 import { KubernetesMetadata } from "./kubernetesMetadata";
 
 export interface DeploymentModel extends KubernetesMetadata  {
@@ -12,23 +12,13 @@ export interface DeploymentModel extends KubernetesMetadata  {
     containerImagePullPolicy: string;
     containerPort: number;
     containerEnvironment?: EnvVar[];
-    resources?: ManagedResource;
+    resources?: ResourceRequirements;
     probe: Probe;
 }
 
 interface Strategy {
     type: string;
     rollingUpdate: RollingUpdateDeployment;
-}
-
-interface ManagedResource {
-    requests?: RequiredResource;
-    limits?: RequiredResource;
-}
-
-interface RequiredResource {
-    cpu?: string;
-    memory?: string;
 }
 
 interface Probe {

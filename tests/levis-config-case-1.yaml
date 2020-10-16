@@ -5,23 +5,26 @@ levis:
     name: "nginx"
     labels:
       app: nginx
+      run: nginx
     annotations:
       app: nginx
+      nginx.master: "true"
     serviceAccount: microservice
-    revisionHistoryLimit: 1
-    replicas: 1
+    revisionHistoryLimit: 5
+    replicas: 3
     strategy: 
       type: RollingUpdate
       rollingUpdate:
-        maxSurge: "100%"
-        maxUnavailable: "0%"
+        maxSurge: "80%"
+        maxUnavailable: "20%"
     matchLabels:
       app: nginx
+      run: nginx
     containers:
       name: "nginx"
       image: "nginx"
       imagePullPolicy: Always
-      port: 80
+      port: 8080
       env:
         app: nginx
       resources:
@@ -60,4 +63,3 @@ levis:
       name: "nginx"
       port: 80
       targetPort: 80
-      nodePort: 30090  

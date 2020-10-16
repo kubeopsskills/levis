@@ -1,4 +1,4 @@
-import { Construct } from "constructs";
+import { App } from "cdk8s"
 import * as log4js from "log4js";
 import * as Minimist from "minimist";
 import ILevisCommand from "../interfaces";
@@ -12,7 +12,7 @@ export class CommandManager {
     
     private command?: ILevisCommand;
  
-    constructor(app: Construct, commandOption: string) {
+    constructor(app: App, commandOption: string) {
         switch(commandOption) {
             case LevisCommand.CREATE: {
                 log.debug("create command");

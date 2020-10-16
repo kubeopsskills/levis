@@ -1,3 +1,5 @@
+import { ResourceRequirements } from "../../libs/k8s";
+
 export interface LevisConfig {
     levis: Levis;
 }
@@ -40,25 +42,9 @@ interface Containers {
     imagePullPolicy?: string;
     port: number;
     env?: { [key: string]: string };
-    resources?: Resources;
+    resources?: ResourceRequirements;
     livenessProbe?: LivenessProbe;
     readinessProbe?: ReadinessProbe;
-}
-
-/* Container Resources */
-interface Resources {
-    requests?: Requests;
-    limits?: Limits;
-}
-
-interface Requests {
-    memory?: string;
-    cpu?: string; 
-}
-
-interface Limits {
-    memory?: string;
-    cpu?: string;
 }
 
 /* Container Probe */
