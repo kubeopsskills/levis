@@ -10,14 +10,8 @@ export class FileUtils {
             Fs.rmdirSync(newPath, { recursive: true });
         }
         Fs.mkdirSync(newPath, { recursive: true });
-        Fs.rename(oldPath, newPath, (error) => {
-                if(error) { 
-                    log.error(error);
-                    process.exit(1);
-                }
-                Fs.rmdirSync(oldPath, { recursive: true });               
-                log.info("Successfully moved %s to %s.", oldPath, newPath);
-            }    
-        );
+        Fs.renameSync(oldPath, newPath);
+        Fs.rmdirSync(oldPath, { recursive: true });
+        log.info("Successfully moved %s to %s.", oldPath, newPath);
     }
 }

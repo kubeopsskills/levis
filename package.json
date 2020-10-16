@@ -1,9 +1,9 @@
 {
   "name": "levis",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha",
   "main": "main.js",
   "types": "main.ts",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "import": "cdk8s import",

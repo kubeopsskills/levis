@@ -3,5 +3,6 @@
 !jest.config.js
 node_modules
 dist/
+bin/
 manifests/
 __snapshots__/
