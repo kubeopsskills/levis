@@ -22,12 +22,15 @@ export class ConfigParser {
       
     public static ParseService (config: LevisConfig): ServiceModel {
         const serviceName = config.levis.service?.name || config.levis.name;
+        const deploymentName = config.levis.deployment.name || config.levis.name;
+        const deploymentLabels = config.levis.deployment.labels || {app: deploymentName};
+        const deploymentMatchLabels = config.levis.deployment.matchLabels || deploymentLabels;
         return {
             name: serviceName,
             namespace: config.levis.namespace || Constants.MetaData.DEFAULT_NAMESPACE,
             labels: config.levis.service?.labels || {app: serviceName},
             annotations: config.levis.service?.annotations,
-            selector: config.levis.service?.selector || config.levis.deployment.matchLabels,
+            selector: config.levis.service?.selector || deploymentMatchLabels,
             type: config.levis.service?.type || Constants.Service.TYPE_CLUSTER_IP,
             portName: config.levis.service?.ports?.name || serviceName,
             port: config.levis.service?.ports?.port || config.levis.deployment.containers.port,
