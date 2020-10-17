@@ -1,4 +1,4 @@
-RELEASE_VERSION = 1.0.0-alpha
+RELEASE_VERSION = 1.0.1-alpha
 TARGET_PATH = bin/target/
 BUNDLE_PATH = bin/bundle/
 
