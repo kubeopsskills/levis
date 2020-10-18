@@ -1,6 +1,6 @@
-RELEASE_VERSION = 1.0.1-alpha
 TARGET_PATH = bin/target/
 BUNDLE_PATH = bin/bundle/
+RELEASE_VERSION = $(shell grep version package.json | awk -F \" '{print $$4}')
 
 define bundleProject
 	ncc build bin/main.js -o $(BUNDLE_PATH)
