@@ -27,20 +27,13 @@ buildLinux:
 	cd $(TARGET_PATH) && tar -zcvf levis-$(RELEASE_VERSION)-linux-x64.tar.gz levis
 	rm -rf $(TARGET_PATH)levis
 
-buildAlpine:
-	$(call bundleProject)
-	pkg $(BUNDLE_PATH)index.js --output $(TARGET_PATH)levis-alpine --targets node14-alpine-x64
-	mv $(TARGET_PATH)levis-alpine $(TARGET_PATH)levis
-	cd $(TARGET_PATH) && tar -zcvf levis-$(RELEASE_VERSION)-alpine-x64.tar.gz levis
-	rm -rf $(TARGET_PATH)levis
-
 compile:
 	yarn run build-all
 
-build: buildWindows buildMacOS buildLinux buildAlpine
+build: buildWindows buildMacOS buildLinux
 
 clean:
 	rm -rf $(BUNDLE_PATH)
 	rm -rf $(TARGET_PATH)
 
-all: clean compile buildWindows buildMacOS buildLinux buildAlpine
+all: clean compile buildWindows buildMacOS buildLinux
