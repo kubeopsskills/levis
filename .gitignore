@@ -1,5 +1,6 @@
 *.d.ts
 *.js
+*.bk
 !jest.config.js
 node_modules
 dist/
