@@ -28,9 +28,9 @@ This is an early-stage, experimental project built with ❤️ by KubeOps Skills
 **Levis** is Kubernetes Manifest Generatoror 
 
 ## Versioning
-| Levis Release  Release |cdk8 Version | construct Version | log4js Version | minimist Version | yamljs Version | Jib Version
+| Levis Release |cdk8 Version | construct Version | log4js Version | minimist Version | yamljs Version |
 |----------------|------------ |---------------------|----------------------|------------------|------------------|
-| 1.0.1-alpha | 0.30.0 | 3.0.14 | 6.3.0 | 1.2.5 | 0.3.0 
+| 1.0.1-alpha | 0.30.0 | 3.0.14 | 6.3.0 | 1.2.5 | 0.3.0 |
 
 ## Demo
 
