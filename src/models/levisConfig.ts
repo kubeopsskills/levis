@@ -45,6 +45,8 @@ interface Containers {
     resources?: ResourceRequirements;
     livenessProbe?: LivenessProbe;
     readinessProbe?: ReadinessProbe;
+    configEnvName?: string;
+    secretEnvName?: string; 
 }
 
 /* Container Probe */

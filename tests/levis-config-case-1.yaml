@@ -27,6 +27,8 @@ levis:
       port: 8080
       env:
         app: nginx
+      configEnvName: "appsettings"
+      secretEnvName: "secretappsettings"
       resources:
         requests:
           memory: "64Mi"

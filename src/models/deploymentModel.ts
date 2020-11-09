@@ -1,4 +1,4 @@
-import { EnvVar, ResourceRequirements, RollingUpdateDeployment } from "../../libs/k8s";
+import { EnvFromSource, EnvVar, ResourceRequirements, RollingUpdateDeployment } from "../../libs/k8s";
 import { KubernetesMetadata } from "./kubernetesMetadata";
 
 export interface DeploymentModel extends KubernetesMetadata  {
@@ -12,6 +12,7 @@ export interface DeploymentModel extends KubernetesMetadata  {
     containerImagePullPolicy: string;
     containerPort: number;
     containerEnvironment?: EnvVar[];
+    containerEnvironmentFrom?: EnvFromSource[]
     resources?: ResourceRequirements;
     probe: Probe;
 }

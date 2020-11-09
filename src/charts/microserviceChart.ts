@@ -83,6 +83,7 @@ export class MicroServiceChart extends Chart {
                         } 
                       ],
                       env: model.containerEnvironment,
+                      envFrom: model.containerEnvironmentFrom,
                       livenessProbe: {
                         httpGet: {
                           path: model.probe.livenessProbe.path,

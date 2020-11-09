@@ -1,7 +1,7 @@
 import { DeploymentModel, ServiceModel, LevisConfig } from "../models";
 import * as Constants from "../models/constants";
 import * as log4js from "log4js";
-import { EnvVar, RollingUpdateDeployment } from "../../libs/k8s";
+import { EnvVar, RollingUpdateDeployment, EnvFromSource } from "../../libs/k8s";
 import { TypeMapper } from ".";
 
 const log = log4js.getLogger();
@@ -18,6 +18,25 @@ export class ConfigParser {
             maxSurge: maxSurge,
             maxUnavailable: maxUnavailable
         }
+    }
+
+    private static createEnvironmentFrom(configEnvName?: string, secretEnvName?: string): EnvFromSource[] {
+       const envFrom: EnvFromSource[] = []
+       if(configEnvName) {
+          envFrom.push({
+            configMapRef: {
+                name: configEnvName,
+            }
+          })
+       }
+       if(secretEnvName) {
+          envFrom.push({
+            secretRef: {
+                name: secretEnvName,
+            }
+        })
+       }
+       return envFrom;
     }
       
     public static ParseService (config: LevisConfig): ServiceModel {
@@ -74,6 +93,7 @@ export class ConfigParser {
             containerImagePullPolicy: config.levis.deployment.containers?.imagePullPolicy || Constants.Container.IMAGE_PULL_POLICY,
             containerPort: config.levis.deployment.containers?.port,
             containerEnvironment: containerEnv,
+            containerEnvironmentFrom: this.createEnvironmentFrom(config.levis.deployment.containers.configEnvName, config.levis.deployment.containers.secretEnvName),
             resources: config.levis.deployment.containers.resources,
             probe: {
                 readinessProbe: {
