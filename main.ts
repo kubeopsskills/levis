@@ -12,7 +12,7 @@ log4js.configure({
     }}
   },
   categories: { 
-    default: { appenders: ['out'], level: 'debug', enableCallStack: true }
+    default: { appenders: ['out'], level: 'info', enableCallStack: true }
   }
 })
 
@@ -24,4 +24,3 @@ log.debug("App Creating...");
 const app = new App();
 const commandManager = new CommandManager(app, commandOption);
 commandManager.handle(args);
-app.synth();

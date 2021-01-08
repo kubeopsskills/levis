@@ -22,6 +22,12 @@ interface Deployment {
     matchLabels?: { [key: string]: string };
     serviceAccount?: string;
     containers: Containers;
+    node?: Node
+}
+
+interface Node {
+    mode: string;
+    labels: { [key: string]: string };
 }
 
 /* Deployment Strategy */
@@ -53,6 +59,7 @@ interface Containers {
 interface LivenessProbe {
     path?: string;
     port?: number;
+    enabled?: boolean;
     initialDelaySeconds?: number;
     intervalSeconds?: number;
     successThreshold?: number;
@@ -63,6 +70,7 @@ interface LivenessProbe {
 interface ReadinessProbe {
     path?: string;
     port?: number;
+    enabled?: boolean;
     initialDelaySeconds?: number;
     intervalSeconds?: number;
     successThreshold?: number;
@@ -73,6 +81,7 @@ interface ReadinessProbe {
 /* Service Section */
 interface Service {
     name?: string;
+    enabled?: boolean;
     labels?: { [key: string]: string };
     annotations?: { [key: string]: string };
     selector?: { [key: string]: string };

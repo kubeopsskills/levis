@@ -4,3 +4,9 @@ levis:
     containers:
       image: "nginx"
       port: 80
+    node: 
+      mode: prefer
+      labels:
+        pool: system
+  service:
+    enabled: false

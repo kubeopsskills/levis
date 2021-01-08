@@ -1,4 +1,4 @@
-import { EnvFromSource, EnvVar, ResourceRequirements, RollingUpdateDeployment } from "../../libs/k8s";
+import { EnvFromSource, EnvVar, ResourceRequirements, RollingUpdateDeployment, Affinity } from "../../libs/k8s";
 import { KubernetesMetadata } from "./kubernetesMetadata";
 
 export interface DeploymentModel extends KubernetesMetadata  {
@@ -15,6 +15,7 @@ export interface DeploymentModel extends KubernetesMetadata  {
     containerEnvironmentFrom?: EnvFromSource[]
     resources?: ResourceRequirements;
     probe: Probe;
+    affinity?: Affinity;
 }
 
 interface Strategy {

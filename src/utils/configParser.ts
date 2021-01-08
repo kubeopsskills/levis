@@ -1,7 +1,7 @@
 import { DeploymentModel, ServiceModel, LevisConfig } from "../models";
 import * as Constants from "../models/constants";
 import * as log4js from "log4js";
-import { EnvVar, RollingUpdateDeployment, EnvFromSource } from "../../libs/k8s";
+import { EnvVar, RollingUpdateDeployment, EnvFromSource, NodeSelectorRequirement } from "../../libs/k8s";
 import { TypeMapper } from ".";
 
 const log = log4js.getLogger();
@@ -38,6 +38,21 @@ export class ConfigParser {
        }
        return envFrom;
     }
+
+    private static createNodeSelectorRequirement(labels: {[key: string]: string}): NodeSelectorRequirement[] {
+        const nodeSelectorReq: NodeSelectorRequirement[] = []
+        for (const key in labels) {
+            const value = labels[key];
+            nodeSelectorReq.push({
+                key: key,
+                operator: "Exists",
+                values: [
+                  value
+                ]
+            })
+        }
+        return nodeSelectorReq;
+    }
       
     public static ParseService (config: LevisConfig): ServiceModel {
         const serviceName = config.levis.service?.name || config.levis.name;
@@ -58,8 +73,7 @@ export class ConfigParser {
         };
     }
 
-    public static ParseDeployment (config: LevisConfig): DeploymentModel {
-        
+    public static ParseDeployment (config: LevisConfig): DeploymentModel {      
         const deploymentName = config.levis.deployment.name || config.levis.name;
         const deploymentLabels = config.levis.deployment.labels || {app: deploymentName};
         const env = config.levis.deployment.containers.env;
@@ -85,8 +99,7 @@ export class ConfigParser {
             strategy:{
                 type: rollingUpdateType,
                 rollingUpdate: rollingUpdateStrategy
-            }, 
-
+            },
             matchLabels: config.levis.deployment.matchLabels || deploymentLabels,
             containerName: config.levis.deployment.containers?.name || deploymentName,
             containerImage: config.levis.deployment.containers?.image,
@@ -115,6 +128,18 @@ export class ConfigParser {
                     timeoutSeconds: config.levis.deployment.containers.livenessProbe?.timeoutSeconds || Constants.Container.LIVENESS_TIMEOUT_SECONDS,
                 }
             },
+            affinity: config.levis.deployment.node?{
+                nodeAffinity: {
+                    preferredDuringSchedulingIgnoredDuringExecution: [
+                        {
+                            weight: 1,
+                            preference: {
+                                matchExpressions: this.createNodeSelectorRequirement(config.levis.deployment.node.labels)
+                            }
+                        }
+                    ]
+                }
+            }:{}
         };
     }
 }

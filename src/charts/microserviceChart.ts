@@ -16,7 +16,9 @@ export class MicroServiceChart extends Chart {
         log.debug(command.configFilePath);
         const configFilePath = command.configFilePath;
         const config: LevisConfig = YAML.load(configFilePath);
-        this.generateService(ConfigParser.ParseService(config));
+        if (!config.levis.service || config.levis.service?.enabled){
+          this.generateService(ConfigParser.ParseService(config));
+        }
         this.generateDeployment(ConfigParser.ParseDeployment(config));
     }
 
@@ -70,6 +72,7 @@ export class MicroServiceChart extends Chart {
                   annotations: model.annotations
                 },
                 spec: {
+                  affinity: model.affinity,
                   serviceAccountName: model.serviceAccount,
                   containers: [
                     {
