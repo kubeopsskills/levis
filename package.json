@@ -1,6 +1,6 @@
 {
   "name": "levis",
-  "version": "1.0.2-alpha",
+  "version": "1.0.4-alpha",
   "main": "main.js",
   "types": "main.ts",
   "license": "MIT",
