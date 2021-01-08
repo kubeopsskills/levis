@@ -45,7 +45,7 @@ export class ConfigParser {
             const value = labels[key];
             nodeSelectorReq.push({
                 key: key,
-                operator: "Exists",
+                operator: "In",
                 values: [
                   value
                 ]
