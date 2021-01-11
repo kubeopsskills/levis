@@ -57,9 +57,9 @@ interface Containers {
 
 /* Container Probe */
 interface LivenessProbe {
+    type?: string;
     path?: string;
     port?: number;
-    enabled?: boolean;
     initialDelaySeconds?: number;
     intervalSeconds?: number;
     successThreshold?: number;
@@ -68,9 +68,9 @@ interface LivenessProbe {
 }
 
 interface ReadinessProbe {
+    type?: string;
     path?: string;
     port?: number;
-    enabled?: boolean;
     initialDelaySeconds?: number;
     intervalSeconds?: number;
     successThreshold?: number;

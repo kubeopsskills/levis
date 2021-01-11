@@ -87,29 +87,8 @@ export class MicroServiceChart extends Chart {
                       ],
                       env: model.containerEnvironment,
                       envFrom: model.containerEnvironmentFrom,
-                      livenessProbe: {
-                        httpGet: {
-                          path: model.probe.livenessProbe.path,
-                          port: model.probe.livenessProbe.port
-                        },
-                        periodSeconds: model.probe.livenessProbe.intervalSeconds,
-                        initialDelaySeconds: model.probe.livenessProbe.initialDelaySeconds,
-                        successThreshold: model.probe.livenessProbe.successThreshold,
-                        failureThreshold: model.probe.livenessProbe.failureThreshold,
-                        timeoutSeconds: model.probe.livenessProbe.timeoutSeconds
-                      },
-                      readinessProbe: {
-                        httpGet: {
-                          path: model.probe.readinessProbe.path,
-                          port: model.probe.readinessProbe.port
-                        },
-                        periodSeconds: model.probe.readinessProbe.intervalSeconds,
-                        initialDelaySeconds: model.probe.readinessProbe.initialDelaySeconds,
-                        successThreshold: model.probe.readinessProbe.successThreshold,
-                        failureThreshold: model.probe.readinessProbe.failureThreshold,
-                        timeoutSeconds: model.probe.readinessProbe.timeoutSeconds
-                      },
-                      resources: model.resources
+                      livenessProbe: model.livenessProbe,
+                      readinessProbe: model.readinessProbe
                     }
                   ]
                 }

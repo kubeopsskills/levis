@@ -10917,7 +10917,7 @@ export interface Probe {
    *
    * @schema io.k8s.api.core.v1.Probe#httpGet
    */
-  readonly httpGet?: HttpGetAction;
+  httpGet?: HttpGetAction;
 
   /**
    * Number of seconds after the container has started before liveness probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
@@ -10947,7 +10947,7 @@ export interface Probe {
    *
    * @schema io.k8s.api.core.v1.Probe#tcpSocket
    */
-  readonly tcpSocket?: TcpSocketAction;
+  tcpSocket?: TcpSocketAction;
 
   /**
    * Number of seconds after which the probe times out. Defaults to 1 second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes

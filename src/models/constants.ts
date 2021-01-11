@@ -16,7 +16,6 @@ export enum Deployment {
     STRATEGY_ROLLING_UPDATE = "RollingUpdate",
     ROLLING_UPDATE_MAX_SURGE = "100%",
     ROLLING_UPDATE_MAX_UNAVAILABLE = "0%",
-    
 }
 
 export enum Pod {
@@ -26,6 +25,8 @@ export enum Pod {
 export enum Container {
     IMAGE_PULL_POLICY = "Always",
 
+    PROBE_TYPE_HTTP = "http",
+    PROBE_TYPE_SOCKET = "socket",
     READINESS_PATH = "/healthz",
     READINESS_INITIAL_DELAY_SECONDS = 0,
     READINESS_PERIOD_SECONDS = 10,

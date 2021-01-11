@@ -1,4 +1,4 @@
-import { EnvFromSource, EnvVar, ResourceRequirements, RollingUpdateDeployment, Affinity } from "../../libs/k8s";
+import { EnvFromSource, EnvVar, ResourceRequirements, RollingUpdateDeployment, Affinity, Probe } from "../../libs/k8s";
 import { KubernetesMetadata } from "./kubernetesMetadata";
 
 export interface DeploymentModel extends KubernetesMetadata  {
@@ -14,27 +14,12 @@ export interface DeploymentModel extends KubernetesMetadata  {
     containerEnvironment?: EnvVar[];
     containerEnvironmentFrom?: EnvFromSource[]
     resources?: ResourceRequirements;
-    probe: Probe;
+    livenessProbe: Probe;
+    readinessProbe: Probe;
     affinity?: Affinity;
 }
 
 interface Strategy {
     type: string;
     rollingUpdate: RollingUpdateDeployment;
-}
-
-interface Probe {
-    readinessProbe: HealthCheckProbe;
-    livenessProbe: HealthCheckProbe;
-
-}
-
-interface HealthCheckProbe {
-    path: string;
-    port: number;
-    initialDelaySeconds: number;
-    intervalSeconds: number;
-    successThreshold: number;
-    failureThreshold: number;
-    timeoutSeconds: number;
 }
