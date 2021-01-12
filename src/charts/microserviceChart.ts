@@ -86,6 +86,7 @@ export class MicroServiceChart extends Chart {
                         } 
                       ],
                       env: model.containerEnvironment,
+                      resources: model.resources,
                       envFrom: model.containerEnvironmentFrom,
                       livenessProbe: model.livenessProbe,
                       readinessProbe: model.readinessProbe
