@@ -75,6 +75,13 @@ export class ConfigParser {
                 port: config.levis.deployment.containers.readinessProbe?.port || config.levis.deployment.containers.port,
             }
             break;
+            case Constants.Container.PROBE_TYPE_COMMAND:
+            readinessProbe.exec = {
+                command: [
+                    config.levis.deployment.containers.readinessProbe?.command || Constants.Container.PROBE_DEFAULT_COMMAND
+                ]
+            }    
+            break;
         }
         return readinessProbe
     }
@@ -99,6 +106,13 @@ export class ConfigParser {
             livenessProbe.tcpSocket = {
                 port: config.levis.deployment.containers.livenessProbe?.port || config.levis.deployment.containers.port,
             }
+            break;
+            case Constants.Container.PROBE_TYPE_COMMAND:
+            livenessProbe.exec = {
+                command: [
+                    config.levis.deployment.containers.livenessProbe?.command || Constants.Container.PROBE_DEFAULT_COMMAND
+                ]
+            }    
             break;
         }
         return livenessProbe

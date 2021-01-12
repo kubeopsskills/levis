@@ -26,7 +26,10 @@ export enum Container {
     IMAGE_PULL_POLICY = "Always",
 
     PROBE_TYPE_HTTP = "http",
-    PROBE_TYPE_SOCKET = "socket",
+    PROBE_TYPE_SOCKET = "tcpsocket",
+    PROBE_TYPE_COMMAND = "command",
+    PROBE_DEFAULT_COMMAND = "cat /app/package.json",
+    
     READINESS_PATH = "/healthz",
     READINESS_INITIAL_DELAY_SECONDS = 0,
     READINESS_PERIOD_SECONDS = 10,
