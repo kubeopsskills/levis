@@ -12,7 +12,6 @@ export enum Service {
 
 export enum Deployment {
     REVISION_HISTORY_LIMIT = 10,
-    REPLICAS = 1,
     STRATEGY_ROLLING_UPDATE = "RollingUpdate",
     ROLLING_UPDATE_MAX_SURGE = "100%",
     ROLLING_UPDATE_MAX_UNAVAILABLE = "0%",

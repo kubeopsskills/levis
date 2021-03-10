@@ -3,7 +3,7 @@ import { KubernetesMetadata } from "./kubernetesMetadata";
 
 export interface DeploymentModel extends KubernetesMetadata  {
     revisionHistoryLimit: number;
-    replicas: number;
+    replicas?: number;
     strategy: Strategy;
     matchLabels: { [key: string]: string };
     serviceAccount: string;

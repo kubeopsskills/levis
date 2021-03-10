@@ -159,7 +159,7 @@ export class ConfigParser {
             annotations: config.levis.deployment.annotations ,
             serviceAccount:config.levis.deployment.serviceAccount || Constants.Pod.DEFAULT_SERVICE_ACCOUNT ,
             revisionHistoryLimit:config.levis.deployment.revisionHistoryLimit || Constants.Deployment.REVISION_HISTORY_LIMIT,
-            replicas:config.levis.deployment.replicas || Constants.Deployment.REPLICAS,
+            replicas: config.levis.deployment.replicas,
             strategy:{
                 type: rollingUpdateType,
                 rollingUpdate: rollingUpdateStrategy
