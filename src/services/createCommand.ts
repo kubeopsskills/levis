@@ -21,7 +21,7 @@ export class CreateCommand implements ILevisCommand {
     init(args: Minimist.ParsedArgs): Command {
         log.debug("CreateCommand");
         const inputFilePath=args.f;
-        const outputFilePath=args.o ? args.o: "./manifests";
+        const outputFilePath=args.o ? args.o: "./manifests/levis.k8s.yaml";
         
         if(!inputFilePath){
           Message.CreateInstruction();
@@ -40,7 +40,7 @@ export class CreateCommand implements ILevisCommand {
         log.debug("process");
         new MicroServiceChart(this.app, this.command);
         this.app.synth();
-        FileUtils.Move("./dist", this.command.outputFilePath);
+        FileUtils.Move("./dist/levis.k8s.yaml", this.command.outputFilePath);
     }
 
 }
