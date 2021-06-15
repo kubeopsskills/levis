@@ -1,7 +1,7 @@
 import { DeploymentModel, ServiceModel, LevisConfig } from "../models";
 import * as Constants from "../models/constants";
 import * as log4js from "log4js";
-import { EnvVar, RollingUpdateDeployment, EnvFromSource, NodeSelectorRequirement, Probe } from "../../libs/k8s";
+import { EnvVar, RollingUpdateDeployment, EnvFromSource, Volume, VolumeMount, NodeSelectorRequirement, Probe } from "../../libs/k8s";
 import { TypeMapper } from ".";
 
 const log = log4js.getLogger();
@@ -54,7 +54,7 @@ export class ConfigParser {
         return nodeSelectorReq;
     }
 
-    public static createReadinessProbe(config: LevisConfig): Probe {
+    private static createReadinessProbe(config: LevisConfig): Probe {
         const readinessProbe: Probe =  {
             initialDelaySeconds: config.levis.deployment.containers.readinessProbe?.initialDelaySeconds || Constants.Container.READINESS_INITIAL_DELAY_SECONDS,
             periodSeconds: config.levis.deployment.containers.readinessProbe?.intervalSeconds || Constants.Container.READINESS_PERIOD_SECONDS,
@@ -86,7 +86,7 @@ export class ConfigParser {
         return readinessProbe
     }
 
-    public static createLivenessProbe(config: LevisConfig): Probe{
+    private static createLivenessProbe(config: LevisConfig): Probe{
         const livenessProbe: Probe = { 
             initialDelaySeconds: config.levis.deployment.containers.livenessProbe?.initialDelaySeconds || Constants.Container.LIVENESS_INITIAL_DELAY_SECONDS,
             periodSeconds: config.levis.deployment.containers.livenessProbe?.intervalSeconds || Constants.Container.LIVENESS_PERIOD_SECONDS,
@@ -116,6 +116,51 @@ export class ConfigParser {
             break;
         }
         return livenessProbe
+    }
+
+    private static createContainerVolumeMounts(config: LevisConfig): VolumeMount[] {
+        const volumeMounts: VolumeMount[] = []
+        if(config.levis.deployment.containers.volumeMounts){
+            for (const val of config.levis.deployment.containers.volumeMounts) {
+               volumeMounts.push({
+                  name: val.name,
+                  mountPath: val.mountPath,
+                  readOnly: val.readOnly
+               })
+            }
+        }
+        return volumeMounts
+    }
+
+    private static createDeploymentVolume(config: LevisConfig): Volume[] {
+        const volume: Volume[] = []
+        if(config.levis.deployment.containers.volumeMounts){
+            for (const val of config.levis.deployment.containers.volumeMounts) {
+               if (val.configName){
+                volume.push({
+                    name: val.name,
+                    configMap: {
+                      name: val.configName
+                    }
+                 })
+               }
+               else if(val.secretName){
+                volume.push({
+                    name: val.name,
+                    secret: {
+                      secretName: val.secretName
+                    }
+                 })
+               }
+               else {
+                volume.push({
+                    name: val.name,
+                    emptyDir: {}
+                 }) 
+               }
+            }
+        }
+        return volume
     }
       
     public static ParseService (config: LevisConfig): ServiceModel {
@@ -174,6 +219,8 @@ export class ConfigParser {
             resources: config.levis.deployment.containers.resources,
             readinessProbe: this.createReadinessProbe(config),
             livenessProbe: this.createLivenessProbe(config),
+            deploymentVolumes: this.createDeploymentVolume(config),
+            containerVolumeMounts: this.createContainerVolumeMounts(config),
             affinity: config.levis.deployment.node?{
                 nodeAffinity: {
                     preferredDuringSchedulingIgnoredDuringExecution: [

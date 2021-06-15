@@ -1,5 +1,6 @@
 import * as log4js from "log4js";
-import * as YAML from "yamljs";
+import * as YAML from "yaml";
+import * as Fs from "fs"
 import { Chart } from "cdk8s";
 import { Construct } from "constructs";
 import { Command, ServiceModel, DeploymentModel } from "../models";
@@ -15,7 +16,8 @@ export class MicroServiceChart extends Chart {
         super(scope, "levis");
         log.debug(command.configFilePath);
         const configFilePath = command.configFilePath;
-        const config: LevisConfig = YAML.load(configFilePath);
+        const config: LevisConfig = YAML.parse(Fs.readFileSync(configFilePath, {encoding: 'utf-8'}))
+        log.info(config.levis.deployment.containers.volumeMounts)
         if (!config.levis.service || config.levis.service?.enabled){
           this.generateService(ConfigParser.ParseService(config));
         }
@@ -74,6 +76,7 @@ export class MicroServiceChart extends Chart {
                 spec: {
                   affinity: model.affinity,
                   serviceAccountName: model.serviceAccount,
+                  volumes: model.deploymentVolumes,
                   containers: [
                     {
                       name: model.containerName,
@@ -89,7 +92,8 @@ export class MicroServiceChart extends Chart {
                       resources: model.resources,
                       envFrom: model.containerEnvironmentFrom,
                       livenessProbe: model.livenessProbe,
-                      readinessProbe: model.readinessProbe
+                      readinessProbe: model.readinessProbe,
+                      volumeMounts: model.containerVolumeMounts
                     }
                   ]
                 }

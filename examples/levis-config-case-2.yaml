@@ -4,6 +4,18 @@ levis:
     containers:
       image: "nginx"
       port: 80
+      volumeMounts:
+      - name: test-volume
+        mountPath: /test-ebs
+        readOnly: true
+        secretName: test
+      - name: oam-volume
+        mountPath: /oam-ebs
+        readOnly: true
+        configName: oam
+      - name: em-volume
+        mountPath: /em
+        readOnly: true
     node: 
       mode: prefer
       labels:

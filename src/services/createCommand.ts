@@ -21,7 +21,7 @@ export class CreateCommand implements ILevisCommand {
     init(args: Minimist.ParsedArgs): Command {
         log.debug("CreateCommand");
         const inputFilePath=args.f;
-        const outputFilePath=args.o ? args.o: "./manifests/levis.k8s.yaml";
+        const outputFilePath=args.o ? args.o: "manifests/levis.k8s.yaml";
         
         if(!inputFilePath){
           Message.CreateInstruction();

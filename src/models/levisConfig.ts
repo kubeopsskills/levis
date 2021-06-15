@@ -53,6 +53,7 @@ interface Containers {
     readinessProbe?: ReadinessProbe;
     configEnvName?: string;
     secretEnvName?: string; 
+    volumeMounts?: Volume[]
 }
 
 /* Container Probe */
@@ -78,6 +79,14 @@ interface ReadinessProbe {
     successThreshold?: number;
     failureThreshold?: number;
     timeoutSeconds?: number;
+}
+
+interface Volume {
+    name: string
+    mountPath: string
+    readOnly: boolean
+    secretName?: string
+    configName?: string 
 }
 
 /* Service Section */
