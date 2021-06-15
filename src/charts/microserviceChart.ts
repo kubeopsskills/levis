@@ -17,7 +17,6 @@ export class MicroServiceChart extends Chart {
         log.debug(command.configFilePath);
         const configFilePath = command.configFilePath;
         const config: LevisConfig = YAML.parse(Fs.readFileSync(configFilePath, {encoding: 'utf-8'}))
-        log.info(config.levis.deployment.containers.volumeMounts)
         if (!config.levis.service || config.levis.service?.enabled){
           this.generateService(ConfigParser.ParseService(config));
         }
