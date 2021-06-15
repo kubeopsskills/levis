@@ -20,6 +20,13 @@ buildMacOS:
 	cd $(TARGET_PATH) && tar -zcvf levis-$(RELEASE_VERSION)-macos-x64.tar.gz levis
 	rm -rf $(TARGET_PATH)levis
 
+buildArm:
+	$(call bundleProject)
+	pkg $(BUNDLE_PATH)index.js --output $(TARGET_PATH)levis-arm --targets node14-linux-arm64
+	mv $(TARGET_PATH)levis-arm $(TARGET_PATH)levis
+	cd $(TARGET_PATH) && tar -zcvf levis-$(RELEASE_VERSION)-arm-x64.tar.gz levis
+	rm -rf $(TARGET_PATH)levis
+
 buildLinux:
 	$(call bundleProject)
 	pkg $(BUNDLE_PATH)index.js --output $(TARGET_PATH)levis-linux --targets node14-linux-x64
@@ -30,7 +37,7 @@ buildLinux:
 compile:
 	yarn run build-all
 
-build: buildWindows buildMacOS buildLinux
+build: buildWindows buildMacOS buildArm buildLinux
 
 clean:
 	rm -rf $(BUNDLE_PATH)
