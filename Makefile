@@ -43,4 +43,4 @@ clean:
 	rm -rf $(BUNDLE_PATH)
 	rm -rf $(TARGET_PATH)
 
-all: clean compile buildWindows buildMacOS buildLinux
+all: clean compile buildWindows buildMacOS buildArm buildLinux
