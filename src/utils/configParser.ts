@@ -125,6 +125,7 @@ export class ConfigParser {
                volumeMounts.push({
                   name: val.name,
                   mountPath: val.mountPath,
+                  subPath: val.subPath,
                   readOnly: val.readOnly
                })
             }

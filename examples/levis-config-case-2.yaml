@@ -14,9 +14,10 @@ levis:
         readOnly: true
         configName: oam
       - name: em-volume
-        mountPath: /em
+        mountPath: /em/oam.txt
+        subPath: oam.txt
         readOnly: true
-    node: 
+      node: 
       mode: prefer
       labels:
         pool: system

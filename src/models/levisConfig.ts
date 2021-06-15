@@ -84,6 +84,7 @@ interface ReadinessProbe {
 interface Volume {
     name: string
     mountPath: string
+    subPath?: string
     readOnly: boolean
     secretName?: string
     configName?: string 
