@@ -1,9 +1,1 @@
-*.d.ts
-*.js
-*.bk
-!jest.config.js
-node_modules
-dist/
-bin/
-manifests/
-__snapshots__/
+book
