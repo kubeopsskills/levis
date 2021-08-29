@@ -3,7 +3,14 @@
 export class Message {
 
     public static Instruction(): void {
-        console.log("create: text");
+        console.log("Levis Kubernetes Manifest Generator \n");
+        console.log("USAGE: ");
+        console.log("    levis [COMMAND] [FLAGS] [OPTIONS] \n");
+        console.log("COMMAND: ");
+        console.log("    create    Gerate kubernetes configuration\n");
+        console.log("FLAGS: ");
+        console.log("    -f  [OPTIONS]    Levis configuration path followd by OPTION ");
+        // console.log("    -v, --version    Print version info and exit ");
         process.exit(1);
     } 
 

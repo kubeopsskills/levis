@@ -14,8 +14,9 @@ export class MicroServiceChart extends Chart {
     
     constructor(scope: Construct, command: Command) {
         super(scope, "levis");
-        log.debug(command.configFilePath);
         const configFilePath = command.configFilePath;
+        log.debug(configFilePath);
+        // Path yaml to LevisConfig
         const config: LevisConfig = YAML.parse(Fs.readFileSync(configFilePath, {encoding: 'utf-8'}))
         if (!config.levis.service || config.levis.service?.enabled){
           this.generateService(ConfigParser.ParseService(config));

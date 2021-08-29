@@ -118,6 +118,29 @@ export class ConfigParser {
         return livenessProbe
     }
 
+    private static createEnvField(config: LevisConfig): EnvVar[] {
+        
+        const envVar: EnvVar[] = []
+        const envField = config.levis.deployment.containers.envField || [];
+        for (let i=0; i<envField?.length; i++){
+            for(let [key, value] of Object.entries(envField[i])) {
+                envVar.push(
+                    {  
+                        name: key,
+                        valueFrom: {
+                            fieldRef: {
+                                apiVersion: envField[i].apiVersion || "v1",
+                                fieldPath: value || "undefined"
+                            }
+                        }
+                    }
+                )
+            }
+        }
+        
+        return envVar;
+    }
+
     private static createContainerVolumeMounts(config: LevisConfig): VolumeMount[] {
         const volumeMounts: VolumeMount[] = []
         if(config.levis.deployment.containers.volumeMounts){
@@ -186,8 +209,11 @@ export class ConfigParser {
     public static ParseDeployment (config: LevisConfig): DeploymentModel {      
         const deploymentName = config.levis.deployment.name || config.levis.name;
         const deploymentLabels = config.levis.deployment.labels || {app: deploymentName};
-        const env = config.levis.deployment.containers.env;
-        const containerEnv: EnvVar[] = env ? TypeMapper.toEnvVar(env): []; 
+        const envLevis = config.levis.deployment.containers.env;
+        const envFieldLevis = config.levis.deployment.containers.envField;
+        const env: EnvVar[] = envLevis ? TypeMapper.toEnvVar(envLevis): []; 
+        const envField: EnvVar[] = envFieldLevis ? this.createEnvField(config): [];
+        const containerEnv = [...env, ...envField];
         const rollingUpdateType: string = config.levis.deployment.strategy?.type || Constants.Deployment.STRATEGY_ROLLING_UPDATE;
         const maxSurge: string = config.levis.deployment.strategy?.rollingUpdate?.maxSurge || Constants.Deployment.ROLLING_UPDATE_MAX_SURGE;
         const maxUnavailable: string = config.levis.deployment.strategy?.rollingUpdate?.maxUnavailable || Constants.Deployment.ROLLING_UPDATE_MAX_UNAVAILABLE;
@@ -195,7 +221,7 @@ export class ConfigParser {
             this.isRollingUpdateEnable(rollingUpdateType),
             maxSurge,
             maxUnavailable
-            );     
+        );     
         log.debug("rollingUpdate: ", rollingUpdateStrategy);
         log.debug("envVar: ", containerEnv);
         return {

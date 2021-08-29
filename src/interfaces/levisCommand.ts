@@ -10,12 +10,12 @@ export interface ILevisCommand {
      */
 
     /**
-     * TODO: explain this method.
+     * Initial command properties.
      */
     init(args: Minimist.ParsedArgs): Command;
     
     /**
-     * TODO: explain this method.
+     * Process command.
      */
     process(): void;
     

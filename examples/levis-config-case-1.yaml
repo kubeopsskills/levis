@@ -27,6 +27,11 @@ levis:
       port: 8080
       env:
         app: nginx
+      envField:
+        - KEY: "value"
+          AGENT_HOST: "status.hostIP"
+        - apiVersion: v2
+          HOST_NAME: 
       configEnvName: "appsettings"
       secretEnvName: "secretappsettings"
       resources:

@@ -16,6 +16,9 @@ log4js.configure({
   }
 })
 
+/// levis command line interface
+/// levis <position-0> <position-1> <position-2>
+/// e.g. levis create -f <levis-config>.yaml
 const SLICE_POSITION = 2;
 const args = Minimist(process.argv.slice(SLICE_POSITION)); 
 const commandOption = args._[0];

@@ -48,12 +48,13 @@ interface Containers {
     imagePullPolicy?: string;
     port: number;
     env?: { [key: string]: string };
+    envField?: EnvField[];
     resources?: ResourceRequirements;
     livenessProbe?: LivenessProbe;
     readinessProbe?: ReadinessProbe;
     configEnvName?: string;
     secretEnvName?: string; 
-    volumeMounts?: Volume[]
+    volumeMounts?: Volume[];
 }
 
 /* Container Probe */
@@ -82,12 +83,17 @@ interface ReadinessProbe {
 }
 
 interface Volume {
-    name: string
-    mountPath: string
-    subPath?: string
-    readOnly: boolean
-    secretName?: string
-    configName?: string 
+    name: string;
+    mountPath: string;
+    subPath?: string;
+    readOnly: boolean;
+    secretName?: string;
+    configName?: string;
+}
+
+interface EnvField {
+    apiVersion?: string;
+    [key: string]: string | undefined;
 }
 
 /* Service Section */

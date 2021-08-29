@@ -12,7 +12,8 @@
     "clean": "rm -rf bin manifests dist",
     "test": "jest",
     "build-all": "yarn run clean && yarn run build",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "start": "node bin/main.js"
   },
   "dependencies": {
     "cdk8s": "^0.30.0",
