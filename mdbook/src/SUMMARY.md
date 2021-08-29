@@ -1,6 +1,6 @@
 # Summary
 
-- [Introduction](introduction.md)
+- [Introduction](README.md)
 - [Command Line Tool](cli/README.md)
     - [create](cli/create.md)
     - [import](cli/import.md)
