@@ -14,7 +14,7 @@
         - [Containers](config/deployment/containers.md)
             - [Health Check](config/deployment/health-check.md)
             - [Resources](config/deployment/resources.md)
-            - [Environment and Configuration](config/deployment/env.md)
+            - [Env and Config](config/deployment/env.md)
             - [Volume](config/deployment/volume.md)
     - [Service](config/service/README.md)
         - [Metadata](config/service/metadata.md)
