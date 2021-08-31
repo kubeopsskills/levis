@@ -1,22 +1,27 @@
 import { DeploymentModel, ServiceModel, LevisConfig } from "../models";
 import * as Constants from "../models/constants";
 import * as log4js from "log4js";
-import { EnvVar, RollingUpdateDeployment, EnvFromSource, Volume, VolumeMount, NodeSelectorRequirement, Probe } from "../../libs/k8s";
+import { EnvVar, DeploymentStrategy, EnvFromSource, Volume, VolumeMount, NodeSelectorRequirement, Probe } from "../../libs/k8s";
 import { TypeMapper } from ".";
 
 const log = log4js.getLogger();
 
 export class ConfigParser {
-    
+
     private static isRollingUpdateEnable(type: string): boolean {
         return type == Constants.Deployment.STRATEGY_ROLLING_UPDATE;
     }
   
-    private static createStrategyRollingUpdate(isCreate: boolean, maxSurge: string, maxUnavailable: string): RollingUpdateDeployment {
-        if(!isCreate) return {};
+    private static createDeploymentStrategy(isCreate: boolean, maxSurge: string, maxUnavailable: string): DeploymentStrategy {
+        if(!isCreate) return {
+            type: "Recreate",
+        };
         return {
-            maxSurge: maxSurge,
-            maxUnavailable: maxUnavailable
+            type: "RollingUpdate",
+            rollingUpdate: {
+                maxSurge: maxSurge,
+                maxUnavailable: maxUnavailable
+            }
         }
     }
 
@@ -217,12 +222,12 @@ export class ConfigParser {
         const rollingUpdateType: string = config.levis.deployment.strategy?.type || Constants.Deployment.STRATEGY_ROLLING_UPDATE;
         const maxSurge: string = config.levis.deployment.strategy?.rollingUpdate?.maxSurge || Constants.Deployment.ROLLING_UPDATE_MAX_SURGE;
         const maxUnavailable: string = config.levis.deployment.strategy?.rollingUpdate?.maxUnavailable || Constants.Deployment.ROLLING_UPDATE_MAX_UNAVAILABLE;
-        const rollingUpdateStrategy = this.createStrategyRollingUpdate(
+        const strategy = this.createDeploymentStrategy(
             this.isRollingUpdateEnable(rollingUpdateType),
             maxSurge,
             maxUnavailable
         );     
-        log.debug("rollingUpdate: ", rollingUpdateStrategy);
+        log.debug("strategy: ", strategy);
         log.debug("envVar: ", containerEnv);
         return {
             name: deploymentName,
@@ -232,10 +237,7 @@ export class ConfigParser {
             serviceAccount:config.levis.deployment.serviceAccount || Constants.Pod.DEFAULT_SERVICE_ACCOUNT ,
             revisionHistoryLimit:config.levis.deployment.revisionHistoryLimit || Constants.Deployment.REVISION_HISTORY_LIMIT,
             replicas: config.levis.deployment.replicas,
-            strategy:{
-                type: rollingUpdateType,
-                rollingUpdate: rollingUpdateStrategy
-            },
+            strategy: strategy,
             matchLabels: config.levis.deployment.matchLabels || deploymentLabels,
             containerName: config.levis.deployment.containers?.name || deploymentName,
             containerImage: config.levis.deployment.containers?.image,

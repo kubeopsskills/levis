@@ -1,10 +1,10 @@
-import { EnvFromSource, EnvVar, ResourceRequirements, Volume, VolumeMount, RollingUpdateDeployment, Affinity, Probe } from "../../libs/k8s";
+import { EnvFromSource, EnvVar, ResourceRequirements, Volume, VolumeMount, Affinity, Probe, DeploymentStrategy } from "../../libs/k8s";
 import { KubernetesMetadata } from "./kubernetesMetadata";
 
 export interface DeploymentModel extends KubernetesMetadata  {
     revisionHistoryLimit: number;
     replicas?: number;
-    strategy: Strategy;
+    strategy: DeploymentStrategy;
     matchLabels: { [key: string]: string };
     serviceAccount: string;
     deploymentVolumes?: Volume[];
@@ -19,9 +19,4 @@ export interface DeploymentModel extends KubernetesMetadata  {
     livenessProbe: Probe;
     readinessProbe: Probe;
     affinity?: Affinity;
-}
-
-interface Strategy {
-    type: string;
-    rollingUpdate: RollingUpdateDeployment;
 }

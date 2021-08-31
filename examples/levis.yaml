@@ -1,0 +1,7 @@
+levis:
+  name: "nginx"
+  deployment:
+    containers:
+      image: "nginx"
+      port: 80
+  service:

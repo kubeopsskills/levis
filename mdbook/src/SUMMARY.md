@@ -22,10 +22,10 @@
 - [Architecture](architecture.md)
 - [Github Actions CI](ci/README.md)
 - [CHANGELOG](CHANGELOG/CHANGELOG.md)
-    - [CHANGELOG-1.0.0.md](CHANGELOG/CHANGELOG-1.0.0.md)
-    - [CHANGELOG-1.0.1.md](CHANGELOG/CHANGELOG-1.0.1.md)
-    - [CHANGELOG-1.0.2.md](CHANGELOG/CHANGELOG-1.0.2.md)
     - [CHANGELOG-1.0.3.md](CHANGELOG/CHANGELOG-1.0.3.md)
+    - [CHANGELOG-1.0.2.md](CHANGELOG/CHANGELOG-1.0.2.md)
+    - [CHANGELOG-1.0.1.md](CHANGELOG/CHANGELOG-1.0.1.md)
+    - [CHANGELOG-1.0.0.md](CHANGELOG/CHANGELOG-1.0.0.md)
 -----------
 
 [Who uses this?](who-uses-this.md)

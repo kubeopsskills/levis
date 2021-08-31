@@ -61,10 +61,7 @@ export class MicroServiceChart extends Chart {
             spec: {
               revisionHistoryLimit: model.revisionHistoryLimit,
               replicas: model.replicas,
-              strategy: {
-                type: model.strategy.type,
-                rollingUpdate: model.strategy.rollingUpdate
-              },
+              strategy: model.strategy,
               selector: {
                 matchLabels: model.matchLabels
               },

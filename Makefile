@@ -37,10 +37,10 @@ buildLinux:
 compile:
 	yarn run build-all
 
-build: buildWindows buildMacOS buildArm buildLinux
+build: buildWindows buildMacOS buildLinux buildArm
 
 clean:
 	rm -rf $(BUNDLE_PATH)
 	rm -rf $(TARGET_PATH)
 
-all: clean compile buildWindows buildMacOS buildArm buildLinux
+all: clean compile buildWindows buildMacOS buildLinux buildArm 
