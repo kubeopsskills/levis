@@ -1,3 +1,1 @@
-# Chapter 1
-
-Kai ped kai
+# Coming Soon...
