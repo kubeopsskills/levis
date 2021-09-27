@@ -24,9 +24,12 @@ levis:
         labels:
           Nodepool: stateless
       allower:
+      - effect: NoSchedule
         operator: In
-        labels:
-          StatelessOnly: true
+        StatelessOnly: true
+      - effect: NoExecute
+        operator: Equal
+        Kai: Ped
 
   service:
     enabled: false

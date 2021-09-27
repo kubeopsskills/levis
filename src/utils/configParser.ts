@@ -1,7 +1,7 @@
 import { DeploymentModel, ServiceModel, LevisConfig } from "../models";
 import * as Constants from "../models/constants";
 import * as log4js from "log4js";
-import { EnvVar, DeploymentStrategy, EnvFromSource, Volume, VolumeMount, Probe, Affinity, NodeSelectorRequirement } from "../../libs/k8s";
+import { EnvVar, DeploymentStrategy, EnvFromSource, Volume, VolumeMount, Probe, Affinity, NodeSelectorRequirement, Toleration } from "../../libs/k8s";
 import { TypeMapper } from ".";
 
 const log = log4js.getLogger();
@@ -44,6 +44,27 @@ export class ConfigParser {
        return envFrom;
     }
 
+    private static createToleration(config: LevisConfig): Toleration[] | undefined {
+        const toleration: Toleration[] = []
+        const allower = config.levis.deployment.node.allower || undefined;
+        const keyList: Array<string> = ['effect', 'operator'];
+        if(!allower) {
+            return undefined;
+        } 
+        for(let i=0; i<allower?.length; i++) {
+            for(let[key, value] of Object.entries(allower[i]) ){
+                if(keyList.includes(key)){continue;}
+                toleration.push({
+                    effect: allower[i].effect,
+                    operator: allower[i].operator,
+                    key: key.toString(),
+                    value: value ? value.toString(): ""
+                })
+            }
+        }
+        return toleration;
+    }
+
     private static createAffinity(config: LevisConfig): Affinity {
 
         const mode: string = config.levis.deployment.node?.selector?.mode || "prefer";
@@ -61,7 +82,7 @@ export class ConfigParser {
                 }
             }
         }
-        
+
         return {
             nodeAffinity: {
                 preferredDuringSchedulingIgnoredDuringExecution: [{
@@ -253,7 +274,8 @@ export class ConfigParser {
         const maxSurge: string = config.levis.deployment.strategy?.rollingUpdate?.maxSurge || Constants.Deployment.ROLLING_UPDATE_MAX_SURGE;
         const maxUnavailable: string = config.levis.deployment.strategy?.rollingUpdate?.maxUnavailable || Constants.Deployment.ROLLING_UPDATE_MAX_UNAVAILABLE;
         const affinity = config.levis.deployment.node.selector ? this.createAffinity(config): {};
-        console.log("affinity: ", JSON.stringify(affinity))
+        const toleration: Toleration[]| undefined = config.levis.deployment.node.allower ? this.createToleration(config): undefined;
+        log.debug("affinity: ", JSON.stringify(affinity));
         const strategy = this.createDeploymentStrategy(
             this.isRollingUpdateEnable(rollingUpdateType),
             maxSurge,
@@ -282,7 +304,8 @@ export class ConfigParser {
             livenessProbe: this.createLivenessProbe(config),
             deploymentVolumes: this.createDeploymentVolume(config),
             containerVolumeMounts: this.createContainerVolumeMounts(config),
-            affinity: affinity
+            affinity: affinity,
+            toleration: toleration
         };
     }
 }

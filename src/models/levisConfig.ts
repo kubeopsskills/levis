@@ -27,7 +27,7 @@ interface Deployment {
 
 interface Node {
     selector?: NodeSelector;
-    allower?: NodeAllower;
+    allower?: NodeAllower[];
 }
 
 // Mapping to Affinity on Kubernetes Configuration
@@ -39,8 +39,9 @@ interface NodeSelector {
 
 // Mapping to Toleration on Kubernetes Configuration
 interface NodeAllower {
+    effect?: string;
     operator?: string;
-    labels: { [key: string]: string };
+    [key: string]: string | undefined;
 }
 
 /* Deployment Strategy */

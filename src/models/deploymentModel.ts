@@ -1,4 +1,4 @@
-import { EnvFromSource, EnvVar, ResourceRequirements, Volume, VolumeMount, Affinity, Probe, DeploymentStrategy } from "../../libs/k8s";
+import { EnvFromSource, EnvVar, ResourceRequirements, Volume, VolumeMount, Affinity, Probe, DeploymentStrategy, Toleration } from "../../libs/k8s";
 import { KubernetesMetadata } from "./kubernetesMetadata";
 
 export interface DeploymentModel extends KubernetesMetadata  {
@@ -19,4 +19,5 @@ export interface DeploymentModel extends KubernetesMetadata  {
     livenessProbe: Probe;
     readinessProbe: Probe;
     affinity?: Affinity;
+    toleration?: Toleration[] | undefined;
 }
