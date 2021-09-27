@@ -17,5 +17,14 @@ levis:
         mountPath: /em/oam.txt
         subPath: oam.txt
         readOnly: true
+    node:
+      selector:
+        labels:
+          Nodepool: stateless
+      allower:
+        operator: In
+        labels:
+          StatelessOnly: true
+
   service:
     enabled: false

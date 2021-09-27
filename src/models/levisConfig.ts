@@ -22,11 +22,24 @@ interface Deployment {
     matchLabels?: { [key: string]: string };
     serviceAccount?: string;
     containers: Containers;
-    node?: Node
+    node: Node;
 }
 
 interface Node {
-    mode: string;
+    selector?: NodeSelector;
+    allower?: NodeAllower;
+}
+
+// Mapping to Affinity on Kubernetes Configuration
+interface NodeSelector {
+    mode?: string;
+    operator?: string;
+    labels: { [key: string]: string };
+}
+
+// Mapping to Toleration on Kubernetes Configuration
+interface NodeAllower {
+    operator?: string;
     labels: { [key: string]: string };
 }
 

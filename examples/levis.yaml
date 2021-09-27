@@ -3,5 +3,5 @@ levis:
   deployment:
     containers:
       image: "nginx"
-      port: 80
   service:
+    enable: true

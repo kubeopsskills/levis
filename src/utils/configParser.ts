@@ -1,7 +1,7 @@
 import { DeploymentModel, ServiceModel, LevisConfig } from "../models";
 import * as Constants from "../models/constants";
 import * as log4js from "log4js";
-import { EnvVar, DeploymentStrategy, EnvFromSource, Volume, VolumeMount, NodeSelectorRequirement, Probe } from "../../libs/k8s";
+import { EnvVar, DeploymentStrategy, EnvFromSource, Volume, VolumeMount, Probe, Affinity, NodeSelectorRequirement } from "../../libs/k8s";
 import { TypeMapper } from ".";
 
 const log = log4js.getLogger();
@@ -44,13 +44,43 @@ export class ConfigParser {
        return envFrom;
     }
 
-    private static createNodeSelectorRequirement(labels: {[key: string]: string}): NodeSelectorRequirement[] {
+    private static createAffinity(config: LevisConfig): Affinity {
+
+        const mode: string = config.levis.deployment.node?.selector?.mode || "prefer";
+        const operator: string = config.levis.deployment.node?.selector?.operator || "In";
+        const labels: {[key: string]: string} = config.levis.deployment.node?.selector?.labels || {};
+
+        if(mode.toLowerCase() === "require".toLowerCase()){
+            return {
+                nodeAffinity: {
+                    requiredDuringSchedulingIgnoredDuringExecution: {
+                        nodeSelectorTerms: [{
+                            matchExpressions: this.createNodeSelectorRequirement(operator, labels)
+                        }]
+                    }
+                }
+            }
+        }
+        
+        return {
+            nodeAffinity: {
+                preferredDuringSchedulingIgnoredDuringExecution: [{
+                    weight: 1,
+                    preference: {
+                        matchExpressions: this.createNodeSelectorRequirement(operator, labels)
+                    }
+                }]
+            }
+        }
+    }
+
+    private static createNodeSelectorRequirement(operator: string, labels: {[key: string]: string}): NodeSelectorRequirement[] {
         const nodeSelectorReq: NodeSelectorRequirement[] = []
         for (const key in labels) {
             const value = labels[key];
             nodeSelectorReq.push({
                 key: key,
-                operator: "In",
+                operator: operator,
                 values: [
                   value
                 ]
@@ -216,12 +246,14 @@ export class ConfigParser {
         const deploymentLabels = config.levis.deployment.labels || {app: deploymentName};
         const envLevis = config.levis.deployment.containers.env;
         const envFieldLevis = config.levis.deployment.containers.envField;
-        const env: EnvVar[] = envLevis ? TypeMapper.toEnvVar(envLevis): []; 
+        const env: EnvVar[] = envLevis ? TypeMapper.toEnvVar(envLevis): [];
         const envField: EnvVar[] = envFieldLevis ? this.createEnvField(config): [];
         const containerEnv = [...env, ...envField];
         const rollingUpdateType: string = config.levis.deployment.strategy?.type || Constants.Deployment.STRATEGY_ROLLING_UPDATE;
         const maxSurge: string = config.levis.deployment.strategy?.rollingUpdate?.maxSurge || Constants.Deployment.ROLLING_UPDATE_MAX_SURGE;
         const maxUnavailable: string = config.levis.deployment.strategy?.rollingUpdate?.maxUnavailable || Constants.Deployment.ROLLING_UPDATE_MAX_UNAVAILABLE;
+        const affinity = config.levis.deployment.node.selector ? this.createAffinity(config): {};
+        console.log("affinity: ", JSON.stringify(affinity))
         const strategy = this.createDeploymentStrategy(
             this.isRollingUpdateEnable(rollingUpdateType),
             maxSurge,
@@ -250,18 +282,7 @@ export class ConfigParser {
             livenessProbe: this.createLivenessProbe(config),
             deploymentVolumes: this.createDeploymentVolume(config),
             containerVolumeMounts: this.createContainerVolumeMounts(config),
-            affinity: config.levis.deployment.node?{
-                nodeAffinity: {
-                    preferredDuringSchedulingIgnoredDuringExecution: [
-                        {
-                            weight: 1,
-                            preference: {
-                                matchExpressions: this.createNodeSelectorRequirement(config.levis.deployment.node.labels)
-                            }
-                        }
-                    ]
-                }
-            }:{}
+            affinity: affinity
         };
     }
 }
