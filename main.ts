@@ -12,7 +12,7 @@ log4js.configure({
     }}
   },
   categories: { 
-    default: { appenders: ['out'], level: 'debug', enableCallStack: true }
+    default: { appenders: ['out'], level: 'info', enableCallStack: true }
   }
 })
 
