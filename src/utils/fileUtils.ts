@@ -8,6 +8,10 @@ export class FileUtils {
     public static Move(oldPath: string, newPath: string): void  {
         try {
             Fs.moveSync(oldPath, newPath, { overwrite: true });
+
+            const oldPathPrefix: string = oldPath.split("/")[1];
+            Fs.removeSync(oldPathPrefix);
+            
             log.info("Successfully moved %s to %s.", oldPath, newPath);
         } catch (err) {
             log.error("Cannot move file with error : %s", err);
