@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MicroServiceChart should be can generate 1`] = `
+Array [
+  Object {
+    "apiVersion": "apps/v1",
+    "kind": "Deployment",
+    "metadata": Object {
+      "annotations": Object {
+        "app": "nginx",
+      },
+      "labels": Object {
+        "app": "nginx",
+      },
+      "name": "nginx",
+      "namespace": "kubeops",
+    },
+    "spec": Object {
+      "replicas": 1,
+      "revisionHistoryLimit": 1,
+      "selector": Object {
+        "matchLabels": Object {
+          "app": "nginx",
+        },
+      },
+      "strategy": Object {
+        "rollingUpdate": Object {
+          "maxSurge": "100%",
+          "maxUnavailable": "0%",
+        },
+        "type": "RollingUpdate",
+      },
+      "template": Object {
+        "metadata": Object {
+          "annotations": Object {
+            "app": "nginx",
+          },
+          "labels": Object {
+            "app": "nginx",
+          },
+        },
+        "spec": Object {
+          "affinity": Object {},
+          "containers": Array [
+            Object {
+              "env": Array [
+                Object {
+                  "name": "app",
+                  "value": "nginx",
+                },
+              ],
+              "envFrom": Array [],
+              "image": "nginx",
+              "imagePullPolicy": "Always",
+              "livenessProbe": Object {
+                "failureThreshold": 10,
+                "httpGet": Object {
+                  "path": "/actuator/health/liveness",
+                  "port": "8080",
+                },
+                "initialDelaySeconds": 30,
+                "periodSeconds": 10,
+                "successThreshold": 10,
+                "timeoutSeconds": 10,
+              },
+              "name": "nginx",
+              "ports": Array [
+                Object {
+                  "containerPort": 80,
+                  "name": "nginx",
+                },
+              ],
+              "readinessProbe": Object {
+                "failureThreshold": 10,
+                "httpGet": Object {
+                  "path": "/actuator/health/readiness",
+                  "port": "8080",
+                },
+                "initialDelaySeconds": 30,
+                "periodSeconds": 10,
+                "successThreshold": 10,
+                "timeoutSeconds": 10,
+              },
+              "resources": Object {
+                "limits": Object {
+                  "cpu": "500m",
+                  "memory": "128Mi",
+                },
+                "requests": Object {
+                  "cpu": "250m",
+                  "memory": "64Mi",
+                },
+              },
+              "volumeMounts": Array [],
+            },
+          ],
+          "serviceAccountName": "microservice",
+          "volumes": Array [],
+        },
+      },
+    },
+  },
+]
+`;

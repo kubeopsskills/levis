@@ -1,11 +1,17 @@
-// import {MyChart} from './main';
-// import {Testing} from 'cdk8s';
+import MicroServiceChart from "./src/charts/index";
+import { Testing } from 'cdk8s';
 
-// describe('Placeholder', () => {
-  // test('Empty', () => {
-    // const app = Testing.app();
-    // const chart = new MyChart(app, 'test-chart');
-    // const results = Testing.synth(chart)
-    // expect(results).toMatchSnapshot();
-  // });
-// });
+describe("MicroServiceChart", () => {
+  test("should be can generate", () => {
+    const app = Testing.app();
+    const command = {
+      configFilePath: "./examples/levis-config.yaml",
+      outputFilePath: "./tests/result",
+    };
+
+    const chart = new MicroServiceChart(app, command);
+    const results = Testing.synth(chart);
+
+    expect(results).toMatchSnapshot();
+  });
+});
