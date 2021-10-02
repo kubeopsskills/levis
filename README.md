@@ -28,7 +28,7 @@ Levis is available on Linux, macOS and Windows platforms.
 - Binaries for Linux, Windows and Mac are available as tarballs in the [release](https://github.com/kubeopsskills/levis/releases) page.
 
 ### Develop
-- must install yarn ande nodejs
+- must install [nodejs](https://nodejs.org/en/) and [yarn](https://classic.yarnpkg.com/lang/en/docs/install/)
 - use `yarn` for installing dependencies
 
 ## Help & Feedback
