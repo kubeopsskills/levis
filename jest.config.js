@@ -5,5 +5,4 @@ module.exports = {
     "^.+\\.tsx?$": "ts-jest",
   },
   collectCoverage: true,
-  coverageReporters: ["json", "html"],
 };

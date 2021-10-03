@@ -23,11 +23,12 @@ jobs:
 
     - name: Build for testing
       run: rm -rf bin && yarn build
-      
+
     - name: Run test
       run: yarn test --coverage --coverageDirectory='coverage'
     
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
+      uses: codecov/codecov-action@v2
       with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          directory: ./coverage
