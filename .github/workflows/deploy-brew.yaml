@@ -12,7 +12,7 @@ jobs:
     - uses: actions/checkout@v2
       
     - name: Build Release
-      run: make build-releasebuildMacOS
+      run: make buildMacOS
 
     - name: Get version
       id: get_version
