@@ -6,9 +6,6 @@ on:
       - Test
     types:
       - completed
-  push:
-    tags:
-      - '*'
 
 jobs: 
   release:
