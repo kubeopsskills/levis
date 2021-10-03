@@ -67,4 +67,3 @@ jobs:
         asset_path: ./bin/target/levis-${{ steps.get_version.outputs.version }}-linux-x64.tar.gz
         asset_name: levis-${{ steps.get_version.outputs.version }}-linux-x64.tar.gz
         asset_content_type: application/gzip
-

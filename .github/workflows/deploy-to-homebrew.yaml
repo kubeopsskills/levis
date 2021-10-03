@@ -8,6 +8,7 @@ on:
 
 jobs: 
   deploy-macOS-version-to-homebrew:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: macos-latest
     steps:
       - name: Get version
