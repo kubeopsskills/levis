@@ -46,13 +46,13 @@ export class ConfigParser {
 
     private static createToleration(config: LevisConfig): Toleration[] | undefined {
         const toleration: Toleration[] = []
-        const allower = config.levis.deployment.node.allower || undefined;
+        const allower = config.levis.deployment.node?.allower || undefined;
         const keyList: Array<string> = ['effect', 'operator'];
         if(!allower) {
             return undefined;
         } 
         for(let i=0; i<allower?.length; i++) {
-            for(let[key, value] of Object.entries(allower[i]) ){
+            for(const[key, value] of Object.entries(allower[i]) ){
                 if(keyList.includes(key)){continue;}
                 toleration.push({
                     effect: allower[i].effect,
@@ -179,7 +179,7 @@ export class ConfigParser {
         const envVar: EnvVar[] = []
         const envField = config.levis.deployment.containers.envField || [];
         for (let i=0; i<envField?.length; i++){
-            for(let [key, value] of Object.entries(envField[i])) {
+            for(const [key, value] of Object.entries(envField[i])) {
                 envVar.push(
                     {  
                         name: key,
@@ -273,8 +273,8 @@ export class ConfigParser {
         const rollingUpdateType: string = config.levis.deployment.strategy?.type || Constants.Deployment.STRATEGY_ROLLING_UPDATE;
         const maxSurge: string = config.levis.deployment.strategy?.rollingUpdate?.maxSurge || Constants.Deployment.ROLLING_UPDATE_MAX_SURGE;
         const maxUnavailable: string = config.levis.deployment.strategy?.rollingUpdate?.maxUnavailable || Constants.Deployment.ROLLING_UPDATE_MAX_UNAVAILABLE;
-        const affinity = config.levis.deployment.node.selector ? this.createAffinity(config): {};
-        const toleration: Toleration[]| undefined = config.levis.deployment.node.allower ? this.createToleration(config): undefined;
+        const affinity = config.levis.deployment.node?.selector ? this.createAffinity(config): {};
+        const toleration: Toleration[]| undefined = config.levis.deployment.node?.allower ? this.createToleration(config): undefined;
         log.debug("affinity: ", JSON.stringify(affinity));
         const strategy = this.createDeploymentStrategy(
             this.isRollingUpdateEnable(rollingUpdateType),
@@ -283,29 +283,47 @@ export class ConfigParser {
         );     
         log.debug("strategy: ", strategy);
         log.debug("envVar: ", containerEnv);
+        
+        const isEnableHealthCheck = config.levis.deployment?.enableHealthCheck ?? true
+        
         return {
-            name: deploymentName,
-            namespace: config.levis.namespace || Constants.MetaData.DEFAULT_NAMESPACE ,
-            labels: deploymentLabels,
-            annotations: config.levis.deployment.annotations ,
-            serviceAccount:config.levis.deployment.serviceAccount || Constants.Pod.DEFAULT_SERVICE_ACCOUNT ,
-            revisionHistoryLimit:config.levis.deployment.revisionHistoryLimit || Constants.Deployment.REVISION_HISTORY_LIMIT,
-            replicas: config.levis.deployment.replicas,
-            strategy: strategy,
-            matchLabels: config.levis.deployment.matchLabels || deploymentLabels,
-            containerName: config.levis.deployment.containers?.name || deploymentName,
-            containerImage: config.levis.deployment.containers?.image,
-            containerImagePullPolicy: config.levis.deployment.containers?.imagePullPolicy || Constants.Container.IMAGE_PULL_POLICY,
-            containerPort: config.levis.deployment.containers?.port,
-            containerEnvironment: containerEnv,
-            containerEnvironmentFrom: this.createEnvironmentFrom(config.levis.deployment.containers.configEnvName, config.levis.deployment.containers.secretEnvName),
-            resources: config.levis.deployment.containers.resources,
-            readinessProbe: this.createReadinessProbe(config),
-            livenessProbe: this.createLivenessProbe(config),
-            deploymentVolumes: this.createDeploymentVolume(config),
-            containerVolumeMounts: this.createContainerVolumeMounts(config),
-            affinity: affinity,
-            toleration: toleration
+          name: deploymentName,
+          namespace:
+            config.levis.namespace || Constants.MetaData.DEFAULT_NAMESPACE,
+          labels: deploymentLabels,
+          annotations: config.levis.deployment.annotations,
+          serviceAccount:
+            config.levis.deployment.serviceAccount ||
+            Constants.Pod.DEFAULT_SERVICE_ACCOUNT,
+          revisionHistoryLimit:
+            config.levis.deployment.revisionHistoryLimit ||
+            Constants.Deployment.REVISION_HISTORY_LIMIT,
+          replicas: config.levis.deployment.replicas,
+          strategy: strategy,
+          matchLabels: config.levis.deployment.matchLabels || deploymentLabels,
+          containerName:
+            config.levis.deployment.containers?.name || deploymentName,
+          containerImage: config.levis.deployment.containers?.image,
+          containerImagePullPolicy:
+            config.levis.deployment.containers?.imagePullPolicy ||
+            Constants.Container.IMAGE_PULL_POLICY,
+          containerPort: config.levis.deployment.containers?.port,
+          containerEnvironment: containerEnv,
+          containerEnvironmentFrom: this.createEnvironmentFrom(
+            config.levis.deployment.containers.configEnvName,
+            config.levis.deployment.containers.secretEnvName
+          ),
+          resources: config.levis.deployment.containers.resources,
+          readinessProbe: isEnableHealthCheck
+            ? this.createReadinessProbe(config)
+            : {},
+          livenessProbe: isEnableHealthCheck
+            ? this.createLivenessProbe(config)
+            : {},
+          deploymentVolumes: this.createDeploymentVolume(config),
+          containerVolumeMounts: this.createContainerVolumeMounts(config),
+          affinity: affinity,
+          toleration: toleration,
         };
     }
 }
