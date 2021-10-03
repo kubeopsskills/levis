@@ -8,6 +8,8 @@ on:
 jobs: 
   release:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
     steps:    
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v2
@@ -67,3 +69,22 @@ jobs:
         asset_path: ./bin/target/levis-${{ steps.get_version.outputs.version }}-linux-x64.tar.gz
         asset_name: levis-${{ steps.get_version.outputs.version }}-linux-x64.tar.gz
         asset_content_type: application/gzip
+
+  deploy-macOS-version-to-homebrew:
+    needs: release
+    runs-on: macos-11
+    steps:
+      - name: Set macOS release SHA
+        id: shasum-mac-os
+        run: |
+          echo ::set-output name=sha::"$(shasum -a 256 ./bin/target/levis-${{ needs.release.outputs.version }}-macos-x64.tar.gz | awk '{printf $1}')"
+    
+      - name: Deploy to homebrew (for creating pull request to homebrew core)
+        env: 
+          HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.BREW_TOKEN }}
+        run: |
+          brew tap kubeopsskills/levis
+          brew bump-formula-pr -f --version=${{ needs.release.outputs.version }} --no-browse --no-audit \
+          --sha256=${{ steps.shasum-mac-os.outputs.sha }} \
+          --url="https://github.com/kubeopsskills/levis/releases/download/${{ needs.release.outputs.version }}/levis-${{ needs.release.outputs.version }}-macos-x64.tar.gz" \
+          kubeopsskills/levis/levis
