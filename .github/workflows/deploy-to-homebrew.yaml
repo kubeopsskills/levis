@@ -2,7 +2,8 @@ name: Deploy to homebrew
 
 on: 
   workflow_run:
-    workflows: ["Build and Release"]
+    workflows: 
+      - Build and Release
     types:
       - completed
 
