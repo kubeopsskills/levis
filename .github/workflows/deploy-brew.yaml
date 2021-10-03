@@ -1,0 +1,55 @@
+name: Deploy to homebrew
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  release-osx:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+      
+    - name: Build Release
+      run: make build-releasebuildMacOS
+
+    - name: Get version
+      id: get_version
+      run: echo ::set-output name=version::${GITHUB_REF/refs\/tags\//}
+
+    - name: Set SHA
+      id: shasum
+      run: |
+        echo ::set-output name=sha::"$(shasum -a 256 ./bin/target/levis-${{steps.get_version.version}}-macos-x64.tar.gz | awk '{printf $1}')"
+    
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: ${{ github.ref }}
+        draft: false
+        prerelease: true
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./bin/target/levis-${{steps.get_version.version}}-macos-x64.tar.gz
+        asset_name: levis-${{steps.get_version.version}}-macos-x64.tar.gz
+        asset_content_type: application/gzip
+
+    - name: Bump Brew
+      env: 
+        HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.BREW_TOKEN }}
+      run: |
+        brew tap naijab/levis
+        brew bump-formula-pr -f --version=${{ steps.get_version.outputs.version }} --no-browse --no-audit \
+        --sha256=${{ steps.shasum.outputs.sha }} \
+        --url="https://github.com/naijab/levis/releases/download/${{ steps.get_version.outputs.version }}/levis-${{steps.get_version.version}}-macos-x64.tar.gz" \
+        naijab/levis
