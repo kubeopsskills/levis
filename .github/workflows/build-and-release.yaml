@@ -1,38 +1,12 @@
 name: Build and Release
 
-jobs:
-  test:
-    on:
-      pull_request:
-        branches:
-          - main
-          - develop
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: '14'
-    
-    - name: Install ncc and pkg for build 
-      run: npm i -g @vercel/ncc pkg
+on:
+  push:
+    tags:
+      - '*'
 
-    - name: Install dependencies
-      run: yarn
-
-    - name: Run test
-      run: yarn test --coverage
-    
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-    
+jobs: 
   release:
-    on: 
-      push:
-        tags:
-          - '*'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -49,9 +23,6 @@ jobs:
 
     - name: Install dependencies
       run: yarn
-
-    - name: Run test
-      run: yarn test --coverage
 
     - name: Build Release
       run: make all
@@ -97,26 +68,3 @@ jobs:
         asset_name: levis-${{ steps.get_version.outputs.version }}-linux-x64.tar.gz
         asset_content_type: application/gzip
 
-    
-  deploy-macOS-version-to-brew:
-    needs: release
-    runs-on: macos-latest
-    steps:
-      - name: Get version
-        id: get_version
-        run: echo ::set-output name=version::${GITHUB_REF/refs\/tags\//}
-
-      - name: Set macOS release SHA
-        id: shasum-mac-os
-        run: |
-          echo ::set-output name=sha::"$(shasum -a 256 ./bin/target/levis-${{ steps.get_version.outputs.version }}-macos-x64.tar.gz | awk '{printf $1}')"
-    
-      - name: Deploy to homebrew (for creating pull request to homebrew core)
-        env: 
-          HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.BREW_TOKEN }}
-        run: |
-          brew tap kubeopsskills/levis
-          brew bump-formula-pr -f --version=${{ steps.get_version.outputs.version }} --no-browse --no-audit \
-          --sha256=${{ steps.shasum-mac-os.outputs.sha }} \
-          --url="https://github.com/kubeopsskills/levis/releases/download/${{ steps.get_version.outputs.version }}/levis-${{ steps.get_version.outputs.version }}-macos-x64.tar.gz" \
-          kubeopsskills/levis/levis
