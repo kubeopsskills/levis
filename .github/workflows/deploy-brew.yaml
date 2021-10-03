@@ -14,8 +14,8 @@ jobs:
       with:
         node-version: '14'
 
-    - name: Install ncc
-      run: npm i -g @vercel/ncc
+    - name: Install ncc and pkg for build 
+      run: npm i -g @vercel/ncc pkg
 
     - name: Install dependencies
       run: yarn
