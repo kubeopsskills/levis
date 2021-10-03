@@ -30,7 +30,7 @@ jobs:
     - name: Set SHA
       id: shasum
       run: |
-        echo ::set-output name=sha::"$(shasum -a 256 ./bin/target/levis-${{steps.get_version.version}}-macos-x64.tar.gz | awk '{printf $1}')"
+        echo ::set-output name=sha::"$(shasum -a 256 ./bin/target/levis-'{${{steps.get_version.version}}}'-macos-x64.tar.gz | awk '{printf $1}')"
     
     - name: Create Release
       id: create_release
@@ -49,8 +49,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./bin/target/levis-${{steps.get_version.version}}-macos-x64.tar.gz
-        asset_name: levis-${{steps.get_version.version}}-macos-x64.tar.gz
+        asset_path: ./bin/target/levis-'{${{steps.get_version.version}}}'-macos-x64.tar.gz
+        asset_name: levis-'{${{steps.get_version.version}}}'-macos-x64.tar.gz
         asset_content_type: application/gzip
 
     - name: Bump Brew
@@ -60,5 +60,5 @@ jobs:
         brew tap naijab/levis
         brew bump-formula-pr -f --version=${{ steps.get_version.outputs.version }} --no-browse --no-audit \
         --sha256=${{ steps.shasum.outputs.sha }} \
-        --url="https://github.com/naijab/levis/releases/download/${{ steps.get_version.outputs.version }}/levis-${{steps.get_version.version}}-macos-x64.tar.gz" \
+        --url="https://github.com/naijab/levis/releases/download/'{${{steps.get_version.version}}}'/levis-'{${{steps.get_version.version}}}'-macos-x64.tar.gz" \
         naijab/levis
