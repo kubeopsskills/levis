@@ -50,7 +50,7 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./bin/target/levis-${{ steps.get_version.version }}-macos-x64.tar.gz
-        asset_name: levis-'{${{steps.get_version.version}}}'-macos-x64.tar.gz
+        asset_name: levis-${{ steps.get_version.version }}-macos-x64.tar.gz
         asset_content_type: application/gzip
 
     - name: Bump Brew
