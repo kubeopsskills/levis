@@ -1,12 +1,44 @@
 name: Build and Release
 
 on:
+  pull_request:
+    branches:
+      - main
+      - develop
   push:
     tags:
       - '*'
 
 jobs: 
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+    
+    - name: Install ncc and pkg for build 
+      run: npm i -g @vercel/ncc pkg
+
+    - name: Install dependencies
+      run: yarn
+
+    - name: Build for testing
+      run: rm -rf bin && yarn build
+
+    - name: Run test
+      run: yarn test --coverage --coverageDirectory='coverage'
+    
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v2
+      with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          directory: ./coverage
+
   release:
+    needs: test
+    if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.get_version.outputs.version }}
