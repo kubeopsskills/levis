@@ -61,4 +61,4 @@ jobs:
         brew bump-formula-pr -f --version=${{ steps.get_version.outputs.version }} --no-browse --no-audit \
         --sha256=${{ steps.shasum.outputs.sha }} \
         --url="https://github.com/naijab/levis/releases/download/${{ steps.get_version.outputs.version }}/levis-${{ steps.get_version.outputs.version }}-macos-x64.tar.gz" \
-        naijab/levis
+        naijab/levis/levis
