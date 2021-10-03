@@ -2,12 +2,11 @@ name: Build and Release
 
 jobs:
   test:
-    # on:
-    #   pull_request:
-    #     branches:
-    #       - main
-    #       - develop
-    on: [push]
+    on:
+      pull_request:
+        branches:
+          - main
+          - develop
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
