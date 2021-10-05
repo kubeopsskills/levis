@@ -8,7 +8,7 @@
     - [version](cli/version.md)
     - [options](cli/options.md)
 - [YAML Config file ](config/README.md)
-    - [Deployment.md](config/deployment/README.md)
+    - [Deployment](config/deployment/README.md)
         - [Metadata](config/deployment/metadata.md)
         - [Spec](config/deployment/spec.md)
         - [Containers](config/deployment/containers.md)
