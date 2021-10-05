@@ -1,0 +1,26 @@
+name: Build Document
+
+on:
+  push:
+    paths:
+      - 'mdbook/**'
+    
+jobs:
+  build-doc: 
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+    
+      - name: Setup mdBook
+        uses: peaceiris/actions-mdbook@v1
+        with:
+            mdbook-version: '0.4.10'
+      
+      - name: Build document with mdBook
+      - run: mdbook build -d ../docs
+      
+      - name: Deploy to github pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
