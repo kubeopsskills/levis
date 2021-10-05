@@ -46,7 +46,7 @@ export class ConfigParser {
 
     private static createToleration(config: LevisConfig): Toleration[] | undefined {
         const toleration: Toleration[] = []
-        const allower = config.levis.deployment.node.allower || undefined;
+        const allower = config.levis.deployment.node?.allower || undefined;
         const keyList: Array<string> = ['effect', 'operator'];
         if(!allower) {
             return undefined;
