@@ -27,11 +27,15 @@ This is an project built with ❤️ by [KubeOps Skills](https://www.kubeops.gur
 
 ## Demo
 
-
 ## Getting Started
 ### Installation
 Levis is available on Linux, macOS and Windows platforms.
 - Binaries for Linux, Windows and Mac are available as tarballs in the [release](https://github.com/kubeopsskills/levis/releases) page.
+
+
+### Develop
+- must install [nodejs](https://nodejs.org/en/) and [yarn](https://classic.yarnpkg.com/lang/en/docs/install/)
+- use `yarn` for installing dependencies
 
 ### Usage
 after install levis you can use
