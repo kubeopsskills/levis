@@ -46,13 +46,13 @@ export class ConfigParser {
 
     private static createToleration(config: LevisConfig): Toleration[] | undefined {
         const toleration: Toleration[] = []
-        const allower = config.levis.deployment.node.allower || undefined;
+        const allower = config.levis.deployment.node?.allower || undefined;
         const keyList: Array<string> = ['effect', 'operator'];
         if(!allower) {
             return undefined;
         } 
         for(let i=0; i<allower?.length; i++) {
-            for(let[key, value] of Object.entries(allower[i]) ){
+            for(const[key, value] of Object.entries(allower[i]) ){
                 if(keyList.includes(key)){continue;}
                 toleration.push({
                     effect: allower[i].effect,
@@ -179,7 +179,7 @@ export class ConfigParser {
         const envVar: EnvVar[] = []
         const envField = config.levis.deployment.containers.envField || [];
         for (let i=0; i<envField?.length; i++){
-            for(let [key, value] of Object.entries(envField[i])) {
+            for(const [key, value] of Object.entries(envField[i])) {
                 envVar.push(
                     {  
                         name: key,
@@ -273,8 +273,8 @@ export class ConfigParser {
         const rollingUpdateType: string = config.levis.deployment.strategy?.type || Constants.Deployment.STRATEGY_ROLLING_UPDATE;
         const maxSurge: string = config.levis.deployment.strategy?.rollingUpdate?.maxSurge || Constants.Deployment.ROLLING_UPDATE_MAX_SURGE;
         const maxUnavailable: string = config.levis.deployment.strategy?.rollingUpdate?.maxUnavailable || Constants.Deployment.ROLLING_UPDATE_MAX_UNAVAILABLE;
-        const affinity = config.levis.deployment.node.selector ? this.createAffinity(config): {};
-        const toleration: Toleration[]| undefined = config.levis.deployment.node.allower ? this.createToleration(config): undefined;
+        const affinity = config.levis.deployment.node?.selector ? this.createAffinity(config): {};
+        const toleration: Toleration[]| undefined = config.levis.deployment.node?.allower ? this.createToleration(config): undefined;
         log.debug("affinity: ", JSON.stringify(affinity));
         const strategy = this.createDeploymentStrategy(
             this.isRollingUpdateEnable(rollingUpdateType),

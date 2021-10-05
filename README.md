@@ -6,14 +6,19 @@
 This is an project built with ❤️ by [KubeOps Skills](https://www.kubeops.guru). We encourage you to [try it out](#getting-started), [leave feedback](#help--feedback), and [jump in to help](#contributing)!
 
 ### Contents
-- [Versioning](#versioning)
-- [Demo](#demo)
-- [Getting Started](#getting-started)
-- [Help & Feedback](#help--feedback)
-- [Examples](#examples)
-- [Roadmap](#roadmap)
-- [Contributing](#contributing)
-- [License](#license)
+- [Levis](#levis)
+  - [Kubernetes Manifest Generator](#kubernetes-manifest-generator)
+    - [Contents](#contents)
+  - [Versioning](#versioning)
+  - [Demo](#demo)
+  - [Getting Started](#getting-started)
+    - [Installation](#installation)
+    - [Usage](#usage)
+  - [Help & Feedback](#help--feedback)
+  - [Examples](#examples)
+  - [Roadmap](#roadmap)
+  - [Contributing](#contributing)
+  - [License](#license)
 
 ## Versioning
 | Levis Release |cdk8s Version | construct Version | log4js Version | minimist Version | yaml Version |
@@ -27,6 +32,15 @@ This is an project built with ❤️ by [KubeOps Skills](https://www.kubeops.gur
 ### Installation
 Levis is available on Linux, macOS and Windows platforms.
 - Binaries for Linux, Windows and Mac are available as tarballs in the [release](https://github.com/kubeopsskills/levis/releases) page.
+
+### Usage
+after install levis you can use
+- `levis create -f <levis-config.yaml> -o <output.yaml>`
+- **-f** levis config yaml see [Examples Directory](./examples)
+- **-o** name of kubernetes config generated from levis
+- **-v** log level
+  -  1 for info (default)
+  -  2 for debug
 
 ## Help & Feedback
 Interacting with the community and the development team is a great way to
