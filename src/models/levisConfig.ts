@@ -13,16 +13,17 @@ interface Levis {
 
 /* Deployment Section */
 interface Deployment {
-    name?: string;
-    labels?: { [key: string]: string };
-    annotations?: { [key: string]: string };
-    revisionHistoryLimit?: number;
-    replicas?: number;
-    strategy?: Strategy;
-    matchLabels?: { [key: string]: string };
-    serviceAccount?: string;
-    containers: Containers;
-    node: Node;
+  name?: string;
+  labels?: { [key: string]: string };
+  annotations?: { [key: string]: string };
+  revisionHistoryLimit?: number;
+  replicas?: number;
+  strategy?: Strategy;
+  matchLabels?: { [key: string]: string };
+  serviceAccount?: string;
+  containers: Containers;
+  node: Node;
+  enableHealthCheck?: boolean;
 }
 
 interface Node {

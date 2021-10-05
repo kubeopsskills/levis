@@ -283,29 +283,47 @@ export class ConfigParser {
         );     
         log.debug("strategy: ", strategy);
         log.debug("envVar: ", containerEnv);
+        
+        const isEnableHealthCheck = config.levis.deployment?.enableHealthCheck ?? true
+        
         return {
-            name: deploymentName,
-            namespace: config.levis.namespace || Constants.MetaData.DEFAULT_NAMESPACE ,
-            labels: deploymentLabels,
-            annotations: config.levis.deployment.annotations ,
-            serviceAccount:config.levis.deployment.serviceAccount || Constants.Pod.DEFAULT_SERVICE_ACCOUNT ,
-            revisionHistoryLimit:config.levis.deployment.revisionHistoryLimit || Constants.Deployment.REVISION_HISTORY_LIMIT,
-            replicas: config.levis.deployment.replicas,
-            strategy: strategy,
-            matchLabels: config.levis.deployment.matchLabels || deploymentLabels,
-            containerName: config.levis.deployment.containers?.name || deploymentName,
-            containerImage: config.levis.deployment.containers?.image,
-            containerImagePullPolicy: config.levis.deployment.containers?.imagePullPolicy || Constants.Container.IMAGE_PULL_POLICY,
-            containerPort: config.levis.deployment.containers?.port,
-            containerEnvironment: containerEnv,
-            containerEnvironmentFrom: this.createEnvironmentFrom(config.levis.deployment.containers.configEnvName, config.levis.deployment.containers.secretEnvName),
-            resources: config.levis.deployment.containers.resources,
-            readinessProbe: this.createReadinessProbe(config),
-            livenessProbe: this.createLivenessProbe(config),
-            deploymentVolumes: this.createDeploymentVolume(config),
-            containerVolumeMounts: this.createContainerVolumeMounts(config),
-            affinity: affinity,
-            toleration: toleration
+          name: deploymentName,
+          namespace:
+            config.levis.namespace || Constants.MetaData.DEFAULT_NAMESPACE,
+          labels: deploymentLabels,
+          annotations: config.levis.deployment.annotations,
+          serviceAccount:
+            config.levis.deployment.serviceAccount ||
+            Constants.Pod.DEFAULT_SERVICE_ACCOUNT,
+          revisionHistoryLimit:
+            config.levis.deployment.revisionHistoryLimit ||
+            Constants.Deployment.REVISION_HISTORY_LIMIT,
+          replicas: config.levis.deployment.replicas,
+          strategy: strategy,
+          matchLabels: config.levis.deployment.matchLabels || deploymentLabels,
+          containerName:
+            config.levis.deployment.containers?.name || deploymentName,
+          containerImage: config.levis.deployment.containers?.image,
+          containerImagePullPolicy:
+            config.levis.deployment.containers?.imagePullPolicy ||
+            Constants.Container.IMAGE_PULL_POLICY,
+          containerPort: config.levis.deployment.containers?.port,
+          containerEnvironment: containerEnv,
+          containerEnvironmentFrom: this.createEnvironmentFrom(
+            config.levis.deployment.containers.configEnvName,
+            config.levis.deployment.containers.secretEnvName
+          ),
+          resources: config.levis.deployment.containers.resources,
+          readinessProbe: isEnableHealthCheck
+            ? this.createReadinessProbe(config)
+            : {},
+          livenessProbe: isEnableHealthCheck
+            ? this.createLivenessProbe(config)
+            : {},
+          deploymentVolumes: this.createDeploymentVolume(config),
+          containerVolumeMounts: this.createContainerVolumeMounts(config),
+          affinity: affinity,
+          toleration: toleration,
         };
     }
 }
