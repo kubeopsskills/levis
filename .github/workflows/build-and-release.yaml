@@ -102,6 +102,14 @@ jobs:
         asset_name: levis-${{ steps.get_version.outputs.version }}-linux-x64.tar.gz
         asset_content_type: application/gzip
 
+  deploy-to-npm:
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+
   deploy-macOS-version-to-homebrew:
     needs: release
     runs-on: macos-11
