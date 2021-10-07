@@ -1,10 +1,21 @@
 {
-  "name": "levis",
+  "name": "naijab-levis",
   "version": "1.0.15.1-alpha",
+  "description": "Kubernetes Manifest Generator",
+  "keywords": [
+    "kubernetes",
+    "k8s",
+    "manifest",
+    "generator"
+  ],
+  "homepage": "https://github.com/kubeopsskills/levis",
   "main": "main.js",
   "types": "main.ts",
   "license": "MIT",
   "private": true,
+  "bin": {
+    "naijab-levis": "./bin/main.js"
+  },
   "scripts": {
     "import": "cdk8s import",
     "build": "tsc --outDir bin",
