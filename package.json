@@ -14,7 +14,7 @@
   "license": "MIT",
   "private": false,
   "bin": {
-    "naijabx-levis": "./bin-npm/main.js"
+    "naijabx-levis": "./bin/npm-main.js"
   },
   "scripts": {
     "import": "cdk8s import",
