@@ -1,5 +1,5 @@
 # Levis
-## Kubernetes Manifest Generator (with nodejs 14)
+## Kubernetes Manifest Generator
 
 **Levis** is Kubernetes Manifest Generator for simply creating Kubernetes applications. Levis generates pure Kubernetes YAML - you can use Levis to define Kubernetes applications with YAML syntax for any Kubernetes clusters running anywhere.
 
@@ -7,7 +7,7 @@ This is an project built with ❤️ by [KubeOps Skills](https://www.kubeops.gur
 
 ### Contents
 - [Levis](#levis)
-  - [Kubernetes Manifest Generator (with nodejs 14)](#kubernetes-manifest-generator-with-nodejs-14)
+  - [Kubernetes Manifest Generator](#kubernetes-manifest-generator)
     - [Contents](#contents)
   - [Versioning](#versioning)
   - [Demo](#demo)
