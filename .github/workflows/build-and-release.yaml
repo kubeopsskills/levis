@@ -108,5 +108,21 @@ jobs:
     - name: Publish to npm.js
       uses: JS-DevTools/npm-publish@v1
       with:
-          token: ${{ secrets.NPM_TOKEN }}
+        token: ${{ secrets.NPM_TOKEN }}
+
+    - name: Set macOS release SHA
+        id: shasum-mac-os
+        run: |
+          echo ::set-output name=sha::"$(shasum -a 256 ./bin/target/levis-${{ needs.release.outputs.version }}-macos-x64.tar.gz | awk '{printf $1}')"
+
+    - name: Update levis homebrew formula
+      uses: naijabcom/update-formula-homebrew@master
+      with:
+        repo: naijab/levis
+        tap: naijab/homebrew-levis
+        formula: Formula/levis.rb
+        download-url: https://github.com/kubeopsskills/levis/releases/download/${{ needs.release.outputs.version }}/levis-${{ needs.release.outputs.version }}-macos-x64.tar.gz
+        sha256: steps.shasum-mac-os.outputs.sha
+      env:
+        COMMIT_TOKEN: ${{ secrets.BREW_TOKEN_TAP }}
 
