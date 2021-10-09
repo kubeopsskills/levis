@@ -112,7 +112,7 @@ jobs:
 
   deploy-macOS-version-to-homebrew:
     needs: release
-    runs-on: macos-11
+    runs-on: ubuntu-latest
     steps:
       - name: Update the Homebrew formula with latest release
         uses: NSHipster/update-homebrew-formula-action@main
