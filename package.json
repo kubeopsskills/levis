@@ -24,7 +24,8 @@
     "test": "jest",
     "build-all": "yarn run clean && yarn run build",
     "lint": "eslint . --ext .ts",
-    "start": "node bin/main.js"
+    "start": "node bin/main.js",
+    "build-rollup": "rimraf dist && tsc && rollup -c rollup.config.js"
   },
   "dependencies": {
     "cdk8s": "^0.30.0",
@@ -35,6 +36,7 @@
     "yaml": "^2.0.0-6"
   },
   "devDependencies": {
+    "@open-wc/building-rollup": "^1.10.0",
     "@types/fs-extra": "^9.0.13",
     "@types/jest": "^26.0.14",
     "@types/minimist": "^1.2.0",
@@ -42,9 +44,12 @@
     "@typescript-eslint/eslint-plugin": "^3.3.0",
     "@typescript-eslint/parser": "^3.3.0",
     "cdk8s-cli": "^0.30.0",
+    "deepmerge": "^4.2.2",
     "eslint": "^7.2.0",
     "fs-extra": "^10.0.0",
     "jest": "^26.5.3",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.58.0",
     "ts-jest": "^26.4.1",
     "typescript": "^4.0.3"
   }
