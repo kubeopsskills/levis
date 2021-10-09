@@ -1,5 +1,5 @@
 {
-  "name": "naijabx-levis",
+  "name": "levis",
   "version": "1.0.15-alpha",
   "description": "Kubernetes Manifest Generator",
   "keywords": [
@@ -14,7 +14,7 @@
   "license": "MIT",
   "private": false,
   "bin": {
-    "naijabx-levis": "./dist/bundle.js"
+    "levis": "./dist/bundle.js"
   },
   "scripts": {
     "import": "cdk8s import",
