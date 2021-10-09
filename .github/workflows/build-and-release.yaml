@@ -40,8 +40,6 @@ jobs:
     needs: test
     if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
-    outputs:
-      version: ${{ steps.get_version.outputs.version }}
     steps:    
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v2
@@ -111,9 +109,9 @@ jobs:
         token: ${{ secrets.NPM_TOKEN }}
 
     - name: Set macOS release SHA
-        id: shasum-mac-os
-        run: |
-          echo ::set-output name=sha::"$(shasum -a 256 ./bin/target/levis-${{ needs.release.outputs.version }}-macos-x64.tar.gz | awk '{printf $1}')"
+      id: shasum-mac-os
+      run: |
+        echo ::set-output name=sha::"$(shasum -a 256 ./bin/target/levis-${{ steps.get_version.outputs.version }}-macos-x64.tar.gz | awk '{printf $1}')"
 
     - name: Update levis homebrew formula
       uses: naijabcom/update-formula-homebrew@master
@@ -121,8 +119,7 @@ jobs:
         repo: naijab/levis
         tap: naijab/homebrew-levis
         formula: Formula/levis.rb
-        download-url: https://github.com/kubeopsskills/levis/releases/download/${{ needs.release.outputs.version }}/levis-${{ needs.release.outputs.version }}-macos-x64.tar.gz
+        download-url: https://github.com/kubeopsskills/levis/releases/download/${{ steps.get_version.outputs.version }}/levis-${{ steps.get_version.outputs.version }}-macos-x64.tar.gz
         sha256: steps.shasum-mac-os.outputs.sha
       env:
         COMMIT_TOKEN: ${{ secrets.BREW_TOKEN_TAP }}
-
