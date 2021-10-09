@@ -102,7 +102,10 @@ jobs:
         asset_name: levis-${{ steps.get_version.outputs.version }}-linux-x64.tar.gz
         asset_content_type: application/gzip
 
-    - name: Publish to npm
+    - name: Build for npm.js
+      run: yarn build-rollup
+
+    - name: Publish to npm.js
       uses: JS-DevTools/npm-publish@v1
       with:
           token: ${{ secrets.NPM_TOKEN }}
