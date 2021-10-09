@@ -109,16 +109,12 @@ jobs:
       uses: JS-DevTools/npm-publish@v1
       with:
           token: ${{ secrets.NPM_TOKEN }}
-
-  deploy-macOS-version-to-homebrew:
-    needs: release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Update the Homebrew formula with latest release
-        uses: NSHipster/update-homebrew-formula-action@main
-        with:
-          repository: naijab/levis
-          tap: naijab/homebrew-levis
-          formula: Formula/levis.rb
-        env:
-          GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.BREW_TOKEN_TAP }}
+    
+    - name: Update the Homebrew formula with latest release
+      uses: NSHipster/update-homebrew-formula-action@main
+      with:
+        repository: naijab/levis
+        tap: naijab/homebrew-levis
+        formula: Formula/levis.rb
+      env:
+        GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.BREW_TOKEN_TAP }}
