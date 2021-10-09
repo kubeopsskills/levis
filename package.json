@@ -1,6 +1,6 @@
 {
   "name": "naijabx-levis",
-  "version": "1.0.15-alpha",
+  "version": "1.0.19-alpha",
   "description": "Kubernetes Manifest Generator",
   "keywords": [
     "kubernetes",
