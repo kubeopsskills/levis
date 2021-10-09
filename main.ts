@@ -1,7 +1,9 @@
+#!/usr/bin/env node
+
 import { App } from "cdk8s";
 import * as log4js from "log4js";
 import * as Minimist from "minimist";
-import { CommandManager } from './src/managers/commandManager';
+import { CommandManager } from "./src/managers/commandManager";
 import { LogConfig } from "./src/utils";
 
 // Setup log config
@@ -30,7 +32,7 @@ const log = log4js.getLogger();
 /// levis <position-0> <position-1> <position-2>
 /// e.g. levis create -f <levis-config>.yaml
 const SLICE_POSITION = 2;
-const args = Minimist(process.argv.slice(SLICE_POSITION)); 
+const args = Minimist(process.argv.slice(SLICE_POSITION));
 const commandOption = args._[0];
 
 log.debug("App Creating...");
