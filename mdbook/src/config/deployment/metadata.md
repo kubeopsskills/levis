@@ -13,6 +13,16 @@ deployment:
     nginx.master: "true"
 ```
 
+### Configuration
+The following tables list the configurable parameters of the `metadata` chart and their default values.
+
+| Parameter | Type | Description | Default |
+| ----------| ---- | ----------- | ------- |
+| `levis.name` | String | To define global name of deployment and service | `{}` |
+| `deployment.name` | String | To define deployment name| `{}` |
+| `deployment.labels` | String : String | To define deployment labels | `{}` |
+| `deployment.annotations` | String : String | To define deployment annotations | `{}` |
+
 ## Labels
 You can visualize and manage Kubernetes objects with more tools than kubectl and the dashboard. A common set of labels allows tools to work interoperably, describing objects in a common manner that all tools can understand. 
 
