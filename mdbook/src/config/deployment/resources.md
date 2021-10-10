@@ -36,6 +36,17 @@ deployment:
   ...
 ```
 
-references: 
+### Configuration
+The following tables list the configurable parameters of the `resource` chart and their default values.
+
+| Parameter | Description | Type | Default |
+| ----------| ----------- | ---- | ------- |
+| `requests.memory` | String | To reserve node's memory | `{}` |
+| `requests.cpu` | String | To reserve node's cpu | `{}` |
+| `limits.memory` | String | To limit node's memory | `{}` |
+| `limits.cpu` | String |  To limit node's cpu  | `{}` |
+
+
+**References:** 
 - [Managing Resources for Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)
 - [Requests and Limits](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#requests-and-limits)
