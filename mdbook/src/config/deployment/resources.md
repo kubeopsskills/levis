@@ -39,7 +39,7 @@ deployment:
 ### Configuration
 The following tables list the configurable parameters of the `resource` chart and their default values.
 
-| Parameter | Description | Type | Default |
+| Parameter | Type | Description | Default |
 | ----------| ----------- | ---- | ------- |
 | `requests.memory` | String | To reserve node's memory | `{}` |
 | `requests.cpu` | String | To reserve node's cpu | `{}` |
