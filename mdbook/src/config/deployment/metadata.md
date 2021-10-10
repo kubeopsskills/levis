@@ -18,8 +18,8 @@ The following tables list the configurable parameters of the `metadata` chart an
 
 | Parameter | Type | Description | Default |
 | ----------| ---- | ----------- | ------- |
-| `levis.name` | String | To define global name of deployment and service | `{}` |
-| `deployment.name` | String | To define deployment name| `{}` |
+| `levis.name` | String | To name the deployment and service | `undefined` |
+| `deployment.name` | String | To name the deployment | `inherit from levis.name` |
 | `deployment.labels` | String : String | To define deployment labels | `{}` |
 | `deployment.annotations` | String : String | To define deployment annotations | `{}` |
 
