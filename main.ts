@@ -18,7 +18,7 @@ log4js.configure({
   categories: {
     default: {
       appenders: ["out"],
-      level: LogConfig.logLevel(process.argv),
+      level: "info",
       enableCallStack: true,
     },
   },
@@ -27,11 +27,15 @@ log4js.configure({
 const log = log4js.getLogger();
 
 /// levis command line interface
-/// levis <position-0> <position-1> <position-2>
-/// e.g. levis create -f <levis-config>.yaml
+///      levis <position-2>  <position-3>       <position-4>
+/// e.g. levis   create           -f        <levis-config>.yaml
 const SLICE_POSITION = 2;
 const args = Minimist(process.argv.slice(SLICE_POSITION)); 
 const commandOption = args._[0];
+
+// Adjust LogLevel from argument variable
+const logLevel = LogConfig.logLevel(args.v);
+log.level = logLevel;
 
 log.debug("App Creating...");
 const app = new App();
