@@ -18,15 +18,18 @@ export class MicroServiceChart extends Chart {
         log.debug(configFilePath);
         // Path yaml to LevisConfig
         const config: LevisConfig = YAML.parse(Fs.readFileSync(configFilePath, {encoding: 'utf-8'}))
-        
-        if (!config.levis.service || config.levis.service?.enabled){
+        log.debug("LevisConfig: ", config);
+        log.debug("Service: ", config.levis.service);
+        if ( config.levis.service?.enabled || !!config.levis.service){
+          log.debug("Generate Service ...")
           this.generateService(ConfigParser.ParseService(config));
         }
+        log.debug("Generate Deployment ...")
         this.generateDeployment(ConfigParser.ParseDeployment(config));
     }
 
     private generateService(model: ServiceModel): void {
-      log.debug("generateService");
+      log.debug("servicePort: ", model.servicePort);
       new Service(this, 'service', {
         metadata: {
           name: model.name,
@@ -36,14 +39,7 @@ export class MicroServiceChart extends Chart {
         },
         spec: {
           type: model.type,
-          ports: [ 
-            { 
-              name: model.name, 
-              port: model.port, 
-              targetPort: model.targetPort, 
-              nodePort: model.nodePort 
-            } 
-          ],
+          ports: model.servicePort,
           selector: model.selector
         }
       });

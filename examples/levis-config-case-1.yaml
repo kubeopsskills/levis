@@ -58,6 +58,7 @@ levis:
         failureThreshold: 10
         timeoutSeconds: 10
   service:
+    enabled: false
     name: "nginx"
     labels:
       app: nginx
@@ -67,6 +68,9 @@ levis:
       app: nginx
     type: ClusterIP
     ports:
-      name: "nginx"
-      port: 80
-      targetPort: 80
+      - name: "nginx"
+        port: 80
+        targetPort: 80
+      - name: "grpc"
+        port: 8000
+        targetPort: 8000

@@ -1,4 +1,4 @@
-import { ResourceRequirements } from "../../libs/k8s";
+import { ResourceRequirements, ServicePort } from "../../libs/k8s";
 
 export interface LevisConfig {
     levis: Levis;
@@ -22,7 +22,7 @@ interface Deployment {
   matchLabels?: { [key: string]: string };
   serviceAccount?: string;
   containers: Containers;
-  node: Node;
+  node?: Node;
   enableHealthCheck?: boolean;
 }
 
@@ -119,12 +119,5 @@ interface Service {
     annotations?: { [key: string]: string };
     selector?: { [key: string]: string };
     type?: string;
-    ports?: Ports;
-}
-
-interface Ports {
-    name?: string;
-    port?: number;
-    targetPort?: number;
-    nodePort?: number;
+    ports?: ServicePort[];
 }

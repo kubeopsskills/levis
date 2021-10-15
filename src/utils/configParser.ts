@@ -255,10 +255,7 @@ export class ConfigParser {
             annotations: config.levis.service?.annotations,
             selector: config.levis.service?.selector || deploymentMatchLabels,
             type: config.levis.service?.type || Constants.Service.TYPE_CLUSTER_IP,
-            portName: config.levis.service?.ports?.name || serviceName,
-            port: config.levis.service?.ports?.port || config.levis.deployment.containers.port,
-            targetPort: config.levis.service?.ports?.targetPort || config.levis.deployment.containers.port,
-            nodePort: config.levis.service?.ports?.nodePort,
+            servicePort: config.levis.service?.ports
         };
     }
 
@@ -273,8 +270,13 @@ export class ConfigParser {
         const rollingUpdateType: string = config.levis.deployment.strategy?.type || Constants.Deployment.STRATEGY_ROLLING_UPDATE;
         const maxSurge: string = config.levis.deployment.strategy?.rollingUpdate?.maxSurge || Constants.Deployment.ROLLING_UPDATE_MAX_SURGE;
         const maxUnavailable: string = config.levis.deployment.strategy?.rollingUpdate?.maxUnavailable || Constants.Deployment.ROLLING_UPDATE_MAX_UNAVAILABLE;
-        const affinity = config.levis.deployment.node?.selector ? this.createAffinity(config): {};
-        const toleration: Toleration[]| undefined = config.levis.deployment.node?.allower ? this.createToleration(config): undefined;
+        const isNodeSelector = config.levis.deployment.node ?? undefined;
+        var affinity: Affinity | undefined = undefined;
+        var toleration: Toleration[] | undefined = undefined;
+        if (isNodeSelector){
+            affinity = config.levis.deployment.node?.selector ? this.createAffinity(config) : {};
+            toleration = config.levis.deployment.node?.allower ?? this.createToleration(config);
+        }
         log.debug("affinity: ", JSON.stringify(affinity));
         const strategy = this.createDeploymentStrategy(
             this.isRollingUpdateEnable(rollingUpdateType),
