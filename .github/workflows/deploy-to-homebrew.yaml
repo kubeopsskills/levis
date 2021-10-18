@@ -10,6 +10,8 @@ jobs:
   deploy-to-homebrew:
     runs-on: ubuntu-20.04
     steps:
+      - uses: actions/checkout@v2
+        
       - name: Get latest tag version
         id: latest_tag
         uses: "WyriHaximus/github-action-get-previous-tag@v1"
