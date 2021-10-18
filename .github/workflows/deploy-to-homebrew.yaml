@@ -1,12 +1,10 @@
 name: Deploy release to homebrew
 
 on:
-  # release:
-  #   types: [published]
-  push:
+  release:
+    types: [published]
 
 jobs:
-  
   deploy-to-homebrew:
     runs-on: ubuntu-20.04
     steps:
@@ -27,13 +25,11 @@ jobs:
       - name: Update levis homebrew formula
         uses: naijabx/update-formula-homebrew-action@v1
         with:
-          # repo: kubeopsskills/levis
-          # tap: kubeopsskills/homebrew-levis
-          repo: naijab/levis
-          tap: naijab/homebrew-levis
+          repo: kubeopsskills/levis
+          tap: kubeopsskills/homebrew-levis
           formula: Formula/levis.rb
           download-url: https://github.com/kubeopsskills/levis/releases/download/${{ steps.latest_tag.outputs.tag }}/levis-${{ steps.latest_tag.outputs.tag }}-macos-x64.tar.gz
           sha256: ${{ steps.shasum_mac_os.outputs.sha }}
         env:
           COMMIT_TOKEN: ${{ secrets.BREW_TOKEN_TAP }}
-        continue-on-error: true
+
