@@ -21,7 +21,7 @@ jobs:
       - name: Get sha 256 of macOS version
         id: shasum_mac_os
         run: | 
-          wget https://github.com/kubeopsskills/levis/releases/download/${{ steps.latest_tag.outputs.tag }}/levis-${{ steps.latest_tag.outputs.tag }}-macos-x64.tar.gz -O . &&
+          wget https://github.com/kubeopsskills/levis/releases/download/${{ steps.latest_tag.outputs.tag }}/levis-${{ steps.latest_tag.outputs.tag }}-macos-x64.tar.gz &&
           echo ::set-output name=sha::"$(shasum -a 256 ./levis-${{ steps.latest_tag.outputs.tag }}-macos-x64.tar.gz | awk '{printf $1}')" 
 
       - name: Update levis homebrew formula
