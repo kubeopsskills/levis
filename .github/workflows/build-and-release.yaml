@@ -1,0 +1,101 @@
+name: Build and Release
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+  push:
+    tags:
+      - '*'
+
+jobs: 
+  test:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+    
+    - name: Install ncc and pkg for build 
+      run: npm i -g @vercel/ncc pkg
+
+    - name: Install dependencies
+      run: yarn
+
+    - name: Build for testing
+      run: rm -rf bin && yarn build
+
+    - name: Run test
+      run: yarn test --coverage --coverageDirectory='coverage'
+    
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v2
+      with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          directory: ./coverage
+
+  release:
+    needs: test
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:    
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Get version
+      id: get_version
+      run: echo ::set-output name=version::${GITHUB_REF/refs\/tags\//}
+
+    - name: Install ncc and pkg for build 
+      run: npm i -g @vercel/ncc pkg
+
+    - name: Install dependencies
+      run: yarn
+
+    - name: Build Release
+      run: make all
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: ${{ github.ref }}
+        draft: false
+        prerelease: true
+
+    - name: Upload Windows Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./bin/target/levis-${{ steps.get_version.outputs.version }}-win-x64.zip
+        asset_name: levis-${{ steps.get_version.outputs.version }}-win-x64.zip
+        asset_content_type: application/gzip
+
+    - name: Upload MacOS Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./bin/target/levis-${{ steps.get_version.outputs.version }}-macos-x64.tar.gz
+        asset_name: levis-${{ steps.get_version.outputs.version }}-macos-x64.tar.gz
+        asset_content_type: application/gzip
+
+    - name: Upload Linux Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./bin/target/levis-${{ steps.get_version.outputs.version }}-linux-x64.tar.gz
+        asset_name: levis-${{ steps.get_version.outputs.version }}-linux-x64.tar.gz
+        asset_content_type: application/gzip
