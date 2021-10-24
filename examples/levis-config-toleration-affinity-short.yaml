@@ -25,6 +25,5 @@ levis:
         operator: In
         labels:
           StatelessOnly: true
-
   service:
     enabled: false

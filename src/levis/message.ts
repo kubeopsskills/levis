@@ -7,9 +7,11 @@ export class Message {
         console.log("USAGE: ");
         console.log("    levis [COMMAND] [FLAGS] [OPTIONS] \n");
         console.log("COMMAND: ");
-        console.log("    create    Gerate kubernetes configuration\n");
+        console.log("    create Gerate kubernetes configuration\n");
         console.log("FLAGS: ");
-        console.log("    -f  [OPTIONS]    Levis configuration path followd by OPTION ");
+        console.log("    -f  [OPTIONS] Levis configuration path followd by OPTION ");
+        console.log("    -o  [OPTIONS] Output of kubernetes configuration file ");
+        console.log("    -v  [OPTIONS] log level 1: info (default) 2: debug ");
         // console.log("    -v, --version    Print version info and exit ");
         process.exit(1);
     } 
