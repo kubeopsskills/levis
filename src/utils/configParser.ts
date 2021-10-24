@@ -275,9 +275,10 @@ export class ConfigParser {
         var toleration: Toleration[] | undefined = undefined;
         if (isNodeSelector){
             affinity = config.levis.deployment.node?.selector ? this.createAffinity(config) : {};
-            toleration = config.levis.deployment.node?.allower ?? this.createToleration(config);
+            toleration = this.createToleration(config);
         }
         log.debug("affinity: ", JSON.stringify(affinity));
+        log.debug("toleration: ", toleration);
         const strategy = this.createDeploymentStrategy(
             this.isRollingUpdateEnable(rollingUpdateType),
             maxSurge,
