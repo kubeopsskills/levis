@@ -104,6 +104,7 @@ interface Volume {
     readOnly: boolean;
     secretName?: string;
     configName?: string;
+    claimName?: string
 }
 
 interface EnvField {

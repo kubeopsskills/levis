@@ -228,7 +228,15 @@ export class ConfigParser {
                 volume.push({
                     name: val.name,
                     secret: {
-                      secretName: val.secretName
+                    secretName: val.secretName
+                    }
+                })
+               }
+               else if (val.claimName){
+                volume.push({
+                    name: val.name,
+                    persistentVolumeClaim: {
+                        claimName: val.claimName
                     }
                  })
                }

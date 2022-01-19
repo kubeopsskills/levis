@@ -1,0 +1,13 @@
+levis:
+  name: "nginx"
+  deployment:
+    containers:
+      image: "nginx"
+      port: 80
+      volumeMounts:
+      - name: test-volume
+        mountPath: /test-ebs
+        readOnly: true
+        claimName: test
+  service:
+    enabled: false
