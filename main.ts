@@ -1,4 +1,3 @@
-import { App } from "cdk8s";
 import * as log4js from "log4js";
 import * as Minimist from "minimist";
 import { CommandManager } from './src/managers/commandManager';
@@ -38,6 +37,5 @@ const logLevel = LogConfig.logLevel(args.v);
 log.level = logLevel;
 
 log.debug("App Creating...");
-const app = new App();
-const commandManager = new CommandManager(app, commandOption);
+const commandManager = new CommandManager(commandOption);
 commandManager.handle(args);
