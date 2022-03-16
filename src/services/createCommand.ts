@@ -13,7 +13,11 @@ const log = log4js.getLogger();
 export class CreateCommand implements ILevisCommand {
     
     private command!: Command;
-    private app!: App;
+    private app: App;
+
+    constructor(app: App){
+        this.app = app;
+    }
 
     init(args: Minimist.ParsedArgs): Command {
         log.debug("CreateCommand");
