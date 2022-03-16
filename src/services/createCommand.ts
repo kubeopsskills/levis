@@ -6,6 +6,7 @@ import { Message } from "../levis/message";
 import MicroServiceChart from "../charts";
 import { App } from "cdk8s";
 import { FileUtils } from "../utils";
+import { Path } from "../models/constants";
 
 const log = log4js.getLogger();
 
@@ -23,7 +24,7 @@ export class CreateCommand implements ILevisCommand {
         // get a value from -f  
         const inputFilePath=args.f;
         // get a value from -o
-        const outputFilePath=args.o ? args.o: "manifests/levis.k8s.yaml";
+        const outputFilePath=args.o ? args.o: Path.OUTPUT_PATH;
         
         // Message handler if with -f flag
         if(!inputFilePath){
@@ -44,7 +45,7 @@ export class CreateCommand implements ILevisCommand {
         new MicroServiceChart(this.app, this.command);
         // Activate CDK8S for generating yaml file
         this.app.synth();
-        FileUtils.Move("./dist/levis.k8s.yaml", this.command.outputFilePath);
+        FileUtils.Move(Path.CURRENT_PATH, this.command.outputFilePath);
     }
 
 }
