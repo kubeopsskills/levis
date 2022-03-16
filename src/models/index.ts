@@ -1,12 +1,13 @@
 import { Command } from "./command";
 import { DeploymentModel } from "./deploymentModel";
-import { LevisCommand } from "./constants";
+import { LevisCommand, Path } from "./constants";
 import { LevisConfig } from "./levisConfig";
 import { ServiceModel } from "./serviceModel";
 
 export {
     Command,
-    DeploymentModel, 
+    DeploymentModel,
+    Path, 
     LevisCommand,
     LevisConfig, 
     ServiceModel
