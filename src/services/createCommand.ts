@@ -37,9 +37,10 @@ export class CreateCommand implements ILevisCommand {
 
     process(): void {
         log.debug("process");
-        new MicroServiceChart(this.app, this.command);
+        const app = new App();
+        new MicroServiceChart(app, this.command);
         // Activate CDK8S for generating yaml file
-        this.app.synth();
+        app.synth();
         FileUtils.Move("./dist/levis.k8s.yaml", this.command.outputFilePath);
     }
 
