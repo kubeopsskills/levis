@@ -1,3 +1,7 @@
 # Health Check
 
-# Coming Soon...
+## Readiness
+- attribute
+
+## Liveness
+- attribute
