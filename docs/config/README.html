@@ -73,7 +73,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="README.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="cli/README.html"><strong aria-hidden="true">2.</strong> Command Line Tool</a></li><li><ol class="section"><li><a href="cli/create.html"><strong aria-hidden="true">2.1.</strong> create</a></li><li><a href="cli/import.html"><strong aria-hidden="true">2.2.</strong> import</a></li><li><a href="cli/apply.html"><strong aria-hidden="true">2.3.</strong> apply</a></li><li><a href="cli/version.html"><strong aria-hidden="true">2.4.</strong> version</a></li><li><a href="cli/options.html"><strong aria-hidden="true">2.5.</strong> options</a></li></ol></li><li><a href="config/README.html" class="active"><strong aria-hidden="true">3.</strong> YAML Config file </a></li><li><ol class="section"><li><a href="config/deployment/README.html"><strong aria-hidden="true">3.1.</strong> Deployment.md</a></li><li><ol class="section"><li><a href="config/deployment/metadata.html"><strong aria-hidden="true">3.1.1.</strong> Metadata</a></li><li><a href="config/deployment/spec.html"><strong aria-hidden="true">3.1.2.</strong> Spec</a></li><li><a href="config/deployment/containers.html"><strong aria-hidden="true">3.1.3.</strong> Containers</a></li><li><ol class="section"><li><a href="config/deployment/health-check.html"><strong aria-hidden="true">3.1.3.1.</strong> Health Check</a></li><li><a href="config/deployment/resources.html"><strong aria-hidden="true">3.1.3.2.</strong> Resources</a></li><li><a href="config/deployment/env.html"><strong aria-hidden="true">3.1.3.3.</strong> Env and Config</a></li><li><a href="config/deployment/volume.html"><strong aria-hidden="true">3.1.3.4.</strong> Volume</a></li></ol></li></ol></li><li><a href="config/service/README.html"><strong aria-hidden="true">3.2.</strong> Service</a></li><li><ol class="section"><li><a href="config/service/metadata.html"><strong aria-hidden="true">3.2.1.</strong> Metadata</a></li><li><a href="config/service/spec.html"><strong aria-hidden="true">3.2.2.</strong> Spec</a></li></ol></li></ol></li><li><a href="architecture.html"><strong aria-hidden="true">4.</strong> Architecture</a></li><li><a href="ci/README.html"><strong aria-hidden="true">5.</strong> Github Actions CI</a></li><li><a href="CHANGELOG/CHANGELOG.html"><strong aria-hidden="true">6.</strong> CHANGELOG</a></li><li class="spacer"></li><li class="affix"><a href="who-uses-this.html">Who uses this?</a></li><li class="affix"><a href="CONTRIBUTING.html">CONTRIBUTING</a></li></ol>
+            <ol class="chapter"><li><a href="README.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="cli/README.html"><strong aria-hidden="true">2.</strong> Command Line Tool</a></li><li><ol class="section"><li><a href="cli/create.html"><strong aria-hidden="true">2.1.</strong> create</a></li><li><a href="cli/import.html"><strong aria-hidden="true">2.2.</strong> import</a></li><li><a href="cli/apply.html"><strong aria-hidden="true">2.3.</strong> apply</a></li><li><a href="cli/version.html"><strong aria-hidden="true">2.4.</strong> version</a></li><li><a href="cli/options.html"><strong aria-hidden="true">2.5.</strong> options</a></li></ol></li><li><a href="config/README.html" class="active"><strong aria-hidden="true">3.</strong> YAML Config file </a></li><li><ol class="section"><li><a href="config/deployment/README.html"><strong aria-hidden="true">3.1.</strong> Deployment</a></li><li><ol class="section"><li><a href="config/deployment/metadata.html"><strong aria-hidden="true">3.1.1.</strong> Metadata</a></li><li><a href="config/deployment/spec.html"><strong aria-hidden="true">3.1.2.</strong> Spec</a></li><li><a href="config/deployment/containers.html"><strong aria-hidden="true">3.1.3.</strong> Containers</a></li><li><ol class="section"><li><a href="config/deployment/health-check.html"><strong aria-hidden="true">3.1.3.1.</strong> Health Check</a></li><li><a href="config/deployment/resources.html"><strong aria-hidden="true">3.1.3.2.</strong> Resources</a></li><li><a href="config/deployment/env.html"><strong aria-hidden="true">3.1.3.3.</strong> Env and Config</a></li><li><a href="config/deployment/volume.html"><strong aria-hidden="true">3.1.3.4.</strong> Volume</a></li></ol></li></ol></li><li><a href="config/service/README.html"><strong aria-hidden="true">3.2.</strong> Service</a></li><li><ol class="section"><li><a href="config/service/metadata.html"><strong aria-hidden="true">3.2.1.</strong> Metadata</a></li><li><a href="config/service/spec.html"><strong aria-hidden="true">3.2.2.</strong> Spec</a></li></ol></li></ol></li><li><a href="architecture.html"><strong aria-hidden="true">4.</strong> Architecture</a></li><li><a href="ci/README.html"><strong aria-hidden="true">5.</strong> Github Actions CI</a></li><li><a href="CHANGELOG/CHANGELOG.html"><strong aria-hidden="true">6.</strong> CHANGELOG</a></li><li class="spacer"></li><li class="affix"><a href="who-uses-this.html">Who uses this?</a></li><li class="affix"><a href="CONTRIBUTING.html">CONTRIBUTING</a></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -119,7 +119,84 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="config/README.html#coming-soon" id="coming-soon"><h1>Coming Soon...</h1></a>
+                        <a class="header" href="config/README.html#yaml-config-file-schema" id="yaml-config-file-schema"><h1>YAML Config file schema</h1></a>
+<p>Use <code>levis create -f &lt;levis-config-file&gt;.yaml</code> schema to generate Kubernetes Component Syntax</p>
+<a class="header" href="config/README.html#levis-config-file-syntax-example" id="levis-config-file-syntax-example"><h2>Levis Config file Syntax Example</h2></a>
+<p>This is an example levis config</p>
+<pre><code class="language-yaml">levis:
+  name: &quot;nginx&quot;
+  namespace: &quot;kubeops&quot;
+  deployment:
+    name: &quot;nginx&quot;
+    labels:
+      app: nginx
+      run: nginx
+    annotations:
+      app: nginx
+      nginx.master: &quot;true&quot;
+    serviceAccount: microservice
+    revisionHistoryLimit: 5
+    replicas: 3
+    strategy: 
+      type: RollingUpdate
+      rollingUpdate:
+        maxSurge: &quot;80%&quot;
+        maxUnavailable: &quot;20%&quot;
+    matchLabels:
+      app: nginx
+      run: nginx
+    containers:
+      name: &quot;nginx&quot;
+      image: &quot;nginx&quot;
+      imagePullPolicy: Always
+      port: 8080
+      env:
+        app: nginx
+      envField:
+        - KEY: &quot;value&quot;
+          AGENT_HOST: &quot;status.hostIP&quot;
+        - apiVersion: v2
+          HOST_NAME: 
+      configEnvName: &quot;appsettings&quot;
+      secretEnvName: &quot;secretappsettings&quot;
+      resources:
+        requests:
+          memory: &quot;64Mi&quot;
+          cpu: &quot;250m&quot;
+        limits:
+          memory: &quot;128Mi&quot;
+          cpu: &quot;500m&quot;
+      livenessProbe:
+        path: /actuator/health/liveness
+        port: &quot;8080&quot;
+        initialDelaySeconds: 30
+        intervalSeconds: 10
+        successThreshold: 10
+        failureThreshold: 10
+        timeoutSeconds: 10
+      readinessProbe:
+        path: /actuator/health/readiness
+        port: &quot;8080&quot;
+        initialDelaySeconds: 30
+        intervalSeconds: 10
+        successThreshold: 10
+        failureThreshold: 10
+        timeoutSeconds: 10
+  service:
+    name: &quot;nginx&quot;
+    labels:
+      app: nginx
+    annotations:
+      app: nginx
+    selector:
+      app: nginx
+    type: ClusterIP
+    ports:
+      name: &quot;nginx&quot;
+      port: 80
+      targetPort: 80
+</code></pre>
+<p>For more information, you can follow levis syntax example from this <a href="https://github.com/kubeopsskills/levis/tree/develop/examples">link</a></p>
 
                     </main>
 
