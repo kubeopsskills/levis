@@ -1,0 +1,14 @@
+levis:
+  name: "nginx"
+  deployment:
+    name: "nginx"
+    containers:
+      image: "nginx"
+      livenessProbe:
+        path: /actuator/health/liveness
+        port: "8080"
+      readinessProbe:
+        path: /actuator/health/readiness
+        port: "8080"
+  service:
+    enabled: true
