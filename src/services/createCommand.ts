@@ -12,11 +12,6 @@ const log = log4js.getLogger();
 export class CreateCommand implements ILevisCommand {
     
     private command!: Command;
-    private app: App;
-
-    constructor(app: App){
-        this.app = app;
-    }
 
     init(args: Minimist.ParsedArgs): Command {
         log.debug("CreateCommand");
@@ -41,10 +36,11 @@ export class CreateCommand implements ILevisCommand {
 
     process(): void {
         log.debug("process");
-        new MicroServiceChart(this.app, this.command);
+        const app = new App();
+        new MicroServiceChart(app, this.command);
         // Activate CDK8S for generating yaml file
-        this.app.synth();
-        FileUtils.Move(Path.CURRENT_PATH, this.command.outputFilePath);
+        app.synth();
+        FileUtils.Move("./dist/levis.k8s.yaml", this.command.outputFilePath);
     }
 
 }
