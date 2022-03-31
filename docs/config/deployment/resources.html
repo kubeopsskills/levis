@@ -73,7 +73,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="README.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="cli/README.html"><strong aria-hidden="true">2.</strong> Command Line Tool</a></li><li><ol class="section"><li><a href="cli/create.html"><strong aria-hidden="true">2.1.</strong> create</a></li><li><a href="cli/import.html"><strong aria-hidden="true">2.2.</strong> import</a></li><li><a href="cli/apply.html"><strong aria-hidden="true">2.3.</strong> apply</a></li><li><a href="cli/version.html"><strong aria-hidden="true">2.4.</strong> version</a></li><li><a href="cli/options.html"><strong aria-hidden="true">2.5.</strong> options</a></li></ol></li><li><a href="config/README.html"><strong aria-hidden="true">3.</strong> YAML Config file </a></li><li><ol class="section"><li><a href="config/deployment/README.html"><strong aria-hidden="true">3.1.</strong> Deployment.md</a></li><li><ol class="section"><li><a href="config/deployment/metadata.html"><strong aria-hidden="true">3.1.1.</strong> Metadata</a></li><li><a href="config/deployment/spec.html"><strong aria-hidden="true">3.1.2.</strong> Spec</a></li><li><a href="config/deployment/containers.html"><strong aria-hidden="true">3.1.3.</strong> Containers</a></li><li><ol class="section"><li><a href="config/deployment/health-check.html"><strong aria-hidden="true">3.1.3.1.</strong> Health Check</a></li><li><a href="config/deployment/resources.html" class="active"><strong aria-hidden="true">3.1.3.2.</strong> Resources</a></li><li><a href="config/deployment/env.html"><strong aria-hidden="true">3.1.3.3.</strong> Env and Config</a></li><li><a href="config/deployment/volume.html"><strong aria-hidden="true">3.1.3.4.</strong> Volume</a></li></ol></li></ol></li><li><a href="config/service/README.html"><strong aria-hidden="true">3.2.</strong> Service</a></li><li><ol class="section"><li><a href="config/service/metadata.html"><strong aria-hidden="true">3.2.1.</strong> Metadata</a></li><li><a href="config/service/spec.html"><strong aria-hidden="true">3.2.2.</strong> Spec</a></li></ol></li></ol></li><li><a href="architecture.html"><strong aria-hidden="true">4.</strong> Architecture</a></li><li><a href="ci/README.html"><strong aria-hidden="true">5.</strong> Github Actions CI</a></li><li><a href="CHANGELOG/CHANGELOG.html"><strong aria-hidden="true">6.</strong> CHANGELOG</a></li><li class="spacer"></li><li class="affix"><a href="who-uses-this.html">Who uses this?</a></li><li class="affix"><a href="CONTRIBUTING.html">CONTRIBUTING</a></li></ol>
+            <ol class="chapter"><li><a href="README.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="cli/README.html"><strong aria-hidden="true">2.</strong> Command Line Tool</a></li><li><ol class="section"><li><a href="cli/create.html"><strong aria-hidden="true">2.1.</strong> create</a></li><li><a href="cli/import.html"><strong aria-hidden="true">2.2.</strong> import</a></li><li><a href="cli/apply.html"><strong aria-hidden="true">2.3.</strong> apply</a></li><li><a href="cli/version.html"><strong aria-hidden="true">2.4.</strong> version</a></li><li><a href="cli/options.html"><strong aria-hidden="true">2.5.</strong> options</a></li></ol></li><li><a href="config/README.html"><strong aria-hidden="true">3.</strong> YAML Config file </a></li><li><ol class="section"><li><a href="config/deployment/README.html"><strong aria-hidden="true">3.1.</strong> Deployment</a></li><li><ol class="section"><li><a href="config/deployment/metadata.html"><strong aria-hidden="true">3.1.1.</strong> Metadata</a></li><li><a href="config/deployment/spec.html"><strong aria-hidden="true">3.1.2.</strong> Spec</a></li><li><a href="config/deployment/containers.html"><strong aria-hidden="true">3.1.3.</strong> Containers</a></li><li><ol class="section"><li><a href="config/deployment/health-check.html"><strong aria-hidden="true">3.1.3.1.</strong> Health Check</a></li><li><a href="config/deployment/resources.html" class="active"><strong aria-hidden="true">3.1.3.2.</strong> Resources</a></li><li><a href="config/deployment/env.html"><strong aria-hidden="true">3.1.3.3.</strong> Env and Config</a></li><li><a href="config/deployment/volume.html"><strong aria-hidden="true">3.1.3.4.</strong> Volume</a></li></ol></li></ol></li><li><a href="config/service/README.html"><strong aria-hidden="true">3.2.</strong> Service</a></li><li><ol class="section"><li><a href="config/service/metadata.html"><strong aria-hidden="true">3.2.1.</strong> Metadata</a></li><li><a href="config/service/spec.html"><strong aria-hidden="true">3.2.2.</strong> Spec</a></li></ol></li></ol></li><li><a href="architecture.html"><strong aria-hidden="true">4.</strong> Architecture</a></li><li><a href="ci/README.html"><strong aria-hidden="true">5.</strong> Github Actions CI</a></li><li><a href="CHANGELOG/CHANGELOG.html"><strong aria-hidden="true">6.</strong> CHANGELOG</a></li><li class="spacer"></li><li class="affix"><a href="who-uses-this.html">Who uses this?</a></li><li class="affix"><a href="CONTRIBUTING.html">CONTRIBUTING</a></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -120,7 +120,69 @@
                 <div id="content" class="content">
                     <main>
                         <a class="header" href="config/deployment/resources.html#resources" id="resources"><h1>Resources</h1></a>
-<a class="header" href="config/deployment/resources.html#coming-soon" id="coming-soon"><h1>Coming Soon...</h1></a>
+<p>When you specify a Pod, you can optionally specify how much of each resource a Container needs. The most common resources to specify are <code>cpu</code> and <code>memory</code> (RAM); there are others.</p>
+<p>When you specify the resource <code>request</code> for Containers in a Pod,</p>
+<ul>
+<li>
+<blockquote>
+<p>the scheduler uses this information to decide which node to place the Pod on.</p>
+</blockquote>
+</li>
+</ul>
+<p>When you specify a resource <code>limit</code> for a Container,</p>
+<ul>
+<li>
+<blockquote>
+<p>the kubelet enforces those limits so that the running container is not allowed to use more of that resource than the limit you set.</p>
+</blockquote>
+</li>
+</ul>
+<p>The kubelet also reserves at least the request amount of that system resource specifically for that container to use.</p>
+<a class="header" href="config/deployment/resources.html#requests-and-limits" id="requests-and-limits"><h2>Requests and limits</h2></a>
+<p>If the node where a Pod is running has enough of a resource available, it's possible (and allowed) for a container to use more resource than its <code>request</code> for that resource specifies. However, a container is not allowed to use more than its resource <code>limit</code>.</p>
+<ul>
+<li>
+<blockquote>
+<p>For example, if you set a <code>memory</code> request of 256 MiB for a container, and that container is in a Pod scheduled to a Node with 8GiB of memory and no other Pods, then the container can try to use more RAM.</p>
+</blockquote>
+</li>
+</ul>
+<p>If you set a <code>memory</code> limit of 4GiB for that Container, the kubelet (and container runtime) enforce the limit. The runtime prevents the container from using more than the configured resource limit.</p>
+<ul>
+<li>
+<blockquote>
+<p>For example: when a process in the container tries to consume more than the allowed amount of memory, the system kernel terminates the process that attempted the allocation, with an <code>out of memory (OOM)</code> error.</p>
+</blockquote>
+</li>
+</ul>
+<p>Limits can be implemented either reactively (the system intervenes once it sees a violation) or by enforcement (the system prevents the container from ever exceeding the limit). Different runtimes can have different ways to implement the same restrictions.</p>
+<a class="header" href="config/deployment/resources.html#example" id="example"><h3>Example</h3></a>
+<pre><code class="language-yaml">deployment:
+  ...
+  containers:
+  ...
+    resources:
+      requests:
+        memory: &quot;64Mi&quot;
+        cpu: &quot;250m&quot;
+      limits:
+        memory: &quot;128Mi&quot;
+        cpu: &quot;500m&quot;
+  ...
+</code></pre>
+<a class="header" href="config/deployment/resources.html#configuration" id="configuration"><h3>Configuration</h3></a>
+<p>The following tables list the configurable parameters of the <code>resource</code> chart and their default values.</p>
+<table><thead><tr><th> Parameter </th><th> Type </th><th> Description </th><th> Default </th></tr></thead><tbody>
+<tr><td> <code>requests.memory</code> </td><td> String </td><td> To reserve node's memory </td><td> <code>{}</code> </td></tr>
+<tr><td> <code>requests.cpu</code> </td><td> String </td><td> To reserve node's cpu </td><td> <code>{}</code> </td></tr>
+<tr><td> <code>limits.memory</code> </td><td> String </td><td> To limit node's memory </td><td> <code>{}</code> </td></tr>
+<tr><td> <code>limits.cpu</code> </td><td> String </td><td>  To limit node's cpu  </td><td> <code>{}</code> </td></tr>
+</tbody></table>
+<p><strong>References:</strong></p>
+<ul>
+<li><a href="https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/">Managing Resources for Containers</a></li>
+<li><a href="https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#requests-and-limits">Requests and Limits</a></li>
+</ul>
 
                     </main>
 

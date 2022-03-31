@@ -12,7 +12,7 @@ export class Message {
         console.log("    -f  [OPTIONS] Levis configuration path");
         console.log("    -o  [OPTIONS] Output of kubernetes configuration file ");
         console.log("    -v  [OPTIONS] log level 1: info (default) 2: debug ");
-        // console.log("    -v, --version    Print version info and exit ");
+        console.log("    version    Print version info and exit ");
         process.exit(0);
     } 
 

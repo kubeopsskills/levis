@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Deployment.md - </title>
+        <title>Deployment - </title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -73,7 +73,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="README.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="cli/README.html"><strong aria-hidden="true">2.</strong> Command Line Tool</a></li><li><ol class="section"><li><a href="cli/create.html"><strong aria-hidden="true">2.1.</strong> create</a></li><li><a href="cli/import.html"><strong aria-hidden="true">2.2.</strong> import</a></li><li><a href="cli/apply.html"><strong aria-hidden="true">2.3.</strong> apply</a></li><li><a href="cli/version.html"><strong aria-hidden="true">2.4.</strong> version</a></li><li><a href="cli/options.html"><strong aria-hidden="true">2.5.</strong> options</a></li></ol></li><li><a href="config/README.html"><strong aria-hidden="true">3.</strong> YAML Config file </a></li><li><ol class="section"><li><a href="config/deployment/README.html" class="active"><strong aria-hidden="true">3.1.</strong> Deployment.md</a></li><li><ol class="section"><li><a href="config/deployment/metadata.html"><strong aria-hidden="true">3.1.1.</strong> Metadata</a></li><li><a href="config/deployment/spec.html"><strong aria-hidden="true">3.1.2.</strong> Spec</a></li><li><a href="config/deployment/containers.html"><strong aria-hidden="true">3.1.3.</strong> Containers</a></li><li><ol class="section"><li><a href="config/deployment/health-check.html"><strong aria-hidden="true">3.1.3.1.</strong> Health Check</a></li><li><a href="config/deployment/resources.html"><strong aria-hidden="true">3.1.3.2.</strong> Resources</a></li><li><a href="config/deployment/env.html"><strong aria-hidden="true">3.1.3.3.</strong> Env and Config</a></li><li><a href="config/deployment/volume.html"><strong aria-hidden="true">3.1.3.4.</strong> Volume</a></li></ol></li></ol></li><li><a href="config/service/README.html"><strong aria-hidden="true">3.2.</strong> Service</a></li><li><ol class="section"><li><a href="config/service/metadata.html"><strong aria-hidden="true">3.2.1.</strong> Metadata</a></li><li><a href="config/service/spec.html"><strong aria-hidden="true">3.2.2.</strong> Spec</a></li></ol></li></ol></li><li><a href="architecture.html"><strong aria-hidden="true">4.</strong> Architecture</a></li><li><a href="ci/README.html"><strong aria-hidden="true">5.</strong> Github Actions CI</a></li><li><a href="CHANGELOG/CHANGELOG.html"><strong aria-hidden="true">6.</strong> CHANGELOG</a></li><li class="spacer"></li><li class="affix"><a href="who-uses-this.html">Who uses this?</a></li><li class="affix"><a href="CONTRIBUTING.html">CONTRIBUTING</a></li></ol>
+            <ol class="chapter"><li><a href="README.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="cli/README.html"><strong aria-hidden="true">2.</strong> Command Line Tool</a></li><li><ol class="section"><li><a href="cli/create.html"><strong aria-hidden="true">2.1.</strong> create</a></li><li><a href="cli/import.html"><strong aria-hidden="true">2.2.</strong> import</a></li><li><a href="cli/apply.html"><strong aria-hidden="true">2.3.</strong> apply</a></li><li><a href="cli/version.html"><strong aria-hidden="true">2.4.</strong> version</a></li><li><a href="cli/options.html"><strong aria-hidden="true">2.5.</strong> options</a></li></ol></li><li><a href="config/README.html"><strong aria-hidden="true">3.</strong> YAML Config file </a></li><li><ol class="section"><li><a href="config/deployment/README.html" class="active"><strong aria-hidden="true">3.1.</strong> Deployment</a></li><li><ol class="section"><li><a href="config/deployment/metadata.html"><strong aria-hidden="true">3.1.1.</strong> Metadata</a></li><li><a href="config/deployment/spec.html"><strong aria-hidden="true">3.1.2.</strong> Spec</a></li><li><a href="config/deployment/containers.html"><strong aria-hidden="true">3.1.3.</strong> Containers</a></li><li><ol class="section"><li><a href="config/deployment/health-check.html"><strong aria-hidden="true">3.1.3.1.</strong> Health Check</a></li><li><a href="config/deployment/resources.html"><strong aria-hidden="true">3.1.3.2.</strong> Resources</a></li><li><a href="config/deployment/env.html"><strong aria-hidden="true">3.1.3.3.</strong> Env and Config</a></li><li><a href="config/deployment/volume.html"><strong aria-hidden="true">3.1.3.4.</strong> Volume</a></li></ol></li></ol></li><li><a href="config/service/README.html"><strong aria-hidden="true">3.2.</strong> Service</a></li><li><ol class="section"><li><a href="config/service/metadata.html"><strong aria-hidden="true">3.2.1.</strong> Metadata</a></li><li><a href="config/service/spec.html"><strong aria-hidden="true">3.2.2.</strong> Spec</a></li></ol></li></ol></li><li><a href="architecture.html"><strong aria-hidden="true">4.</strong> Architecture</a></li><li><a href="ci/README.html"><strong aria-hidden="true">5.</strong> Github Actions CI</a></li><li><a href="CHANGELOG/CHANGELOG.html"><strong aria-hidden="true">6.</strong> CHANGELOG</a></li><li class="spacer"></li><li class="affix"><a href="who-uses-this.html">Who uses this?</a></li><li class="affix"><a href="CONTRIBUTING.html">CONTRIBUTING</a></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -119,7 +119,31 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="config/deployment/README.html#coming-soon" id="coming-soon"><h1>Coming Soon...</h1></a>
+                        <a class="header" href="config/deployment/README.html#deployment" id="deployment"><h1>Deployment</h1></a>
+<p>A Deployment provides declarative updates for Pods and ReplicaSets.</p>
+<a class="header" href="config/deployment/README.html#use-case" id="use-case"><h2>Use Case</h2></a>
+<p>The following are typical use cases for Deployments:</p>
+<ul>
+<li><a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#creating-a-deployment">Create a Deployment to rollout a ReplicaSet</a>. The ReplicaSet creates Pods in the background. Check the status of the rollout to see if it succeeds or not.</li>
+<li><a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#updating-a-deployment">Declare the new state of the Pods</a> by updating the PodTemplateSpec of the Deployment. A new ReplicaSet is created and the Deployment manages moving the Pods from the old ReplicaSet to the new one at a controlled rate. Each new ReplicaSet updates the revision of the Deployment.</li>
+<li><a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#rolling-back-a-deployment">Rollback to an earlier Deployment revision</a> if the current state of the Deployment is not stable. Each rollback updates the revision of the Deployment.</li>
+<li><a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#pausing-and-resuming-a-deployment">Scale up the Deployment to facilitate more load</a>.</li>
+<li><a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#pausing-and-resuming-a-deployment">Pause the Deployment</a> to apply multiple fixes to its PodTemplateSpec and then resume it to start a new rollout.</li>
+<li><a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#deployment-status">Use the status of the Deployment</a> as an indicator that a rollout has stuck.</li>
+<li><a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#clean-up-policy">Clean up older ReplicaSets</a> that you don't need anymore.</li>
+</ul>
+<p>reference: <a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/">link</a></p>
+<a class="header" href="config/deployment/README.html#creating-a-deployment" id="creating-a-deployment"><h2>Creating a Deployment</h2></a>
+<p>The following is an example of a Deployment. It creates a kubernetes configuration to bring up nginx Pods and Service:</p>
+<pre><code class="language-yaml">levis:
+  name: &quot;nginx&quot;
+  deployment:
+    containers:
+      image: &quot;nginx&quot;
+  service:
+    enable: true
+</code></pre>
+<p>this example: [link] (https://github.com/kubeopsskills/levis/blob/develop/examples/levis.yaml)</p>
 
                     </main>
 

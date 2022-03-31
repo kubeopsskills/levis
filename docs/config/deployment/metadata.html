@@ -73,7 +73,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="README.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="cli/README.html"><strong aria-hidden="true">2.</strong> Command Line Tool</a></li><li><ol class="section"><li><a href="cli/create.html"><strong aria-hidden="true">2.1.</strong> create</a></li><li><a href="cli/import.html"><strong aria-hidden="true">2.2.</strong> import</a></li><li><a href="cli/apply.html"><strong aria-hidden="true">2.3.</strong> apply</a></li><li><a href="cli/version.html"><strong aria-hidden="true">2.4.</strong> version</a></li><li><a href="cli/options.html"><strong aria-hidden="true">2.5.</strong> options</a></li></ol></li><li><a href="config/README.html"><strong aria-hidden="true">3.</strong> YAML Config file </a></li><li><ol class="section"><li><a href="config/deployment/README.html"><strong aria-hidden="true">3.1.</strong> Deployment.md</a></li><li><ol class="section"><li><a href="config/deployment/metadata.html" class="active"><strong aria-hidden="true">3.1.1.</strong> Metadata</a></li><li><a href="config/deployment/spec.html"><strong aria-hidden="true">3.1.2.</strong> Spec</a></li><li><a href="config/deployment/containers.html"><strong aria-hidden="true">3.1.3.</strong> Containers</a></li><li><ol class="section"><li><a href="config/deployment/health-check.html"><strong aria-hidden="true">3.1.3.1.</strong> Health Check</a></li><li><a href="config/deployment/resources.html"><strong aria-hidden="true">3.1.3.2.</strong> Resources</a></li><li><a href="config/deployment/env.html"><strong aria-hidden="true">3.1.3.3.</strong> Env and Config</a></li><li><a href="config/deployment/volume.html"><strong aria-hidden="true">3.1.3.4.</strong> Volume</a></li></ol></li></ol></li><li><a href="config/service/README.html"><strong aria-hidden="true">3.2.</strong> Service</a></li><li><ol class="section"><li><a href="config/service/metadata.html"><strong aria-hidden="true">3.2.1.</strong> Metadata</a></li><li><a href="config/service/spec.html"><strong aria-hidden="true">3.2.2.</strong> Spec</a></li></ol></li></ol></li><li><a href="architecture.html"><strong aria-hidden="true">4.</strong> Architecture</a></li><li><a href="ci/README.html"><strong aria-hidden="true">5.</strong> Github Actions CI</a></li><li><a href="CHANGELOG/CHANGELOG.html"><strong aria-hidden="true">6.</strong> CHANGELOG</a></li><li class="spacer"></li><li class="affix"><a href="who-uses-this.html">Who uses this?</a></li><li class="affix"><a href="CONTRIBUTING.html">CONTRIBUTING</a></li></ol>
+            <ol class="chapter"><li><a href="README.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><a href="cli/README.html"><strong aria-hidden="true">2.</strong> Command Line Tool</a></li><li><ol class="section"><li><a href="cli/create.html"><strong aria-hidden="true">2.1.</strong> create</a></li><li><a href="cli/import.html"><strong aria-hidden="true">2.2.</strong> import</a></li><li><a href="cli/apply.html"><strong aria-hidden="true">2.3.</strong> apply</a></li><li><a href="cli/version.html"><strong aria-hidden="true">2.4.</strong> version</a></li><li><a href="cli/options.html"><strong aria-hidden="true">2.5.</strong> options</a></li></ol></li><li><a href="config/README.html"><strong aria-hidden="true">3.</strong> YAML Config file </a></li><li><ol class="section"><li><a href="config/deployment/README.html"><strong aria-hidden="true">3.1.</strong> Deployment</a></li><li><ol class="section"><li><a href="config/deployment/metadata.html" class="active"><strong aria-hidden="true">3.1.1.</strong> Metadata</a></li><li><a href="config/deployment/spec.html"><strong aria-hidden="true">3.1.2.</strong> Spec</a></li><li><a href="config/deployment/containers.html"><strong aria-hidden="true">3.1.3.</strong> Containers</a></li><li><ol class="section"><li><a href="config/deployment/health-check.html"><strong aria-hidden="true">3.1.3.1.</strong> Health Check</a></li><li><a href="config/deployment/resources.html"><strong aria-hidden="true">3.1.3.2.</strong> Resources</a></li><li><a href="config/deployment/env.html"><strong aria-hidden="true">3.1.3.3.</strong> Env and Config</a></li><li><a href="config/deployment/volume.html"><strong aria-hidden="true">3.1.3.4.</strong> Volume</a></li></ol></li></ol></li><li><a href="config/service/README.html"><strong aria-hidden="true">3.2.</strong> Service</a></li><li><ol class="section"><li><a href="config/service/metadata.html"><strong aria-hidden="true">3.2.1.</strong> Metadata</a></li><li><a href="config/service/spec.html"><strong aria-hidden="true">3.2.2.</strong> Spec</a></li></ol></li></ol></li><li><a href="architecture.html"><strong aria-hidden="true">4.</strong> Architecture</a></li><li><a href="ci/README.html"><strong aria-hidden="true">5.</strong> Github Actions CI</a></li><li><a href="CHANGELOG/CHANGELOG.html"><strong aria-hidden="true">6.</strong> CHANGELOG</a></li><li class="spacer"></li><li class="affix"><a href="who-uses-this.html">Who uses this?</a></li><li class="affix"><a href="CONTRIBUTING.html">CONTRIBUTING</a></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -119,14 +119,52 @@
 
                 <div id="content" class="content">
                     <main>
-                        <p>name: &quot;nginx&quot;
-labels:
-app: nginx
-run: nginx
-annotations:
-app: nginx
-nginx.master: &quot;true&quot;</p>
-<a class="header" href="config/deployment/metadata.html#coming-soon" id="coming-soon"><h1>Coming Soon...</h1></a>
+                        <a class="header" href="config/deployment/metadata.html#metadata" id="metadata"><h1>Metadata</h1></a>
+<p>This is metadata about the resource, such as its name, type, api version, annotations, and labels. This contains fields that maybe updated both by the end user and the system (e.g. annotations, labels and so on).</p>
+<a class="header" href="config/deployment/metadata.html#example-of-metadata" id="example-of-metadata"><h2>Example of Metadata</h2></a>
+<pre><code class="language-yaml">deployment:
+  name: &quot;nginx&quot;
+  labels:
+    app: nginx
+    run: nginx
+  annotations:
+    app: nginx
+    nginx.master: &quot;true&quot;
+</code></pre>
+<a class="header" href="config/deployment/metadata.html#configuration" id="configuration"><h3>Configuration</h3></a>
+<p>The following tables list the configurable parameters of the <code>metadata</code> chart and their default values.</p>
+<table><thead><tr><th> Parameter </th><th> Type </th><th> Description </th><th> Default </th></tr></thead><tbody>
+<tr><td> <code>levis.name</code> </td><td> String </td><td> To name the deployment and service </td><td> <code>undefined</code> </td></tr>
+<tr><td> <code>deployment.name</code> </td><td> String </td><td> To name the deployment </td><td> <code>inherit from levis.name</code> </td></tr>
+<tr><td> <code>deployment.labels</code> </td><td> String : String </td><td> To define deployment labels </td><td> <code>{}</code> </td></tr>
+<tr><td> <code>deployment.annotations</code> </td><td> String : String </td><td> To define deployment annotations </td><td> <code>{}</code> </td></tr>
+</tbody></table>
+<a class="header" href="config/deployment/metadata.html#labels" id="labels"><h2>Labels</h2></a>
+<p>You can visualize and manage Kubernetes objects with more tools than kubectl and the dashboard. A common set of labels allows tools to work interoperably, describing objects in a common manner that all tools can understand.</p>
+<a class="header" href="config/deployment/metadata.html#example" id="example"><h3>Example</h3></a>
+<pre><code class="language-yaml">deployment:
+  labels:
+    app.kubernetes.io/name: &quot;nginx&quot;
+    app.kubernetes.io/instance: &quot;nginx-01&quot;
+    app.kubernetes.io/version: &quot;1.1.0-stable&quot;
+    app.kubernetes.io/component: &quot;reverse-proxy&quot;
+    app.kubernetes.io/part-of: &quot;api-gateway&quot;
+    app.kubernetes.io/managed-by: &quot;levis&quot;
+    app.kubernetes.io/created-by: &quot;controller-manager&quot;
+</code></pre>
+<a class="header" href="config/deployment/metadata.html#annotations" id="annotations"><h2>Annotations</h2></a>
+<p>You can use Kubernetes annotations to attach arbitrary non-identifying metadata to objects. Clients such as tools and libraries can retrieve this metadata.</p>
+<a class="header" href="config/deployment/metadata.html#example-1" id="example-1"><h3>Example</h3></a>
+<pre><code class="language-yaml">deployment:
+  annotations:
+    registry: &quot;https://hub.docker.com/&quot;
+    credential: &quot;secret-manager&quot;
+</code></pre>
+<p>references:</p>
+<ul>
+<li><a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/">Recommended Labels</a></li>
+<li><a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/">Annotations</a></li>
+</ul>
 
                     </main>
 

@@ -1,5 +1,11 @@
 export enum LevisCommand {
-    CREATE = "create"
+    CREATE = "create",
+    VERSION = "version"
+}
+
+export enum Path {
+    OUTPUT_PATH =  "manifests/levis.k8s.yaml",
+    CURRENT_PATH =  "./dist/levis.k8s.yaml"
 }
 
 export enum MetaData {
