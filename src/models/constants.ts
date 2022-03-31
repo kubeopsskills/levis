@@ -1,5 +1,6 @@
 export enum LevisCommand {
-    CREATE = "create"
+    CREATE = "create",
+    VERSION = "version"
 }
 
 export enum Path {

@@ -1,3 +1,7 @@
 import { CreateCommand } from "./createCommand";
+import { VersionCommand} from "./versionCommand";
 
-export default CreateCommand;
+export {
+    CreateCommand,
+    VersionCommand
+};
