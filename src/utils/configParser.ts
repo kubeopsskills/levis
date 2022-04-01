@@ -2,6 +2,7 @@ import { DeploymentModel, ServiceModel, LevisConfig } from "../models";
 import * as Constants from "../models/constants";
 import * as log4js from "log4js";
 import { EnvVar, DeploymentStrategy, EnvFromSource, Volume, VolumeMount, Probe, Affinity, NodeSelectorRequirement, Toleration } from "../../libs/k8s";
+import { ServicePort } from "../../libs/k8s";
 import { TypeMapper } from ".";
 
 const log = log4js.getLogger();
@@ -249,11 +250,27 @@ export class ConfigParser {
         return volume
     }
       
+    private static getDefaultPort(config: LevisConfig): ServicePort[] | undefined {
+        const containerPort = config.levis.deployment.containers.port;
+        log.debug("containerPort: ", containerPort);
+        if (!containerPort) {
+            return config.levis.service?.ports;
+        }
+        log.debug("Generate  ");
+        return [{
+            name: config.levis.name,
+            port: containerPort,
+            targetPort: containerPort
+        }];
+    } 
+
     public static ParseService (config: LevisConfig): ServiceModel {
         const serviceName = config.levis.service?.name || config.levis.name;
         const deploymentName = config.levis.deployment.name || config.levis.name;
         const deploymentLabels = config.levis.deployment.labels || {app: deploymentName};
         const deploymentMatchLabels = config.levis.deployment.matchLabels || deploymentLabels;
+        const servicePort = config.levis.service?.ports ?? this.getDefaultPort(config);
+        log.debug("ServicePort: ", servicePort);
         return {
             name: serviceName,
             namespace: config.levis.namespace || Constants.MetaData.DEFAULT_NAMESPACE,
@@ -261,7 +278,7 @@ export class ConfigParser {
             annotations: config.levis.service?.annotations,
             selector: config.levis.service?.selector || deploymentMatchLabels,
             type: config.levis.service?.type || Constants.Service.TYPE_CLUSTER_IP,
-            servicePort: config.levis.service?.ports
+            servicePort: servicePort
         };
     }
 
