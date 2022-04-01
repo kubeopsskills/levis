@@ -4,4 +4,4 @@ levis:
     containers:
       image: "nginx"
   service:
-    enable: true
+    enabled: true

@@ -20,10 +20,12 @@ export class MicroServiceChart extends Chart {
         const config: LevisConfig = YAML.parse(Fs.readFileSync(configFilePath, {encoding: 'utf-8'}))
         log.debug("LevisConfig: ", config);
         log.debug("Service: ", config.levis.service);
-        if ( config.levis.service?.enabled || !!config.levis.service){
+        const isServiceEnabled = config.levis.service?.enabled ?? true;
+        if ( !!config.levis.service && isServiceEnabled ){
           log.debug("Generate Service ...")
           this.generateService(ConfigParser.ParseService(config));
         }
+        log.debug("Deployment: ", config.levis.deployment);
         log.debug("Generate Deployment ...")
         this.generateDeployment(ConfigParser.ParseDeployment(config));
     }
