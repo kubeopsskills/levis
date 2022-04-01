@@ -311,7 +311,8 @@ export class ConfigParser {
         log.debug("envVar: ", containerEnv);
         
         const isEnableHealthCheck = config.levis.deployment?.enableHealthCheck ?? true
-        
+        log.debug("args: ", config.levis.deployment.containers.args);
+        log.debug("cmd: ", config.levis.deployment.containers.command);
         return {
           name: deploymentName,
           namespace:
@@ -339,6 +340,8 @@ export class ConfigParser {
             config.levis.deployment.containers.configEnvName,
             config.levis.deployment.containers.secretEnvName
           ),
+          containerCommand: config.levis.deployment.containers.command,
+          containerArgs: config.levis.deployment.containers.args,
           resources: config.levis.deployment.containers.resources,
           readinessProbe: isEnableHealthCheck
             ? this.createReadinessProbe(config)

@@ -4,5 +4,7 @@ levis:
     containers:
       image: "nginx"
       port: 80
+      command: ["/bin/echo", "sleep 80;"]
+      args: ["$(MESSAGE)", "abc"]
   service:
-    enabled: true
+    enabled: false

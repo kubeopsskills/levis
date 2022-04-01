@@ -64,6 +64,8 @@ interface Containers {
     port: number;
     env?: { [key: string]: string };
     envField?: EnvField[];
+    command?: string[];
+    args?: string[];
     resources?: ResourceRequirements;
     livenessProbe?: LivenessProbe;
     readinessProbe?: ReadinessProbe;

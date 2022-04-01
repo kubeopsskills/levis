@@ -13,8 +13,10 @@ export interface DeploymentModel extends KubernetesMetadata  {
     containerImagePullPolicy: string;
     containerPort: number;
     containerEnvironment?: EnvVar[];
-    containerEnvironmentFrom?: EnvFromSource[]
-    containerVolumeMounts?: VolumeMount[]
+    containerEnvironmentFrom?: EnvFromSource[];
+    containerCommand?: string[];
+    containerArgs?: string[];
+    containerVolumeMounts?: VolumeMount[];
     resources?: ResourceRequirements;
     livenessProbe: Probe;
     readinessProbe: Probe;

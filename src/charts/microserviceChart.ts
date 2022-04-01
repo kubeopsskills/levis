@@ -85,6 +85,8 @@ export class MicroServiceChart extends Chart {
                           containerPort: model.containerPort 
                         } 
                       ],
+                      command: model.containerCommand,
+                      args: model.containerArgs,
                       env: model.containerEnvironment,
                       resources: model.resources,
                       envFrom: model.containerEnvironmentFrom,
