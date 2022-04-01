@@ -119,7 +119,6 @@ export class ConfigParser {
             timeoutSeconds: config.levis.deployment.containers.readinessProbe?.timeoutSeconds || Constants.Container.READINESS_TIMEOUT_SECONDS,
         }
         switch(config.levis.deployment.containers.readinessProbe?.type){
-            default:
             case Constants.Container.PROBE_TYPE_HTTP:
             readinessProbe.httpGet = {
                 path: config.levis.deployment.containers.readinessProbe?.path || Constants.Container.LIVENESS_PATH,
@@ -151,7 +150,6 @@ export class ConfigParser {
             timeoutSeconds: config.levis.deployment.containers.livenessProbe?.timeoutSeconds || Constants.Container.LIVENESS_TIMEOUT_SECONDS,
         }
         switch(config.levis.deployment.containers.livenessProbe?.type) {
-            default:
             case Constants.Container.PROBE_TYPE_HTTP:
             livenessProbe.httpGet = {
                 path: config.levis.deployment.containers.livenessProbe?.path || Constants.Container.LIVENESS_PATH,
