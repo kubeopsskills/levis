@@ -1,0 +1,15 @@
+levis:
+  name: "nginx"
+  deployment:
+    name: "nginx"
+    containers:
+      image: "nginx"
+      port: 80
+      livenessProbe:
+        type: tcpsocket
+        initialDelaySeconds: 10
+      readinessProbe:
+        type: tcpsocket
+        initialDelaySeconds: 10
+  service:
+    enabled: true

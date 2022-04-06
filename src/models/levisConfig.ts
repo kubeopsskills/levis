@@ -81,7 +81,7 @@ interface LivenessProbe {
     command?: string;
     port?: number;
     initialDelaySeconds?: number;
-    intervalSeconds?: number;
+    periodSeconds?: number;
     successThreshold?: number;
     failureThreshold?: number;
     timeoutSeconds?: number;
@@ -93,7 +93,7 @@ interface ReadinessProbe {
     command?: string;
     port?: number;
     initialDelaySeconds?: number;
-    intervalSeconds?: number;
+    periodSeconds?: number;
     successThreshold?: number;
     failureThreshold?: number;
     timeoutSeconds?: number;

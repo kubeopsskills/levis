@@ -114,30 +114,36 @@ export class ConfigParser {
     private static createReadinessProbe(config: LevisConfig): Probe {
         const readinessProbe: Probe =  {
             initialDelaySeconds: config.levis.deployment.containers.readinessProbe?.initialDelaySeconds || Constants.Container.READINESS_INITIAL_DELAY_SECONDS,
-            periodSeconds: config.levis.deployment.containers.readinessProbe?.intervalSeconds || Constants.Container.READINESS_PERIOD_SECONDS,
+            periodSeconds: config.levis.deployment.containers.readinessProbe?.periodSeconds || Constants.Container.READINESS_PERIOD_SECONDS,
             successThreshold: config.levis.deployment.containers.readinessProbe?.successThreshold || Constants.Container.READINESS_SUCCESS_THRESHOLD,
             failureThreshold: config.levis.deployment.containers.readinessProbe?.failureThreshold || Constants.Container.READINESS_FAILURE_THRESHOLD,
             timeoutSeconds: config.levis.deployment.containers.readinessProbe?.timeoutSeconds || Constants.Container.READINESS_TIMEOUT_SECONDS,
         }
-        switch(config.levis.deployment.containers.readinessProbe?.type){
-            case Constants.Container.PROBE_TYPE_HTTP:
-            readinessProbe.httpGet = {
-                path: config.levis.deployment.containers.readinessProbe?.path || Constants.Container.LIVENESS_PATH,
-                port: config.levis.deployment.containers.readinessProbe?.port || config.levis.deployment.containers.port,
+        const probType = config.levis.deployment.containers.readinessProbe?.type ?? Constants.Container.PROBE_TYPE_HTTP;
+        switch(probType.toLowerCase()){
+            case Constants.Container.PROBE_TYPE_HTTP: {
+                readinessProbe.httpGet = {
+                    path: config.levis.deployment.containers.readinessProbe?.path || Constants.Container.LIVENESS_PATH,
+                    port: config.levis.deployment.containers.readinessProbe?.port || config.levis.deployment.containers.port,
+                }
+                break;
             }
-            break;
-            case Constants.Container.PROBE_TYPE_SOCKET:
-            readinessProbe.tcpSocket = {
-                port: config.levis.deployment.containers.readinessProbe?.port || config.levis.deployment.containers.port,
+            case Constants.Container.PROBE_TYPE_SOCKET: {
+                const socketPort =   config.levis.deployment.containers.readinessProbe?.port ?? config.levis.deployment.containers.port;
+                readinessProbe.tcpSocket = {
+                    port: socketPort,
+                }
+                break;
             }
-            break;
-            case Constants.Container.PROBE_TYPE_COMMAND:
-            readinessProbe.exec = {
-                command: [
-                    config.levis.deployment.containers.readinessProbe?.command || Constants.Container.PROBE_DEFAULT_COMMAND
-                ]
-            }    
-            break;
+            case Constants.Container.PROBE_TYPE_COMMAND: {
+
+                readinessProbe.exec = {
+                    command: [
+                        config.levis.deployment.containers.readinessProbe?.command || Constants.Container.PROBE_DEFAULT_COMMAND
+                    ]
+                }    
+                break;
+            }
         }
         return readinessProbe
     }
@@ -145,30 +151,34 @@ export class ConfigParser {
     private static createLivenessProbe(config: LevisConfig): Probe{
         const livenessProbe: Probe = { 
             initialDelaySeconds: config.levis.deployment.containers.livenessProbe?.initialDelaySeconds || Constants.Container.LIVENESS_INITIAL_DELAY_SECONDS,
-            periodSeconds: config.levis.deployment.containers.livenessProbe?.intervalSeconds || Constants.Container.LIVENESS_PERIOD_SECONDS,
+            periodSeconds: config.levis.deployment.containers.livenessProbe?.periodSeconds || Constants.Container.LIVENESS_PERIOD_SECONDS,
             successThreshold: config.levis.deployment.containers.livenessProbe?.successThreshold || Constants.Container.LIVENESS_SUCCESS_THRESHOLD,
             failureThreshold: config.levis.deployment.containers.livenessProbe?.failureThreshold || Constants.Container.LIVENESS_FAILURE_THRESHOLD,
             timeoutSeconds: config.levis.deployment.containers.livenessProbe?.timeoutSeconds || Constants.Container.LIVENESS_TIMEOUT_SECONDS,
         }
-        switch(config.levis.deployment.containers.livenessProbe?.type) {
-            case Constants.Container.PROBE_TYPE_HTTP:
-            livenessProbe.httpGet = {
-                path: config.levis.deployment.containers.livenessProbe?.path || Constants.Container.LIVENESS_PATH,
-                port: config.levis.deployment.containers.livenessProbe?.port || config.levis.deployment.containers.port,
+        const probType = config.levis.deployment.containers.livenessProbe?.type ?? Constants.Container.PROBE_TYPE_HTTP;
+        switch(probType.toLowerCase()) {
+            case Constants.Container.PROBE_TYPE_HTTP:  {
+                livenessProbe.httpGet = {
+                    path: config.levis.deployment.containers.livenessProbe?.path || Constants.Container.LIVENESS_PATH,
+                    port: config.levis.deployment.containers.livenessProbe?.port || config.levis.deployment.containers.port,
+                }
+                break;
             }
-            break;
-            case Constants.Container.PROBE_TYPE_SOCKET:
-            livenessProbe.tcpSocket = {
-                port: config.levis.deployment.containers.livenessProbe?.port || config.levis.deployment.containers.port,
+            case Constants.Container.PROBE_TYPE_SOCKET: {
+                livenessProbe.tcpSocket = {
+                    port: config.levis.deployment.containers.livenessProbe?.port || config.levis.deployment.containers.port,
+                }
+                break;
             }
-            break;
-            case Constants.Container.PROBE_TYPE_COMMAND:
-            livenessProbe.exec = {
-                command: [
-                    config.levis.deployment.containers.livenessProbe?.command || Constants.Container.PROBE_DEFAULT_COMMAND
-                ]
-            }    
-            break;
+            case Constants.Container.PROBE_TYPE_COMMAND: {
+                livenessProbe.exec = {
+                    command: [
+                        config.levis.deployment.containers.livenessProbe?.command || Constants.Container.PROBE_DEFAULT_COMMAND
+                    ]
+                }    
+                break;
+            }
         }
         return livenessProbe
     }

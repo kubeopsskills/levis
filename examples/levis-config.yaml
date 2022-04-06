@@ -35,7 +35,7 @@ levis:
         path: /actuator/health/liveness
         port: "8080"
         initialDelaySeconds: 30
-        intervalSeconds: 10
+        periodSeconds: 10
         successThreshold: 10
         failureThreshold: 10
         timeoutSeconds: 10
@@ -43,7 +43,7 @@ levis:
         path: /actuator/health/readiness
         port: "8080"
         initialDelaySeconds: 30
-        intervalSeconds: 10
+        periodSeconds: 10
         successThreshold: 10
         failureThreshold: 10
         timeoutSeconds: 10

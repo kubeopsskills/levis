@@ -18,7 +18,7 @@ This is an project built with ❤️ by [KubeOps Skills](https://www.kubeops.gur
 ## Versioning
 | Levis Release |cdk8s Version | construct Version | log4js Version | minimist Version | yaml Version |
 |----------------|------------ |---------------------|----------------------|------------------|------------------|
-| 1.2.0-beta | 0.30.0 | 3.0.14 | 6.3.0 | 1.2.5 | 2.0.0-6 |
+| 1.3.1-beta | 0.30.0 | 3.0.14 | 6.3.0 | 1.2.5 | 2.0.0-6 |
 
 ## Demo
 
