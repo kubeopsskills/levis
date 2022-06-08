@@ -20,6 +20,8 @@ so the reviewer can focus only on list above also this will keep PR in a reasona
 ## Commit message
 For the commit message, use the following format: [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#specification)
 
+You can use [commitlint](https://commitlint.js.org/#/guides-local-setup) to verify your commit message.
+
 
 ## How to contribute
 

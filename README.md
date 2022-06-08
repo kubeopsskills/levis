@@ -1,21 +1,87 @@
-========================================================================================================
+# Levis
 
- Your cdk8s typescript project is ready!
+## Kubernetes Manifest Generator
 
-   cat help         Print this message
- 
-  Compile:
-   npm run compile     Compile typescript code to javascript (or "yarn watch")
-   npm run watch       Watch for changes and compile typescript in the background
-   npm run build       Compile + synth
+**Levis** is Kubernetes Manifest Generator for simply creating Kubernetes applications. Levis generates pure Kubernetes YAML - you can use Levis to define Kubernetes applications with YAML syntax for any Kubernetes clusters running anywhere.
 
-  Synthesize:
-   npm run synth       Synthesize k8s manifests from charts to dist/ (ready for 'kubectl apply -f')
+This is an project built with ❤️ by [KubeOps Skills](https://www.kubeops.guru). We encourage you to [try it out](#getting-started), [leave feedback](#help--feedback), and [jump in to help](#contributing)!
+---
+[![License MIT](https://img.shields.io/badge/license-MIT-green?label=License)](https://github.com/kubeopsskills/levis/blob/v2.0.0/LICENSE)
 
- Deploy:
-   kubectl apply -f dist/
+---
+### Contents
+- [Levis](#levis)
+  - [Kubernetes Manifest Generator](#kubernetes-manifest-generator)
+    - [Contents](#contents)
+  - [Versioning](#versioning)
+  - [Demo](#demo)
+  - [Getting Started](#getting-started)
+    - [Installation](#installation)
+    - [Develop](#develop)
+    - [Usage](#usage)
+  - [Help & Feedback](#help--feedback)
+  - [Examples](#examples)
+  - [Roadmap](#roadmap)
+  - [Contributing](#contributing)
+  - [License](#license)
 
- Upgrades:
-   npm run import        Import/update k8s apis (you should check-in this directory)
-   npm run upgrade       Upgrade cdk8s modules to latest version
-   npm run upgrade:next  Upgrade cdk8s modules to latest "@next" version (last commit)
+## Versioning
+| Levis Release |cdk8s Version | construct Version | log4js Version | minimist Version | yaml Version |
+|----------------|------------ |---------------------|----------------------|------------------|------------------|
+| 2.0.0-beta| 2.3.20 | 10.1.32 | 6.5.2 | 1.2.6 | 2.1.1 |
+
+## Demo
+
+## Getting Started
+### Installation
+Levis is available on Linux, macOS and Windows platforms.
+- Binaries for Linux, Windows and Mac are available as tarballs in the [release](https://github.com/kubeopsskills/levis/releases) page.
+
+- macOS with homebrew
+  ```bash
+  # Install homebrew
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  ```
+
+  ```bash
+  brew tap kubeopsskills/levis
+  brew install levis
+  ```
+
+### Develop
+- must install [nodejs](https://nodejs.org/en/) and [yarn](https://classic.yarnpkg.com/lang/en/docs/install/)
+- use `yarn` for installing dependencies
+
+### Usage
+after install levis you can use
+- `levis create -f <levis-config.yaml> -o <output.yaml>`
+- **-f** levis config yaml see [Examples Directory](./examples)
+- **-o** name of kubernetes config generated from levis
+- **-v** log level
+  -  1 for info (default)
+  -  2 for debug
+
+## Help & Feedback
+Interacting with the community and the development team is a great way to
+contribute to the project. Please consider the following venues (in order):
+
+* Search [open issues](https://github.com/kubeopsskills/levis/issues)
+* Slack: #project channel in [levis](https://levis-k8s.slack.com)
+
+## Examples
+
+See our [Examples Directory](./examples/README.md).
+
+## Roadmap
+
+See our [roadmap](https://github.com/kubeopsskills/levis/projects/1) for details about our plans for the project
+
+## Contributing
+
+We welcome community contributions and pull requests. See our [contribution
+guide](./CONTRIBUTING.md) for more information on how to report issues, set up a
+development environment and submit code.
+
+## License
+
+This project is distributed under the [MIT License, Copyright (c) 2021 KUBEOPS SKILLS Co., Ltd.](./LICENSE)
