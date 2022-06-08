@@ -94,7 +94,8 @@ export class MicroServiceChart extends Chart {
                       readinessProbe: model.readinessProbe,
                       volumeMounts: model.containerVolumeMounts
                     }
-                  ]
+                  ],
+                  terminationGracePeriodSeconds: model.terminationGracePeriodSeconds
                 }
               }
             }

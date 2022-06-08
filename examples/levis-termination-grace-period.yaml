@@ -1,0 +1,9 @@
+levis:
+  name: "nginx"
+  deployment:
+    containers:
+      terminationGracePeriodSeconds: 30
+      image: "nginx"
+      port: 80
+  service:
+    enabled: true

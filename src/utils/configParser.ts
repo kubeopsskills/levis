@@ -352,6 +352,7 @@ export class ConfigParser {
           ),
           containerCommand: config.levis.deployment.containers.command,
           containerArgs: config.levis.deployment.containers.args,
+          terminationGracePeriodSeconds: config.levis.deployment.containers.terminationGracePeriodSeconds,
           resources: config.levis.deployment.containers.resources,
           readinessProbe: isEnableHealthCheck
             ? this.createReadinessProbe(config)

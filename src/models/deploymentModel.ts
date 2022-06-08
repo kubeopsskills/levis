@@ -17,6 +17,7 @@ export interface DeploymentModel extends KubernetesMetadata  {
     containerCommand?: string[];
     containerArgs?: string[];
     containerVolumeMounts?: VolumeMount[];
+    terminationGracePeriodSeconds?: number;
     resources?: ResourceRequirements;
     livenessProbe: Probe;
     readinessProbe: Probe;

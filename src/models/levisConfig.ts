@@ -72,6 +72,7 @@ interface Containers {
     configEnvName?: string;
     secretEnvName?: string; 
     volumeMounts?: Volume[];
+    terminationGracePeriodSeconds?: number;
 }
 
 /* Container Probe */
