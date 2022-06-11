@@ -1,4 +1,4 @@
-language: typescript
-app: node main.js
+language: go
+app: go run .
 imports:
   - k8s

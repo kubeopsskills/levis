@@ -1,0 +1,1 @@
+go build -o bin cmd/levis.go 
