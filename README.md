@@ -27,8 +27,6 @@ This is an project built with ❤️ by [KubeOps Skills](https://www.kubeops.gur
 |----------------|------------ |---------------------|----------------------|------------------|------------------|
 | 1.4.0-beta| 0.30.0 | 3.0.14 | 6.3.0 | 1.2.5 | 2.0.0-6 |
 
-## Demo
-
 ## Getting Started
 ### Installation
 Levis is available on Linux, macOS and Windows platforms.
@@ -67,7 +65,7 @@ contribute to the project. Please consider the following venues (in order):
 
 ## Examples
 
-See our [Examples Directory](./examples/README.md).
+See our [Examples Directory](./examples).
 
 ## Roadmap
 
