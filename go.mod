@@ -10,4 +10,7 @@ require (
 	github.com/cdk8s-team/cdk8s-core-go/cdk8s/v2 v2.3.21
 	github.com/spf13/cobra v1.4.0 // indirect
 	github.com/spf13/viper v1.12.0 // indirect
+	go.uber.org/atomic v1.9.0 // indirect
+	go.uber.org/multierr v1.8.0 // indirect
+	go.uber.org/zap v1.21.0 // indirect
 )
