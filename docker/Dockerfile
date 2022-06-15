@@ -1,4 +1,4 @@
-FROM debian:10.7-slim
+FROM debian:11.3-slim
 LABEL maintainer="KubeOps Skills Open Source Software <support@kubeops.guru>"
 
 ARG RELEASE_VERSION=1.4.0-beta
