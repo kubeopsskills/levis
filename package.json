@@ -11,6 +11,7 @@
     "watch": "tsc -w --outDir bin/dev",
     "clean": "rm -rf bin manifests dist",
     "test": "jest",
+    "test:re-snapshot": "jest --updateSnapshot",
     "build-all": "yarn run clean && yarn run build",
     "lint": "eslint . --ext .ts",
     "start": "node bin/main.js"
