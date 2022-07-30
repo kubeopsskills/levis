@@ -23,7 +23,7 @@ jobs:
           echo ::set-output name=sha::"$(shasum -a 256 ./levis-${{ steps.latest_tag.outputs.tag }}-macos-x64.tar.gz | awk '{printf $1}')" 
 
       - name: Update levis homebrew formula
-        uses: naijabx/update-formula-homebrew-action@v1
+        uses: naijabx/update-formula-homebrew-action@v1.1
         with:
           repo: kubeopsskills/levis
           tap: kubeopsskills/homebrew-levis
