@@ -1,4 +1,4 @@
-import { EnvFromSource, EnvVar, ResourceRequirements, Volume, VolumeMount, Affinity, Probe, DeploymentStrategy, Toleration } from "../../libs/k8s";
+import { EnvFromSource, EnvVar, ResourceRequirements, Volume, VolumeMount, Affinity, Probe, DeploymentStrategy, Toleration, SecurityContext, PodSecurityContext } from "../../libs/k8s";
 import { KubernetesMetadata } from "./kubernetesMetadata";
 
 export interface DeploymentModel extends KubernetesMetadata  {
@@ -8,6 +8,8 @@ export interface DeploymentModel extends KubernetesMetadata  {
     matchLabels: { [key: string]: string };
     serviceAccount: string;
     deploymentVolumes?: Volume[];
+    podSecurityContext?: PodSecurityContext;
+    securityContext?: SecurityContext;
     containerName: string;
     containerImage: string;
     containerImagePullPolicy: string;

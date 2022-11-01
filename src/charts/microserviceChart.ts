@@ -70,6 +70,7 @@ export class MicroServiceChart extends Chart {
                   annotations: model.annotations
                 },
                 spec: {
+                  securityContext: model.podSecurityContext,
                   tolerations: model.toleration,
                   affinity: model.affinity,
                   serviceAccountName: model.serviceAccount,
@@ -79,6 +80,7 @@ export class MicroServiceChart extends Chart {
                       name: model.containerName,
                       image: model.containerImage,
                       imagePullPolicy: model.containerImagePullPolicy,
+                      securityContext: model.securityContext,
                       ports: [ 
                         { 
                           name: model.containerName, 

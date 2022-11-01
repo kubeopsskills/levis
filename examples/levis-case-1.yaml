@@ -9,6 +9,12 @@ levis:
     annotations:
       app: nginx
       nginx.master: "true"
+    securityContext:
+      capabilities: ["SYS_ADMIN", "NET_ADMIN", "SYS_TIME"]
+      runAsUser: 1000
+      runAsGroup: 3000
+      fsGroup: 2000
+      runAsNonRoot: false
     serviceAccount: microservice
     revisionHistoryLimit: 5
     replicas: 3
