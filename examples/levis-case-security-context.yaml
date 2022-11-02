@@ -1,0 +1,14 @@
+levis:
+  name: "nginx"
+  deployment:
+    securityContext:
+      capabilities: ["SYS_ADMIN", "NET_ADMIN", "SYS_TIME"]
+      runAsUser: 1000
+      runAsGroup: 3000
+      fsGroup: 2000
+      runAsNonRoot: false
+    containers:
+      image: "nginx"
+      port: 80
+  service:
+    enabled: false

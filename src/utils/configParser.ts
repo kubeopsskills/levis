@@ -1,7 +1,7 @@
 import { DeploymentModel, ServiceModel, LevisConfig } from "../models";
 import * as Constants from "../models/constants";
 import * as log4js from "log4js";
-import { EnvVar, DeploymentStrategy, EnvFromSource, Volume, VolumeMount, Probe, Affinity, NodeSelectorRequirement, Toleration } from "../../libs/k8s";
+import { EnvVar, DeploymentStrategy, EnvFromSource, Volume, VolumeMount, Probe, Affinity, NodeSelectorRequirement, Toleration, SecurityContext, PodSecurityContext } from "../../libs/k8s";
 import { ServicePort } from "../../libs/k8s";
 import { TypeMapper } from ".";
 
@@ -92,6 +92,25 @@ export class ConfigParser {
                         matchExpressions: this.createNodeSelectorRequirement(operator, labels)
                     }
                 }]
+            }
+        }
+    }
+
+    private static createPodSecurityContext(config: LevisConfig): PodSecurityContext {
+        // throw new Error("Method not implemented.");
+        return {
+            runAsUser: config.levis.deployment.securityContext?.runAsUser ?? undefined,
+            runAsGroup: config.levis.deployment.securityContext?.runAsGroup ?? undefined,
+            fsGroup: config.levis.deployment.securityContext?.fsGroup ?? undefined,
+            runAsNonRoot: config.levis.deployment.securityContext?.runAsNonRoot ?? undefined
+        }
+    }
+
+    private static createSecurityContext(config: LevisConfig): SecurityContext {
+        // throw new Error("Method not implemented.");
+        return {
+            capabilities: {
+                add: config.levis.deployment.securityContext?.capabilities
             }
         }
     }
@@ -304,8 +323,28 @@ export class ConfigParser {
         const maxSurge: string = config.levis.deployment.strategy?.rollingUpdate?.maxSurge || Constants.Deployment.ROLLING_UPDATE_MAX_SURGE;
         const maxUnavailable: string = config.levis.deployment.strategy?.rollingUpdate?.maxUnavailable || Constants.Deployment.ROLLING_UPDATE_MAX_UNAVAILABLE;
         const isNodeSelector = config.levis.deployment.node ?? undefined;
+        const isSecurityContext =config.levis.deployment.securityContext ?? undefined;
         var affinity: Affinity | undefined = undefined;
         var toleration: Toleration[] | undefined = undefined;
+        var securityContext: SecurityContext | undefined = undefined;
+        var podSecurityContext: PodSecurityContext | undefined = undefined;
+
+        if (isSecurityContext) {
+            const fsGroup = config.levis.deployment.securityContext?.fsGroup ?? undefined;
+            const runAsUser = config.levis.deployment.securityContext?.runAsUser ?? undefined;
+            const runAsGroup = config.levis.deployment.securityContext?.runAsGroup ?? undefined;
+            const runAsNonRoot = config.levis.deployment.securityContext?.runAsNonRoot ?? undefined;
+            const capabilities = config.levis.deployment.securityContext?.capabilities ?? undefined;
+            if(capabilities) {
+                securityContext = this.createSecurityContext(config);
+                log.debug("securityContext: ", securityContext)
+            }
+            if(fsGroup || runAsUser || runAsGroup || runAsNonRoot){
+                podSecurityContext = this.createPodSecurityContext(config);
+                log.debug("podSecurityContext: ", podSecurityContext)
+            }
+        }
+
         if (isNodeSelector){
             affinity = config.levis.deployment.node?.selector ? this.createAffinity(config) : {};
             toleration = this.createToleration(config);
@@ -338,6 +377,8 @@ export class ConfigParser {
           replicas: config.levis.deployment.replicas,
           strategy: strategy,
           matchLabels: config.levis.deployment.matchLabels || deploymentLabels,
+          securityContext: securityContext,
+          podSecurityContext: podSecurityContext,
           containerName:
             config.levis.deployment.containers?.name || deploymentName,
           containerImage: config.levis.deployment.containers?.image,
@@ -366,4 +407,5 @@ export class ConfigParser {
           toleration: toleration,
         };
     }
+
 }

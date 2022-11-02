@@ -21,6 +21,7 @@ interface Deployment {
   strategy?: Strategy;
   matchLabels?: { [key: string]: string };
   serviceAccount?: string;
+  securityContext?: SecurityContext;
   containers: Containers;
   node?: Node;
   enableHealthCheck?: boolean;
@@ -73,6 +74,16 @@ interface Containers {
     secretEnvName?: string; 
     volumeMounts?: Volume[];
     terminationGracePeriodSeconds?: number;
+    
+}
+
+/* Security Context */
+interface SecurityContext {
+    capabilities?: string[];
+    runAsUser?: number;
+    runAsGroup?: number;
+    fsGroup?: number;
+    runAsNonRoot?: boolean;
 }
 
 /* Container Probe */
